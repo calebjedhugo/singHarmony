@@ -1,0 +1,23 @@
+#paper {
+  background-image: url('../images/paper.png');
+}
+
+#paperEdges {
+  background-image: url('../images/paperEdges.png');
+}
+
+#s-button {
+  background-image: url('../images/s-button.png');
+}
+
+#a-button {
+  background-image: url('../images/a-button.png');
+}
+
+#t-button {
+  background-image: url('../images/t-button.png');
+}
+
+#b-button {
+  background-image: url('../images/b-button.png');
+}
