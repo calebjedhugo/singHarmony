@@ -1,4 +1,9 @@
 @import url('css/imageAssignments.css');
+@import url('css/home.css');
+
+body {
+  font-family: georgia;
+}
 
 .globalBackground {
   position: absolute;
@@ -8,12 +13,23 @@
   height: 100%;
 }
 
-.voice-controller {
+.voice-controller, .navButtonContainer {
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
   width: 13%;
+  margin: 0px 3px;
+  top: 0;
+}
+
+.navButtonContainer {
+  right: 0;
+}
+
+.navButtonContainerDisabled {
+  opacity: .5;
 }
 
 .voiceButton {
@@ -28,4 +44,28 @@
 .voiceButton-active {
   background-size: 100% 100%;
   opacity: 1;
+}
+
+.navButton {
+  text-transform: capitalize;
+  text-align: center;
+  background-color: #f37c7c57;
+  padding: 33% 0px;
+  border: #795548c9 ridge 3px;
+}
+
+.list-group-item.active {
+  background-color: #614f4ff2;
+}
+
+.notation-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.notation {
+  margin-left: 12%;
+  white-space: nowrap;
 }
