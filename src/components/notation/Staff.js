@@ -39,10 +39,10 @@ export class Staff extends Component {
       this.context = this.renderer.getContext();
 
       // Create a stave at position 10, 40 of the passed in width on the canvas.
-      this.stave = new this.VF.Stave(10, 0, this.width)
+      this.stave = new this.VF.Stave(0, 0, this.width)
       if(grand){
-        this.trebleStaff = new this.VF.Stave(10, 0, this.width)
-        this.bassStaff = new this.VF.Stave(10, 75, this.width)
+        this.trebleStaff = new this.VF.Stave(0, 0, this.width)
+        this.bassStaff = new this.VF.Stave(0, 75, this.width)
       } else {
         this[`${type}Staff`] = new this.VF.Stave(10, 0, this.width)
       }

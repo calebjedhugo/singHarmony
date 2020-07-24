@@ -63,9 +63,19 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 }
 
 .notation {
-  margin-left: 12%;
+  margin-left: 14%;
   white-space: nowrap;
+}
+
+.notation > div {
+  display: inline-block;
+}
+
+.notation > div > canvas {
+  position: relative;
+  left: -2px;
 }

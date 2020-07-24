@@ -88,8 +88,55 @@ let songTitles = [
   'Wonderful Grace of Jesus'
 ]
 
+/*[{
+  s: [
+    {value: 'c/5', duration: 'w'}
+  ],
+  a: [
+    {value: 'g#/4', duration: '4'},
+    {value: 'g/4', duration: '4'},
+    {value: 'f/4', duration: '4'},
+    {value: 'b/4', duration: '4'}
+  ],
+  t: [
+    {value: 'c/4', duration: '1'}
+  ],
+  b: [
+    {value: 'ab/3', duration: '1'}
+  ]
+},{
+  s: [
+    {value: 'g#/4', duration: '4'},
+    {value: 'g/4', duration: '4'},
+    {value: 'f/4', duration: '4'},
+    {value: 'b/4', duration: '4'}
+  ],
+  a: [
+    {value: 'c/5', duration: '1'}
+  ],
+  t: [
+    {value: 'c/4', duration: '1'}
+  ],
+  b: [
+    {value: 'ab/3', duration: '1'}
+  ]
+}]*/
+
 for(let i = 0; i < 1/*songTitles.length*/; i++){
   let fileName = songTitles[i].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '')
+  let notes = [], measure = {s: [], a: [], t: [], b: []}
+  for(let i2 = 0; i2 < sopranoNotes.length; i2++){
+    if(sopranoNotes[i2][i]){
+      measure.s.push({value: sopranoNotes[i2][i], duration: sopranoRhythm[i2][i]})
+    }
+    if(i2 % songData.subsPerMeasure[i] === 0 && i2 !== 0){
+      if(!measure.s.length && !measure.a.length && !measure.t.length && !measure.b.length){
+        break;
+      }
+      notes.push(measure)
+      measure = {s: [], a: [], t: [], b: []}
+    }
+  }
   let data = {
     metaData: {
       resolution: songData.resolution[i],
@@ -97,7 +144,7 @@ for(let i = 0; i < 1/*songTitles.length*/; i++){
       pickups: songData.pickups[i],
       subsPerMeasure: songData.subsPerMeasure[i],
     },
-    matix: 
+    notes: notes
   }
-  console.log(data)
+  console.log(data.notes)
 }
