@@ -2,7 +2,7 @@ import {Staff} from './Staff.js'
 
 export default class Measure extends Staff {
   constructor(props){
-    super(props, {padding: 0})
+    super(props, {padding: -2})
   }
 
   draw = () => {
@@ -39,11 +39,17 @@ export default class Measure extends Staff {
   }
 
   componentDidMount(){
-    this.draw()
+    try{this.draw()}
+    catch(e){
+      console.error(e)
+    }
   }
 
   componentDidUpdate(){
-    this.draw()
+    try{this.draw()}
+    catch(e){
+      console.error(e)
+    }
   }
 
   accidental = (note) => {
@@ -59,6 +65,7 @@ export default class Measure extends Staff {
       duration: data.duration,
       stem_direction: /^(a|b)$/.test(data.voice) ? -1 : 1
     })
+    if(/d/.test(data.duration)) note.addDotToAll()
     let accidental = this.accidental(data.value)
     if(accidental) note.addAccidental(...accidental)
     return note

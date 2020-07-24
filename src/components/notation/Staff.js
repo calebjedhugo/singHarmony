@@ -32,7 +32,7 @@ export class Staff extends Component {
       this.renderer = new this.VF.Renderer(this.canvasElement, this.VF.Renderer.Backends.CANVAS);
 
       // Size our canvas:
-      padding = padding !== undefined || Math.min(50, window.innerWidth * .03)
+      padding = padding !== undefined ? padding : Math.min(50, window.innerWidth * .03)
       this.renderer.resize(this.width + (padding * 2), 200);
 
       // And get a drawing context:

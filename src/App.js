@@ -36,7 +36,8 @@ class App extends Component {
 
   get songData(){
     const {song} = this.state
-    return songData[song] || []
+    console.log(songData[song].notes)
+    return songData[song].notes
   }
 
   get screen(){

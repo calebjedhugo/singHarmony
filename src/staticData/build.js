@@ -88,49 +88,51 @@ let songTitles = [
   'Wonderful Grace of Jesus'
 ]
 
-/*[{
-  s: [
-    {value: 'c/5', duration: 'w'}
-  ],
-  a: [
-    {value: 'g#/4', duration: '4'},
-    {value: 'g/4', duration: '4'},
-    {value: 'f/4', duration: '4'},
-    {value: 'b/4', duration: '4'}
-  ],
-  t: [
-    {value: 'c/4', duration: '1'}
-  ],
-  b: [
-    {value: 'ab/3', duration: '1'}
-  ]
-},{
-  s: [
-    {value: 'g#/4', duration: '4'},
-    {value: 'g/4', duration: '4'},
-    {value: 'f/4', duration: '4'},
-    {value: 'b/4', duration: '4'}
-  ],
-  a: [
-    {value: 'c/5', duration: '1'}
-  ],
-  t: [
-    {value: 'c/4', duration: '1'}
-  ],
-  b: [
-    {value: 'ab/3', duration: '1'}
-  ]
-}]*/
+const valueConvert = value => {
+  return value.slice(0, value.length - 1) + '/' + value.slice(value.length - 1)
+}
 
-for(let i = 0; i < 1/*songTitles.length*/; i++){
-  let fileName = songTitles[i].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '')
+const durationConvert = (value, subsPerMeasure) => {
+  let converted = Math.ceil(Number(subsPerMeasure) / Number(value))
+  if((subsPerMeasure % value) === converted && subsPerMeasure % value !== 0){
+    converted += 'd'
+  }
+  return converted.toString()
+}
+
+let importCode = ['', 'export default {\n']
+for(let i = 0; i < songTitles.length; i++){
+  let fileName = songTitles[i].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
+  importCode[0] += `import ${fileName.replace('.json', '')} from './${fileName}'\n`
+  importCode[1] += `'${songTitles[i]}': ${fileName.replace('.json', '')},\n`
   let notes = [], measure = {s: [], a: [], t: [], b: []}
   for(let i2 = 0; i2 < sopranoNotes.length; i2++){
     if(sopranoNotes[i2][i]){
-      measure.s.push({value: sopranoNotes[i2][i], duration: sopranoRhythm[i2][i]})
+      measure.s.push({
+        value: valueConvert(sopranoNotes[i2][i]),
+        duration: durationConvert(sopranoRhythm[i2][i], songData.subsPerMeasure[i])
+      })
     }
-    if(i2 % songData.subsPerMeasure[i] === 0 && i2 !== 0){
-      if(!measure.s.length && !measure.a.length && !measure.t.length && !measure.b.length){
+    if(altoNotes[i2] && altoNotes[i2][i]){
+      measure.a.push({
+        value: valueConvert(altoNotes[i2][i]),
+        duration: durationConvert(altoRhythm[i2][i], songData.subsPerMeasure[i])
+      })
+    }
+    if(tenorNotes[i2] && tenorNotes[i2][i]){
+      measure.t.push({
+        value: valueConvert(tenorNotes[i2][i]),
+        duration: durationConvert(tenorRhythm[i2][i], songData.subsPerMeasure[i])
+      })
+    }
+    if(bassNotes[i2] && bassNotes[i2][i]){
+      measure.b.push({
+        value: valueConvert(bassNotes[i2][i]),
+        duration: durationConvert(bassRhythm[i2][i], songData.subsPerMeasure[i])
+      })
+    }
+    if(i2 % songData.subsPerMeasure[i] === 1 && i2 !== 1){
+      if(!measure.s.length && !measure.a.length && !measure.t.length && !measure.b.length && i2 !== 0){
         break;
       }
       notes.push(measure)
@@ -146,5 +148,13 @@ for(let i = 0; i < 1/*songTitles.length*/; i++){
     },
     notes: notes
   }
-  console.log(data.notes)
+  fs.writeFile(`songData/${fileName}`, JSON.stringify(data), e => {
+    if(e) throw e
+    console.log(`${fileName} has been created.`)
+  })
 }
+
+fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
+  if(e) throw e
+  console.log(`songData/index.js has been created.`)
+})

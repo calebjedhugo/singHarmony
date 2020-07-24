@@ -77,5 +77,5 @@ body {
 
 .notation > div > canvas {
   position: relative;
-  left: -2px;
+  /* left: -2px; */
 }
