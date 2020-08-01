@@ -8,26 +8,30 @@ export default class Measure extends Staff {
   draw = () => {
     this.initStaff()
     this.voices = []
-    const {voices, data} = this.props
+    const {voices, data, idx} = this.props
     if(!data) throw new Error('The Measure component requires the prop, "data"')
 
-    //create voices
-    for(let voice in voices){
-      this.voices.push(new this.VF.Voice({num_beats: 4,  beat_value: 4}))
-      let clef = voice === 's' || voice === 'a' ? 'treble' : 'bass'
-      let tickables = this.createTickables(data[voice], clef, voices[voice], voice)
-      this.voices[this.voices.length - 1].addTickables(tickables)
-      this.voices[this.voices.length - 1].clef = this[`${clef}Staff`]
+    try{
+      //create voices
+      for(let voice in voices){
+        this.voices.push(new this.VF.Voice({num_beats: data.ts[0],  beat_value: data.ts[1]}))
+        let clef = voice === 's' || voice === 'a' ? 'treble' : 'bass'
+        let tickables = this.createTickables(data[voice], clef, voices[voice], voice)
+        this.voices[this.voices.length - 1].addTickables(tickables)
+        this.voices[this.voices.length - 1].clef = this[`${clef}Staff`]
+      }
+
+      // Format and justify the notes to props.width.
+      this.formatter = new this.VF.Formatter().joinVoices(this.voices).formatToStave(this.voices, this.stave);
+      // Render voice
+      //The 'this.stave' in the Staff class needs to be in the constructor to be accessible.
+      this.voices.forEach(voice => {
+        voice.draw(this.context, voice.clef);
+      })
     }
-
-    // Format and justify the notes to props.width.
-    this.formatter = new this.VF.Formatter().joinVoices(this.voices).formatToStave(this.voices, this.stave);
-
-    // Render voice
-    //The 'this.stave' in the Staff class needs to be in the constructor to be accessible.
-    this.voices.forEach(voice => {
-      voice.draw(this.context, voice.clef);
-    })
+    catch(e){
+      console.error(e.message, data, `Measure ${idx}`)
+    }
   }
 
   createTickables = (data, clef, active, voice) => {
@@ -39,17 +43,11 @@ export default class Measure extends Staff {
   }
 
   componentDidMount(){
-    try{this.draw()}
-    catch(e){
-      console.error(e)
-    }
+    this.draw()
   }
 
   componentDidUpdate(){
-    try{this.draw()}
-    catch(e){
-      console.error(e)
-    }
+    this.draw()
   }
 
   accidental = (note) => {

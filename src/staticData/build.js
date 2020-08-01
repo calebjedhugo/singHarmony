@@ -1,15 +1,21 @@
 const fs = require('fs')
 
-const altoNotes = require('./oldData/altoNotes.js')
-const altoRhythm = require('./oldData/altoRhythm.js')
-const bassNotes = require('./oldData/bassNotes.js')
-const bassRhythm = require('./oldData/bassRhythm.js')
-const sopranoNotes = require('./oldData/sopranoNotes.js')
-const sopranoRhythm = require('./oldData/sopranoRhythm.js')
-const tenorNotes = require('./oldData/tenorNotes.js')
-const tenorRhythm = require('./oldData/tenorRhythm.js')
 const tempoChanges = require('./oldData/tempoChanges.js')
 const songData = require('./oldData/songData.js')
+
+const oldNotes = {
+  s: require('./oldData/sopranoNotes.js'),
+  a: require('./oldData/altoNotes.js'),
+  t: require('./oldData/tenorNotes.js'),
+  b: require('./oldData/bassNotes.js')
+}
+
+const rhythm = {
+  a: require('./oldData/altoRhythm.js'),
+  b: require('./oldData/bassRhythm.js'),
+  s: require('./oldData/sopranoRhythm.js'),
+  t: require('./oldData/tenorRhythm.js')
+}
 
 let songTitles = [
   'A Mighty Fortress is Our God',
@@ -92,12 +98,40 @@ const valueConvert = value => {
   return value.slice(0, value.length - 1) + '/' + value.slice(value.length - 1)
 }
 
-const durationConvert = (value, subsPerMeasure) => {
-  let converted = Math.ceil(Number(subsPerMeasure) / Number(value))
-  if((subsPerMeasure % value) === converted && subsPerMeasure % value !== 0){
+const durationConvert = (value, subsPerBeat) => {
+  let converted = Math.abs(Math.ceil(Number(subsPerBeat * 4) / Number(value)))
+  if(!/^(1|2|4|8|16)$/.test(converted.toString())){
+    if(converted === 3){
+      converted = '4d';
+    } else if(converted === 6){
+      switch(subsPerBeat){
+        case 2:
+          converted = '2d';
+          break;
+        case 4:
+          converted = '8d';
+          break;
+      }
+    } else {
+      console.log(`converted value of '${converted}' is not being handled.`)
+    }
+  }
+  //This logic correctly handle half notes.
+  if(((subsPerBeat * 4) % value) === converted && (subsPerBeat * 4) % value !== 0){
     converted += 'd'
   }
   return converted.toString()
+}
+
+const restCheck = (pos, noteEnd, subsPerBeat) => {
+  if(noteEnd < pos - 1 && pos > 2){
+    return {
+      value: 'c/4',
+      duration: `${durationConvert(pos - noteEnd - 1, subsPerBeat)}r`
+    }
+  } else{
+    return false
+  }
 }
 
 let importCode = ['', 'export default {\n']
@@ -105,38 +139,61 @@ for(let i = 0; i < songTitles.length; i++){
   let fileName = songTitles[i].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
   importCode[0] += `import ${fileName.replace('.json', '')} from './${fileName}'\n`
   importCode[1] += `'${songTitles[i]}': ${fileName.replace('.json', '')},\n`
-  let notes = [], measure = {s: [], a: [], t: [], b: []}
-  for(let i2 = 0; i2 < sopranoNotes.length; i2++){
-    if(sopranoNotes[i2][i]){
-      measure.s.push({
-        value: valueConvert(sopranoNotes[i2][i]),
-        duration: durationConvert(sopranoRhythm[i2][i], songData.subsPerMeasure[i])
-      })
+  let notes = [], measure = {s: [], a: [], t: [], b: [], ts: []}
+  let measureLength = {s: 0, a: 0, t: 0, b: 0}
+  let noteEnd = {s: 0, a: 0, t: 0, b: 0}
+  let noteStart = {s: 0, a: 0, t: 0, b: 0}
+  let flag= false
+  for(let i2 = 0; i2 < oldNotes.s.length; i2++){
+    for(let voice in oldNotes){
+      if(oldNotes[voice][i2] && oldNotes[voice][i2][i]){
+        let rest = restCheck(i2, noteEnd[voice], songData.subsPerBeat[i])
+        if(rest && i2 > 2){
+          measure[voice].push(rest)
+        }
+        switch(rhythm[voice][i2][i]){
+          case 5:
+            rhythm[voice][i2][i] = 6;
+            break;
+          case 9:
+            rhythm[voice][i2][i] = 10;
+            break;
+        }
+        measure[voice].push({
+          value: valueConvert(oldNotes[voice][i2][i]),
+          duration: durationConvert(rhythm[voice][i2][i], songData.subsPerBeat[i])
+        })
+        noteStart[voice] = i2
+        measureLength[voice] += rhythm[voice][i2][i]
+        noteEnd[voice] += rhythm[voice][i2][i]
+      }
     }
-    if(altoNotes[i2] && altoNotes[i2][i]){
-      measure.a.push({
-        value: valueConvert(altoNotes[i2][i]),
-        duration: durationConvert(altoRhythm[i2][i], songData.subsPerMeasure[i])
-      })
-    }
-    if(tenorNotes[i2] && tenorNotes[i2][i]){
-      measure.t.push({
-        value: valueConvert(tenorNotes[i2][i]),
-        duration: durationConvert(tenorRhythm[i2][i], songData.subsPerMeasure[i])
-      })
-    }
-    if(bassNotes[i2] && bassNotes[i2][i]){
-      measure.b.push({
-        value: valueConvert(bassNotes[i2][i]),
-        duration: durationConvert(bassRhythm[i2][i], songData.subsPerMeasure[i])
-      })
-    }
-    if(i2 % songData.subsPerMeasure[i] === 1 && i2 !== 1){
+    if((i2 - songData.pickups[i]) % songData.subsPerMeasure[i] === 1 && i2 !== 1){
       if(!measure.s.length && !measure.a.length && !measure.t.length && !measure.b.length && i2 !== 0){
         break;
       }
+      for(let voice in noteEnd){
+        if(noteEnd[voice] <= i2){
+          noteEnd[voice] = i2
+        } else {
+          if(measure[voice][measure[voice].length - 1]){
+            measure[voice][measure[voice].length - 1].duration = durationConvert(i2 - noteStart[voice] + 1, songData.subsPerBeat[i])
+          } else {
+            // measure[voice].push()
+          }
+          measureLength[voice] -= (noteEnd[voice] - i2)
+          if(oldNotes[voice][i2 + 1]){
+            oldNotes[voice][i2 + 1][i] = oldNotes[voice][noteStart[voice]][i]
+            if(rhythm[voice][i2 + 1]){
+              rhythm[voice][i2 + 1][i] = noteEnd[voice] - i2
+            } else console.log(rhythm[voice][i2 + 1], fileName, i2)
+          } else console.log(oldNotes[voice][i2 + 1], fileName, i2)
+        }
+      }
+      measure.ts = [Number(((measureLength.s || measureLength.a || measureLength.t || measureLength.b) * songData.resolution[i]).toFixed(0)), /(5|2)/.test(songData.resolution[i].toString()[2]) ? 4 : 8]
       notes.push(measure)
-      measure = {s: [], a: [], t: [], b: []}
+      measure = {s: [], a: [], t: [], b: [], ts: []}
+      measureLength = {s: 0, a: 0, t: 0, b: 0}
     }
   }
   let data = {

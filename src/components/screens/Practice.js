@@ -7,8 +7,8 @@ export default class Practice extends Component {
 
   get measures(){
     const {voices, songData} = this.props
-    return songData.map((data) => {
-      return <div><Measure data={data} voices={voices} grand={true} /></div>
+    return songData.map((data, idx) => {
+      return <div key={idx}><Measure idx={idx} data={data} voices={voices} grand={true} /></div>
     })
   }
 

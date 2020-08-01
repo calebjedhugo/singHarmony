@@ -11,7 +11,7 @@ import './App.css';
 class App extends Component {
   state = {
     screen: 'practice',
-    song: 'A Mighty Fortress is Our God',
+    song: 'Amazing Grace',
     voices: {
       s: true,
       a: true,
