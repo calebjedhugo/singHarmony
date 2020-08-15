@@ -5,19 +5,31 @@ import Sing from './components/screens/Sing'
 import Practice from './components/screens/Practice'
 import Print from './components/screens/Print'
 import NavButton from './components/NavButton'
+import Player from './Player'
 import songData from './staticData/songData'
 import './App.css';
 
 class App extends Component {
-  state = {
-    screen: 'practice',
-    song: 'A Mighty Fortress is Our God',
-    voices: {
-      s: true,
-      a: true,
-      t: true,
-      b: true
+  constructor(props){
+    super(props)
+    this.player = new Player()
+
+    this.state = {
+      screen: 'practice',
+      song: 'A Mighty Fortress is Our God',
+      tempo: 100,
+      keySignature: 'C',
+      voices: {
+        s: true,
+        a: true,
+        t: true,
+        b: true
+      }
     }
+  }
+
+  componentDidUpdate(){
+    this.player.tempo = this.state.tempo
   }
 
   toggleVoice = (voice) => {
@@ -32,8 +44,17 @@ class App extends Component {
     if(numberActive) this.setState({voices: voices})
   }
 
+  setSong = song => {
+    this.setState({
+      song: song,
+      tempo: songData[song].metaData.tempo,
+      keySignature: songData[song].metaData.key //User will be allow to change this someday.
+    })
+  }
+
   songTitles = Object.keys(songData)
 
+  //The user should not be allowed to adjust this, so we'll retrieve it like this.
   get songData(){
     const {song} = this.state
     return songData[song].notes
@@ -43,9 +64,9 @@ class App extends Component {
     const {screen} = this.state
     switch(screen){
       case 'home':
-        return <Home {...this.state} songTitles={this.songTitles} setSong={song => {this.setState({song: song})}}/>
+        return <Home {...this.state} songTitles={this.songTitles} setSong={this.setSong}/>
       case 'practice':
-        return <Practice {...this.state} songData={this.songData} toggleVoice={this.toggleVoice}/>
+        return <Practice {...this.state} player={this.player} songData={this.songData} toggleVoice={this.toggleVoice}/>
       case 'sing':
         return <Sing {...this.state} songData={this.songData} toggleVoice={this.toggleVoice}/>
       case 'print':

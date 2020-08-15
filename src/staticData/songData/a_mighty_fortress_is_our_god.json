@@ -3,7 +3,8 @@
     "resolution": 0.5,
     "tempo": 98,
     "pickups": 2,
-    "subsPerMeasure": 8
+    "subsPerMeasure": 8,
+    "key": "C"
   },
   "notes": [{
     "s": [{

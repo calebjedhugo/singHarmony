@@ -1,6 +1,3 @@
-//How to Sing Harmony
-//Copyright Caleb Hugo 2016
-//All rights reserved
 import piano from './piano'
 import base64Binary from './base64Binary'
 
@@ -74,9 +71,14 @@ class SampledInstrument{
       console.log(note + " is not available for the " + this.type);
     //make an error handler so that we know when a dynamic is incorrect.
     if(length){
-      this["stopCall" + note] = setTimeout(() => {
-        this.smoothStop(self.soundingSourceNodes[note], self.soundingGainNodes[note]);
-      }, (length * 1000) + 20);
+      return new Promise(resolve => {
+        this["stopCall" + note] = setTimeout(() => {
+          resolve() //resolve with precision.
+          setTimeout(() => { //Allow sound to overlap a bit.
+            this.smoothStop(self.soundingSourceNodes[note], self.soundingGainNodes[note])
+          }, 20)
+        }, (length * 1000));
+      })
     }
   }
 
@@ -169,90 +171,3 @@ export default class SoundManager {
     return new SampledInstrument(type, this.soundscape)
   }
 }
-
-// function NativeInstrument(type){
-//     this.type = type;
-//     this.sourceNodes = [];
-// }
-//
-// let soundingNodes = {};
-//
-// NativeInstrument.prototype.play = function(note, dynamic, length, decayRate){
-//     if(this.sourceNodes["source" + note]){
-//         clearTimeout(this["stopCall" + note]);
-//         nativeSmoothStop(this.sourceNodes["source" + note], this.sourceNodes["source" + note].gain);
-//     }
-//     this.newSource = this.soundscape.createOscillator();
-//     this.newSource.type = this.type;
-//     this.newSource.gain = this.soundscape.createGain();
-//     this.newSource.frequency.value = noteConvert.convert(note, true);
-//     this.newSource.gain.value = dynamics[dynamic];
-//     this.newSource.connect(this.newSource.gain);
-//     this.newSource.gain.connect(this.soundscape.destination)
-//     //make an error handler so that we know that a note doesn't exist
-//     var self = this;
-//     if(dynamic){
-//         this.newSource.gain.value = dynamics[dynamic]/10;
-//     }
-//     else if(this.soundscape[this.type + "gain"].gain.value == 0){
-//         this.newSource.gain.value = dynamics["mf"];
-//     }
-//     //make an error handler so that we know when a dynamic is incorrect.
-//     this.sourceNodes["source" + note] = this.newSource;
-//     if(typeof length != "object"){
-//         this["stopCall" + note] = setTimeout(function(){
-//             nativeSmoothStop(self.sourceNodes["source" + note], self.sourceNodes["source" + note].gain);
-//         }, (length * 1000) + 10);
-//     }
-//     else{
-//         soundingNodes[length.keyCode] = self.newSource;
-//     }
-//     this.newSource.start();
-//     this.playing = true;
-//     if(typeof decayRate == "number")
-//         decay(this.newSource, this.newSource.gain, decayRate)
-// }
-//
-// NativeInstrument.prototype.muteAll = function(){
-//     for(var idx = 0; idx < this.sourceNodes.length; idx += 1){
-//         nativeSmoothStop(this.sourceNodes[idx], this.sourceNodes[idx].gain);
-//     }
-// }
-//
-// function nativeSmoothStop(sourceNode, gainNode){
-//     var stopping = setInterval(function(){
-//         gainNode.gain.value -= .05;
-//         if(gainNode.gain.value <= 0){
-//             clearInterval(stopping)
-//         }
-//     }, 1);
-// }
-//
-// function decay(sourceNode, gainNode, rate){
-//     var decayStopping = setInterval(function(){
-//         gainNode.gain.value -= .05;
-//         if(gainNode.gain.value <= 0){
-//             clearInterval(decayStopping)
-//             sourceNode.stop();
-//         }
-//     }, rate * 20);
-// }
-//
-// NativeInstrument.prototype.changeDynamic = function(dynamic, length){
-//     var difference = dynamics[dynamic] - this.vca.gain.value;
-//     var changing = setInterval(() => {
-//         this.vca.gain.value += difference/(length*100)
-//     }, 10)
-//     setTimeout(function(){clearInterval(changing)}, length*1000);
-// }
-//
-// NativeInstrument.prototype.articulate = function(sourceNode, strength){
-//     var oldGain = sourceNode.gain.value;
-//     sourceNode.gain.value = 0;
-//     if(strength){
-//         setTimeout(() => {this.vca.gain.value = strength}, 50);
-//         setTimeout(() => {this.vca.gain.value = oldGain}, 100)
-//     }
-//     else
-//         setTimeout(() => {this.vca.gain.value = oldGain}, 50);
-// }

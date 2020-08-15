@@ -3,7 +3,6 @@ import VoiceController from '../VoiceController'
 import Measure from '../notation/Measure'
 import Meta from '../notation/Meta'
 import PlayButton from '../playButton'
-import Player from '../../Player'
 
 export default class Practice extends Component {
   constructor(props){
@@ -12,8 +11,6 @@ export default class Practice extends Component {
       activeIdx: 0,
       playing: false
     }
-    const {songData} = props
-    this.player = new Player()
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -21,12 +18,6 @@ export default class Practice extends Component {
     const {playing} = this.state
     if(playing !== prevState.playing){
       playing ? this.beginPlayback() : this.endPlayback()
-    }
-
-    //If the song changes, reconstruct the player
-    const {song, songData} = this.props
-    if(song !== prevProps.song){
-      this.player = new Player(songData)
     }
   }
 
@@ -56,17 +47,27 @@ export default class Practice extends Component {
   }
 
   beginPlayback = async () => {
-    const {songData} = this.props
-
     if(this.atEnd){ //Should start from the begining if at the end.
       return this.setState({activeIdx: 0}, this.beginPlayback)
     }
 
+    let {songData, player} = this.props
+
+    this.playingMeasurePromise = player.play(songData[this.state.activeIdx])
+
     while(this.state.playing){
       let {activeIdx} = this.state
-      await this.player.play(songData[activeIdx])
+      //Wait for entire measure to play.
+      await this.playingMeasurePromise
+      this.timer = new Date().getTime()
+
+      //Play the next meausure?
       if(activeIdx < songData.length - 1){
-        this.setState({activeIdx: activeIdx + 1})
+        //Do not advance if this resolved early due to the user hitting pause.
+        if(this.state.playing){
+          this.playingMeasurePromise = player.play(songData[activeIdx + 1])
+          this.setState({activeIdx: activeIdx + 1})
+        }
       } else {
         this.endPlayback()
       }
@@ -74,7 +75,8 @@ export default class Practice extends Component {
   }
 
   endPlayback = () => {
-    this.player.pause()
+    let {player} = this.props
+    player.pause()
     this.setState({playing: false})
   }
 
