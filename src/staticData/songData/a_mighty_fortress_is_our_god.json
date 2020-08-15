@@ -1,0 +1,1056 @@
+{
+  "metaData": {
+    "resolution": 0.5,
+    "tempo": 98,
+    "pickups": 2,
+    "subsPerMeasure": 8
+  },
+  "notes": [{
+    "s": [{
+      "value": "C/5",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "C/3",
+      "duration": "4"
+    }],
+    "ts": [1, 4],
+    "lyrics": [
+      [{
+        "value": "A",
+        "duration": "4"
+      }],
+      [{
+        "value": "Did",
+        "duration": "4"
+      }],
+      [{
+        "value": "And",
+        "duration": "4"
+      }],
+      [{
+        "value": "That",
+        "duration": "4"
+      }]
+    ]
+  }, {
+    "s": [{
+      "value": "C/5",
+      "duration": "4"
+    }, {
+      "value": "C/5",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }, {
+      "value": "A/4",
+      "duration": "8"
+    }, {
+      "value": "B/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "E/3",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }, {
+      "value": "E/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4],
+    "lyrics": [
+      [{
+        "value": "migh   -",
+        "duration": "4"
+      }, {
+        "value": "ty",
+        "duration": "4"
+      }, {
+        "value": "for   -",
+        "duration": "4"
+      }, {
+        "value": "tress",
+        "duration": "4"
+      }],
+      [{
+        "value": "we",
+        "duration": "4"
+      }, {
+        "value": "in",
+        "duration": "4"
+      }, {
+        "value": "our__",
+        "duration": "4"
+      }, {
+        "value": "own",
+        "duration": "4"
+      }],
+      [{
+        "value": "tho",
+        "duration": "4"
+      }, {
+        "value": "this",
+        "duration": "4"
+      }, {
+        "value": "world,__",
+        "duration": "4"
+      }, {
+        "value": "with",
+        "duration": "4"
+      }],
+      [{
+        "value": "word",
+        "duration": "4"
+      }, {
+        "value": "a   -",
+        "duration": "4"
+      }, {
+        "value": "bove",
+        "duration": "4"
+      }, {
+        "value": "all",
+        "duration": "4"
+      }]
+    ]
+  }, {
+    "s": [{
+      "value": "C/5",
+      "duration": "8"
+    }, {
+      "value": "B/4",
+      "duration": "8"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "C/5",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "F#/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "8"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "A/3",
+      "duration": "4"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "B/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "F/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "E/3",
+      "duration": "4"
+    }, {
+      "value": "F/3",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }, {
+      "value": "C#/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "F/4",
+      "duration": "8"
+    }, {
+      "value": "E/4",
+      "duration": "8"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }, {
+      "value": "c/4",
+      "duration": "8r"
+    }, {
+      "value": "C/5",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "8"
+    }, {
+      "value": "A/3",
+      "duration": "8"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }, {
+      "value": "c/4",
+      "duration": "8r"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "A/3",
+      "duration": "4"
+    }, {
+      "value": "G/3",
+      "duration": "8"
+    }, {
+      "value": "F/3",
+      "duration": "8"
+    }, {
+      "value": "E/3",
+      "duration": "8"
+    }, {
+      "value": "c/4",
+      "duration": "8r"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "D/3",
+      "duration": "4"
+    }, {
+      "value": "G/2",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "8"
+    }, {
+      "value": "c/4",
+      "duration": "8r"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "C/5",
+      "duration": "4"
+    }, {
+      "value": "C/5",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }, {
+      "value": "A/4",
+      "duration": "8"
+    }, {
+      "value": "B/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "E/3",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }, {
+      "value": "E/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "C/5",
+      "duration": "8"
+    }, {
+      "value": "B/4",
+      "duration": "8"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "C/5",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "F#/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "8"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "A/3",
+      "duration": "4"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "B/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "F/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "E/3",
+      "duration": "4"
+    }, {
+      "value": "F/3",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }, {
+      "value": "C#/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "F/4",
+      "duration": "8"
+    }, {
+      "value": "E/4",
+      "duration": "8"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }, {
+      "value": "c/4",
+      "duration": "8r"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "8"
+    }, {
+      "value": "A/3",
+      "duration": "8"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }, {
+      "value": "c/4",
+      "duration": "8r"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "A/3",
+      "duration": "4"
+    }, {
+      "value": "G/3",
+      "duration": "8"
+    }, {
+      "value": "F/3",
+      "duration": "8"
+    }, {
+      "value": "E/3",
+      "duration": "8"
+    }, {
+      "value": "c/4",
+      "duration": "8r"
+    }, {
+      "value": "E/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "D/3",
+      "duration": "4"
+    }, {
+      "value": "G/2",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "8"
+    }, {
+      "value": "c/4",
+      "duration": "8r"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "F#/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "E/3",
+      "duration": "4"
+    }, {
+      "value": "A/2",
+      "duration": "4"
+    }, {
+      "value": "B/2",
+      "duration": "8"
+    }, {
+      "value": "C/3",
+      "duration": "8"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "2d"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "2d"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "B/3",
+      "duration": "2d"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "G/2",
+      "duration": "2d"
+    }, {
+      "value": "A/2",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "B/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "F/4",
+      "duration": "4"
+    }, {
+      "value": "F/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "B/2",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }, {
+      "value": "F/3",
+      "duration": "8"
+    }, {
+      "value": "E/3",
+      "duration": "8"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "C/5",
+      "duration": "2d"
+    }, {
+      "value": "B/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "E/4",
+      "duration": "2d"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "A/3",
+      "duration": "2d"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "A/2",
+      "duration": "2d"
+    }, {
+      "value": "G#/2",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "C/5",
+      "duration": "4"
+    }, {
+      "value": "B/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "F#/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "A/3",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "8"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }],
+    "b": [{
+      "value": "A/2",
+      "duration": "4"
+    }, {
+      "value": "B/2",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "2d"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "2d"
+    }, {
+      "value": "F/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "B/3",
+      "duration": "2d"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "G/3",
+      "duration": "2d"
+    }, {
+      "value": "F/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "8"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }, {
+      "value": "F/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "F/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "8"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }],
+    "t": [{
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "8"
+    }, {
+      "value": "Bb/3",
+      "duration": "8"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "F/3",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }, {
+      "value": "C#/3",
+      "duration": "4"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "E/4",
+      "duration": "2d"
+    }, {
+      "value": "C/5",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "B/3",
+      "duration": "2d"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G#/3",
+      "duration": "2d"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "E/3",
+      "duration": "2d"
+    }, {
+      "value": "A/2",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "B/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }, {
+      "value": "G/4",
+      "duration": "4"
+    }, {
+      "value": "A/4",
+      "duration": "8"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }],
+    "a": [{
+      "value": "F/4",
+      "duration": "4"
+    }, {
+      "value": "F/4",
+      "duration": "4"
+    }, {
+      "value": "F/4",
+      "duration": "4"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "A/3",
+      "duration": "8"
+    }, {
+      "value": "B/3",
+      "duration": "8"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "A/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "D/3",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }, {
+      "value": "B/2",
+      "duration": "4"
+    }, {
+      "value": "C#/3",
+      "duration": "4"
+    }],
+    "ts": [4, 4]
+  }, {
+    "s": [{
+      "value": "F/4",
+      "duration": "8"
+    }, {
+      "value": "E/4",
+      "duration": "8"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "8"
+    }, {
+      "value": "A/3",
+      "duration": "8"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "A/3",
+      "duration": "4"
+    }, {
+      "value": "G/3",
+      "duration": "8"
+    }, {
+      "value": "F/3",
+      "duration": "8"
+    }, {
+      "value": "E/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "D/3",
+      "duration": "4"
+    }, {
+      "value": "G/2",
+      "duration": "4"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }]
+}

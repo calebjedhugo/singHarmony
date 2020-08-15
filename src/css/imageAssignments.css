@@ -6,6 +6,14 @@
   background-image: url('../images/paperEdges.png');
 }
 
+.playButton {
+  background-image: url('../images/playButton.png');
+}
+
+.pauseButton {
+  background-image: url('../images/pauseButton.png');
+}
+
 #s-button {
   background-image: url('../images/s-button.png');
 }

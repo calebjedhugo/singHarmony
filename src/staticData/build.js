@@ -182,12 +182,8 @@ for(let i = 0; i < songTitles.length; i++){
             // measure[voice].push()
           }
           measureLength[voice] -= (noteEnd[voice] - i2)
-          if(oldNotes[voice][i2 + 1]){
-            oldNotes[voice][i2 + 1][i] = oldNotes[voice][noteStart[voice]][i]
-            if(rhythm[voice][i2 + 1]){
-              rhythm[voice][i2 + 1][i] = noteEnd[voice] - i2
-            } else console.log(rhythm[voice][i2 + 1], fileName, i2)
-          } else console.log(oldNotes[voice][i2 + 1], fileName, i2)
+          // oldNotes[voice][i2 + 1][i] = oldNotes[voice][noteStart[voice]][i]
+          // rhythm[voice][i2 + 1][i] = (noteEnd[voice] - i2)
         }
       }
       measure.ts = [Number(((measureLength.s || measureLength.a || measureLength.t || measureLength.b) * songData.resolution[i]).toFixed(0)), /(5|2)/.test(songData.resolution[i].toString()[2]) ? 4 : 8]
@@ -196,6 +192,7 @@ for(let i = 0; i < songTitles.length; i++){
       measureLength = {s: 0, a: 0, t: 0, b: 0}
     }
   }
+  noteEnd = {s: 0, a: 0, t: 0, b: 0}
   let data = {
     metaData: {
       resolution: songData.resolution[i],
@@ -205,13 +202,13 @@ for(let i = 0; i < songTitles.length; i++){
     },
     notes: notes
   }
-  fs.writeFile(`songData/${fileName}`, JSON.stringify(data), e => {
-    if(e) throw e
-    console.log(`${fileName} has been created.`)
-  })
+  // fs.writeFile(`songData/${fileName}`, JSON.stringify(data), e => {
+  //   if(e) throw e
+  //   console.log(`${fileName} has been created.`)
+  // })
 }
 
-fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
-  if(e) throw e
-  console.log(`songData/index.js has been created.`)
-})
+// fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
+//   if(e) throw e
+//   console.log(`songData/index.js has been created.`)
+// })

@@ -1,0 +1,35 @@
+/* .voice-controller and .navButtonContainer styles are shared and are in global.css*/
+
+.voiceButton {
+  background-repeat: no-repeat;
+  background-size: 85% 85%;
+  background-position: center;
+  height: 25%;
+  transition: background-size .5s, opacity .5s;
+  opacity: .8;
+}
+
+.voiceButton-active {
+  background-size: 100% 100%;
+  opacity: 1;
+}
+
+.playButton, .pauseButton {
+  position: fixed;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 50px;
+  width: 40px;
+
+  /* horizantally centered */
+  left: 50%;
+  transform: translateX(-50%);
+
+  margin-top: 10px;
+  z-index: 1;
+}
+
+.pauseButton {
+  width: 30px;
+  opacity: .7;
+}

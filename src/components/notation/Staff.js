@@ -14,18 +14,20 @@ export class Staff extends Component {
         this.setCanvasElement = element => {
           this.canvasElement = element
         }
+        staticProps.stafSpace = staticProps.stafSpace || 100
         this.staticProps = staticProps
         this.VF = Vex.Flow;
         this.canvas = <canvas ref={this.setCanvasElement}></canvas>
     }
 
     get width(){
-      return this.props.width || this.staticProps.width || Math.min(400, window.innerWidth * .75)//default to 400px
+      let width = this.props.width || this.staticProps.width || Math.min(400, window.innerWidth * .75) //default to 400px
+      return width
     }
 
     initStaff(){
       let {grand} = this.props //We only want to render the notes
-      let {clef, padding} = this.staticProps
+      let {clef, padding, stafSpace} = this.staticProps
       let type = this.props.type || 'treble' //the staff on which to render.
 
       // Create a canvas renderer
@@ -33,16 +35,16 @@ export class Staff extends Component {
 
       // Size our canvas:
       padding = padding !== undefined ? padding : Math.min(50, window.innerWidth * .03)
-      this.renderer.resize(this.width + (padding * 2), 200);
+      this.renderer.resize(this.width + (padding * 2), 125 + stafSpace);
 
       // And get a drawing context:
       this.context = this.renderer.getContext();
 
-      // Create a stave at position 10, 40 of the passed in width on the canvas.
+      // Create a stave at position 0, 0 of the passed in width on the canvas.
       this.stave = new this.VF.Stave(0, 0, this.width)
       if(grand){
-        this.trebleStaff = new this.VF.Stave(0, 0, this.width)
-        this.bassStaff = new this.VF.Stave(0, 75, this.width)
+        this.trebleStaff = new this.VF.Stave(-1, 0, this.width)
+        this.bassStaff = new this.VF.Stave(-1, stafSpace, this.width)
       } else {
         this[`${type}Staff`] = new this.VF.Stave(10, 0, this.width)
       }

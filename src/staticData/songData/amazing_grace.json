@@ -1,1 +1,551 @@
-{"metaData":{"resolution":0.5,"tempo":88,"pickups":2,"subsPerMeasure":6},"notes":[{"s":[{"value":"D/4","duration":"4"}],"a":[{"value":"B/3","duration":"4"}],"t":[{"value":"G/3","duration":"4"}],"b":[{"value":"G/2","duration":"4"}],"ts":[1,4]},{"s":[{"value":"G/4","duration":"2"},{"value":"B/4","duration":"8"},{"value":"G/4","duration":"8"}],"a":[{"value":"B/3","duration":"2"},{"value":"B/3","duration":"4"}],"t":[{"value":"D/3","duration":"2"},{"value":"G/3","duration":"4"}],"b":[{"value":"G/2","duration":"2"},{"value":"G/2","duration":"8"},{"value":"B/2","duration":"8"}],"ts":[3,4]},{"s":[{"value":"B/4","duration":"2"},{"value":"A/4","duration":"4"}],"a":[{"value":"D/4","duration":"2"},{"value":"C/4","duration":"4"}],"t":[{"value":"G/3","duration":"2"},{"value":"F#/3","duration":"4"}],"b":[{"value":"D/3","duration":"2"},{"value":"D/3","duration":"4"}],"ts":[3,4]},{"s":[{"value":"G/4","duration":"2"},{"value":"E/4","duration":"4"}],"a":[{"value":"B/3","duration":"2"},{"value":"C/4","duration":"4"}],"t":[{"value":"G/3","duration":"2"},{"value":"G/3","duration":"4"}],"b":[{"value":"E/3","duration":"2"},{"value":"C/3","duration":"4"}],"ts":[3,4]},{"s":[{"value":"D/4","duration":"2"},{"value":"D/4","duration":"4"}],"a":[{"value":"B/3","duration":"2"},{"value":"B/3","duration":"4"}],"t":[{"value":"G/3","duration":"2"},{"value":"G/3","duration":"4"}],"b":[{"value":"G/2","duration":"2"},{"value":"G/2","duration":"4"}],"ts":[3,4]},{"s":[{"value":"G/4","duration":"2"},{"value":"B/4","duration":"8"},{"value":"G/4","duration":"8"}],"a":[{"value":"B/3","duration":"2"},{"value":"D/4","duration":"4"}],"t":[{"value":"D/3","duration":"2"},{"value":"G/3","duration":"4"}],"b":[{"value":"G/2","duration":"2"},{"value":"G/2","duration":"8"},{"value":"B/2","duration":"8"}],"ts":[3,4]},{"s":[{"value":"B/4","duration":"2"},{"value":"A/4","duration":"4"}],"a":[{"value":"D/4","duration":"2"},{"value":"D/4","duration":"4"}],"t":[{"value":"G/3","duration":"2"},{"value":"F#/3","duration":"4"}],"b":[{"value":"D/3","duration":"2"},{"value":"C/3","duration":"4"}],"ts":[3,4]},{"s":[{"value":"D/5","duration":"2d"}],"a":[{"value":"D/4","duration":"2d"}],"t":[{"value":"G/3","duration":"2d"}],"b":[{"value":"B/2","duration":"2d"}],"ts":[3,4]},{"s":[{"value":"B/4","duration":"4"}],"a":[{"value":"D/4","duration":"4"}],"t":[{"value":"F#/3","duration":"2"},{"value":"G/3","duration":"4"}],"b":[{"value":"A/2","duration":"2"},{"value":"G/2","duration":"4"}],"ts":[1,4]},{"s":[{"value":"D/5","duration":"4d"},{"value":"B/4","duration":"8"},{"value":"D/5","duration":"8"},{"value":"B/4","duration":"8"}],"a":[{"value":"D/4","duration":"2"},{"value":"D/4","duration":"4"}],"t":[{"value":"B/3","duration":"4d"},{"value":"G/3","duration":"8"},{"value":"B/3","duration":"8"},{"value":"G/3","duration":"8"}],"b":[{"value":"G/3","duration":"2"},{"value":"G/3","duration":"4"}],"ts":[3,4]},{"s":[{"value":"G/4","duration":"2"},{"value":"D/4","duration":"4"}],"a":[{"value":"D/4","duration":"2"},{"value":"D/4","duration":"4"}],"t":[{"value":"G/3","duration":"2"},{"value":"G/3","duration":"4"}],"b":[{"value":"B/2","duration":"2"},{"value":"B/2","duration":"4"}],"ts":[3,4]},{"s":[{"value":"E/4","duration":"4d"},{"value":"G/4","duration":"8"},{"value":"G/4","duration":"8"},{"value":"E/4","duration":"8"}],"a":[{"value":"C/4","duration":"4d"},{"value":"D/4","duration":"8"},{"value":"C/4","duration":"4"}],"t":[{"value":"G/3","duration":"2"},{"value":"E/3","duration":"8"},{"value":"G/3","duration":"8"}],"b":[{"value":"C/3","duration":"4d"},{"value":"B/2","duration":"8"},{"value":"C/3","duration":"4"}],"ts":[3,4]},{"s":[{"value":"D/4","duration":"2"},{"value":"D/4","duration":"4"}],"a":[{"value":"B/3","duration":"2"},{"value":"D/4","duration":"4"}],"t":[{"value":"G/3","duration":"2"},{"value":"G/3","duration":"4"}],"b":[{"value":"G/2","duration":"2"},{"value":"B/2","duration":"4"}],"ts":[3,4]},{"s":[{"value":"G/4","duration":"2"},{"value":"B/4","duration":"8"},{"value":"G/4","duration":"8"}],"a":[{"value":"B/3","duration":"2"},{"value":"D/4","duration":"4"}],"t":[{"value":"G/3","duration":"2"},{"value":"G/3","duration":"8"},{"value":"B/3","duration":"8"}],"b":[{"value":"E/3","duration":"2"},{"value":"D/3","duration":"4"}],"ts":[3,4]},{"s":[{"value":"B/4","duration":"2"},{"value":"A/4","duration":"4"}],"a":[{"value":"G/4","duration":"2"},{"value":"F#/4","duration":"4"}],"t":[{"value":"D/4","duration":"2"},{"value":"C/4","duration":"4"}],"b":[{"value":"D/3","duration":"2"},{"value":"D/3","duration":"4"}],"ts":[3,4]},{"s":[{"value":"G/4","duration":"2d"}],"a":[{"value":"D/4","duration":"2d"}],"t":[{"value":"B/3","duration":"2d"}],"b":[{"value":"G/3","duration":"2d"}],"ts":[3,4]}]}
+{
+  "metaData": {
+    "resolution": 0.5,
+    "tempo": 88,
+    "pickups": 2,
+    "subsPerMeasure": 6
+  },
+  "notes": [{
+    "s": [{
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "B/3",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "G/2",
+      "duration": "4"
+    }],
+    "ts": [1, 4],
+    "lyrics": [
+      [{
+        "value": "A - ",
+        "duration": "4"
+      }],
+      [{
+        "value": "'Twas",
+        "duration": "4"
+      }],
+      [{
+        "value": "The",
+        "duration": "4"
+      }],
+      [{
+        "value": "Through",
+        "duration": "4"
+      }],
+      [{
+        "value": "When",
+        "duration": "4"
+      }]
+    ]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "2"
+    }, {
+      "value": "B/4",
+      "duration": "8"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }],
+    "a": [{
+      "value": "B/3",
+      "duration": "2"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "D/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "G/2",
+      "duration": "2"
+    }, {
+      "value": "G/2",
+      "duration": "8"
+    }, {
+      "value": "B/2",
+      "duration": "8"
+    }],
+    "ts": [3, 4],
+    "lyrics": [
+      [{
+        "value": "maz - ",
+        "duration": "2"
+      }, {
+        "value": "ing",
+        "duration": "4"
+      }],
+      [{
+        "value": "maz - ",
+        "duration": "2"
+      }, {
+        "value": "ing",
+        "duration": "4"
+      }],
+      [{
+        "value": "maz - ",
+        "duration": "2"
+      }, {
+        "value": "ing",
+        "duration": "4"
+      }],
+      [{
+        "value": "maz - ",
+        "duration": "2"
+      }, {
+        "value": "ing",
+        "duration": "4"
+      }],
+      [{
+        "value": "maz - ",
+        "duration": "2"
+      }, {
+        "value": "ing",
+        "duration": "4"
+      }]
+    ]
+  }, {
+    "s": [{
+      "value": "B/4",
+      "duration": "2"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "2"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "F#/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "D/3",
+      "duration": "2"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "2"
+    }, {
+      "value": "E/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "B/3",
+      "duration": "2"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "E/3",
+      "duration": "2"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "D/4",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "B/3",
+      "duration": "2"
+    }, {
+      "value": "B/3",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "G/2",
+      "duration": "2"
+    }, {
+      "value": "G/2",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "2"
+    }, {
+      "value": "B/4",
+      "duration": "8"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }],
+    "a": [{
+      "value": "B/3",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "D/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "G/2",
+      "duration": "2"
+    }, {
+      "value": "G/2",
+      "duration": "8"
+    }, {
+      "value": "B/2",
+      "duration": "8"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "B/4",
+      "duration": "2"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "F#/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "D/3",
+      "duration": "2"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "D/5",
+      "duration": "2d"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "2d"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2d"
+    }],
+    "b": [{
+      "value": "B/2",
+      "duration": "2d"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "B/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "F#/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "A/2",
+      "duration": "2"
+    }, {
+      "value": "G/2",
+      "duration": "4"
+    }],
+    "ts": [1, 4]
+  }, {
+    "s": [{
+      "value": "D/5",
+      "duration": "4d"
+    }, {
+      "value": "B/4",
+      "duration": "8"
+    }, {
+      "value": "D/5",
+      "duration": "8"
+    }, {
+      "value": "B/4",
+      "duration": "8"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "B/3",
+      "duration": "4d"
+    }, {
+      "value": "G/3",
+      "duration": "8"
+    }, {
+      "value": "B/3",
+      "duration": "8"
+    }, {
+      "value": "G/3",
+      "duration": "8"
+    }],
+    "b": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "B/2",
+      "duration": "2"
+    }, {
+      "value": "B/2",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "E/4",
+      "duration": "4d"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }, {
+      "value": "E/4",
+      "duration": "8"
+    }],
+    "a": [{
+      "value": "C/4",
+      "duration": "4d"
+    }, {
+      "value": "D/4",
+      "duration": "8"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "E/3",
+      "duration": "8"
+    }, {
+      "value": "G/3",
+      "duration": "8"
+    }],
+    "b": [{
+      "value": "C/3",
+      "duration": "4d"
+    }, {
+      "value": "B/2",
+      "duration": "8"
+    }, {
+      "value": "C/3",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "D/4",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "B/3",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "G/2",
+      "duration": "2"
+    }, {
+      "value": "B/2",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "2"
+    }, {
+      "value": "B/4",
+      "duration": "8"
+    }, {
+      "value": "G/4",
+      "duration": "8"
+    }],
+    "a": [{
+      "value": "B/3",
+      "duration": "2"
+    }, {
+      "value": "D/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "G/3",
+      "duration": "2"
+    }, {
+      "value": "G/3",
+      "duration": "8"
+    }, {
+      "value": "B/3",
+      "duration": "8"
+    }],
+    "b": [{
+      "value": "E/3",
+      "duration": "2"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "B/4",
+      "duration": "2"
+    }, {
+      "value": "A/4",
+      "duration": "4"
+    }],
+    "a": [{
+      "value": "G/4",
+      "duration": "2"
+    }, {
+      "value": "F#/4",
+      "duration": "4"
+    }],
+    "t": [{
+      "value": "D/4",
+      "duration": "2"
+    }, {
+      "value": "C/4",
+      "duration": "4"
+    }],
+    "b": [{
+      "value": "D/3",
+      "duration": "2"
+    }, {
+      "value": "D/3",
+      "duration": "4"
+    }],
+    "ts": [3, 4]
+  }, {
+    "s": [{
+      "value": "G/4",
+      "duration": "2d"
+    }],
+    "a": [{
+      "value": "D/4",
+      "duration": "2d"
+    }],
+    "t": [{
+      "value": "B/3",
+      "duration": "2d"
+    }],
+    "b": [{
+      "value": "G/3",
+      "duration": "2d"
+    }],
+    "ts": [3, 4]
+  }]
+}

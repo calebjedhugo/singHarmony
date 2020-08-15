@@ -11,7 +11,7 @@ import './App.css';
 class App extends Component {
   state = {
     screen: 'practice',
-    song: 'Amazing Grace',
+    song: 'A Mighty Fortress is Our God',
     voices: {
       s: true,
       a: true,
@@ -36,7 +36,6 @@ class App extends Component {
 
   get songData(){
     const {song} = this.state
-    console.log(songData[song].notes)
     return songData[song].notes
   }
 
