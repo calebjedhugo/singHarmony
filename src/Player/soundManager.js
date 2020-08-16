@@ -13,69 +13,78 @@ class SampledInstrument{
       this.sounds[sound] = base64Binary.decodeArrayBuffer(sounds[type][sound])
       this.primeSound(sound, this.sounds[sound])
     }
+    window.play = this.play
   }
 
-  dynamics = {"fff": 1, "ff": .875,"f": .75,"mf": .625,"mp": .5,"p": .375,"pp": .25,"ppp": .125, "n": 0}
+  dynamics = {"fff": 1, "ff": .875, "f": .75, "mf": .625, "mp": .5, "p": .375, "pp": .25, "ppp": .125, "n": .01}
 
-  soundingSourceNodes = []
-  soundingGainNodes = []
+  stoppingNodes = {}
   gainNodes = {}
   sourceNodes = {}
 
   primeSound = (note, fileData) => {
     if(this.sourceNodes[note])
       this.sourceNodes[note].ready = false;
-      this.gainNodes[note] = this.soundscape.createGain();
-      this.gainNodes[note].connect(this.soundscape.destination);
-      this.gainNodes[note].gain.value = this.dynamics["mf"];
-      this.soundscape.decodeAudioData(fileData, decodedData => {
-        this.sourceNodes[note] = this.soundscape.createBufferSource();
-        this.sourceNodes[note].buffer = decodedData;
-        this.sourceNodes[note].connect(this.gainNodes[note])
-        this.sourceNodes[note].ready = true;
-      }, (err) => {console.error(err.message, fileData)});
+    this.gainNodes[note] = this.soundscape.createGain();
+    this.gainNodes[note].connect(this.soundscape.destination);
+    this.gainNodes[note].gain.value = this.dynamics["mf"];
+    this.soundscape.decodeAudioData(fileData, decodedData => {
+      this.sourceNodes[note] = this.soundscape.createBufferSource();
+      this.sourceNodes[note].buffer = decodedData;
+      this.sourceNodes[note].connect(this.gainNodes[note])
+      this.sourceNodes[note].ready = true;
+    }, (err) => {console.error(err.message, fileData)});
   }
 
-  play = (note, dynamic, length) => {
+  //For what we resolve a promise at the right time, but without playing a sound.
+  timelyPromise = (length) => {
+    return new Promise(resolve => {
+      //We still want to resolve at the right time.
+      setTimeout(resolve, (length * 1000));
+    })
+  }
+
+  play = (note, dynamic = 'mf', length = 1) => {
     note = this.noteConvert(note);
-    if((this.sourceNodes[note])){
-      if(!(this.sourceNodes[note].ready)){
-        console.log("The " + note + " on the " + this.type + " is priming.")
-        return
-      }
-    }
-    else{
-      console.log("The " + note + " on the " + this.type + " does not exist.")
-      return
-    }
-    var self = this;
-    if(this.soundingSourceNodes[note]){
-      clearTimeout(this["stopCall" + note])
-      this.smoothStop(this.soundingSourceNodes[note], this.soundingGainNodes[note]);
-    }
-    //make an error handler so that we know that a note doesn't exist
-    if(dynamic){
-      this.gainNodes[note].gain.value = this.dynamics[dynamic];
+    if((this.sourceNodes[note] && !(this.sourceNodes[note].ready))) {
+      console.log(`The ${note} on the ${this.type} is priming.`)
+      return this.timelyPromise(length)
     }
 
+
+    if(this.sourceNodes[note] === undefined){
+      console.log(
+        `The ${note} on the ${this.type} out of the instrument's range or has failed to be included.`,
+        this.sourceNodes[note]
+      )
+      return this.timelyPromise(length)
+    }
+
+    let sourceNode = this.sourceNodes[note]
+    let gainNode = this.gainNodes[note]
+
+    //Set gain.
+    if(this.dynamics[dynamic] === undefined){
+      console.warn(`${dynamic} is not a valid dynamic.`, Object.keys(this.dynamics))
+    }
+    gainNode.gain.value = this.dynamics[dynamic] || .625;
+
     if(this.sounds[note]){
-      this.sourceNodes[note].start();
-      this.soundingSourceNodes[note] = this.sourceNodes[note]
-      this.soundingGainNodes[note] = this.gainNodes[note]
-      if(this.sounds[note].byteLength == 0) //firefox is a little fussy sometimes.
+      sourceNode.start(0);
+      if(this.sounds[note].byteLength == 0){ //firefox is a little fussy sometimes.
         this.sounds[note] = base64Binary.decodeArrayBuffer(sounds[this.type][note])
-      this.sourceNodes[note] = null;
+      }
       this.primeSound(note, this.sounds[note])
     }
     else
       console.log(note + " is not available for the " + this.type);
-    //make an error handler so that we know when a dynamic is incorrect.
+
     if(length){
       return new Promise(resolve => {
-        this["stopCall" + note] = setTimeout(() => {
+        setTimeout(() => {
           resolve() //resolve with precision.
           setTimeout(() => { //Allow sound to overlap a bit.
-            this.smoothStop(self.soundingSourceNodes[note], self.soundingGainNodes[note])
+            this.smoothStop(sourceNode, gainNode)
           }, 20)
         }, (length * 1000));
       })
@@ -83,29 +92,30 @@ class SampledInstrument{
   }
 
   noteConvert = note => {
-    if(typeof note != "string" || note.length < 2){
-      console.log(note + " could not be handled by Player.");
-      return;
-    }
-    var originialNote = note.split("");
-    note = note.split("");
-    var octave = Number(note.pop());
-    var idx = 1;
-    var sharpsVsFlats = 0;
-    while(/#|b/.test(note[idx])){
-      if(note[idx] == "#"){
-        note[0] = Object.keys(this.notesMeta)[(this.notesMeta[note[0]][1] + 1) % 12];
-        sharpsVsFlats += 1;
+    try{
+      let f = note.split("");
+      let noteInitial = f[0].toUpperCase();
+      var octave = Number(f.pop());
+      var idx = 1;
+      var sharpsVsFlats = 0;
+      while(/#|b/.test(f[idx])){
+        if(f[idx] == "#"){
+          f[0] = Object.keys(this.notesMeta)[(this.notesMeta[f[0]][1] + 1) % 12];
+          sharpsVsFlats += 1;
+        }
+        if(f[idx] == "b"){
+          f[0] = Object.keys(this.notesMeta)[(this.notesMeta[f[0]][1] + 143) % 12];
+          sharpsVsFlats -= 1;
+        }
+        idx += 1;
       }
-      if(note[idx] == "b"){
-        note[0] = Object.keys(this.notesMeta)[(this.notesMeta[note[0]][1] + 143) % 12];
-        sharpsVsFlats -= 1;
-      }
-      idx += 1;
+      if(this.notesMeta[noteInitial][1] + sharpsVsFlats < 0) octave -= 1;
+      if(this.notesMeta[noteInitial][1] + sharpsVsFlats > 11) octave += 1;
+      return `${f[0]}/${octave}`
+    } catch(e){
+      console.error(`${note} could not be converted.`)
+      throw new Error(e.message)
     }
-    if(this.notesMeta[originialNote[0]][1] + sharpsVsFlats < 0) octave -= 1;
-    if(this.notesMeta[originialNote[0]][1] + sharpsVsFlats > 11) octave += 1;
-    return `${note[0]}/${octave}`
   }
 
   notesMeta = {"C": [261.626, 0], "C#": [277.18, 1], "D": [293.66, 2],
@@ -114,11 +124,11 @@ class SampledInstrument{
                 "A": [440, 9], "Bb": [466.16, 10], "B": [493.88, 11]}
 
   smoothStop = (sourceNode, gainNode) => {
-    let stopping = setInterval(function(){
-      gainNode.gain.value -= .05;
-      if(gainNode.gain.value <= 0){
-        gainNode.gain.value = 0;
-        clearInterval(stopping)
+    let interval = setInterval(() => {
+      gainNode.gain.value = Math.max(gainNode.gain.value - .05, .01);
+      if(gainNode.gain.value <= .01){
+        sourceNode.stop(0)
+        clearInterval(interval)
       }
     }, 1);
   }

@@ -36,20 +36,20 @@ export default class Practice extends Component {
     })
   }
 
-  get atEnd(){
-    const {activeIdx} = this.state
-    const total = this.props.songData.length - 1
-    return activeIdx === total
-  }
+  // get atEnd(){
+  //   const {activeIdx} = this.state
+  //   const total = this.props.songData.length - 1
+  //   return activeIdx === total
+  // }
 
   togglePlay = (value = !this.state.playing) => {
     this.setState({playing: value})
   }
 
   beginPlayback = async () => {
-    if(this.atEnd){ //Should start from the begining if at the end.
-      return this.setState({activeIdx: 0}, this.beginPlayback)
-    }
+    // if(this.atEnd){ //Should start from the begining if at the end.
+    //   return this.setState({activeIdx: 0}, this.beginPlayback)
+    // }
 
     let {songData, player} = this.props
 
@@ -63,13 +63,14 @@ export default class Practice extends Component {
 
       //Play the next meausure?
       if(activeIdx < songData.length - 1){
-        //Do not advance if this resolved early due to the user hitting pause.
+        //Only advance if not resolved early due to the user hitting pause.
         if(this.state.playing){
           this.playingMeasurePromise = player.play(songData[activeIdx + 1])
           this.setState({activeIdx: activeIdx + 1})
         }
       } else {
         this.endPlayback()
+        this.setState({activeIdx: 0})
       }
     }
   }

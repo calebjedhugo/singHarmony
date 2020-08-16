@@ -41,7 +41,12 @@ class App extends Component {
       if(voices[voice]) numberActive++
     }
 
-    if(numberActive) this.setState({voices: voices})
+    if(numberActive){
+      this.setState({voices: voices})
+
+      //We also need to tell the player
+      this.player.voicesActive[voice] = voices[voice]
+    }
   }
 
   setSong = song => {
