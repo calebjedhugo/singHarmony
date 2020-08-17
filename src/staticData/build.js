@@ -202,13 +202,13 @@ for(let i = 0; i < songTitles.length; i++){
     },
     notes: notes
   }
-  // fs.writeFile(`songData/${fileName}`, JSON.stringify(data), e => {
-  //   if(e) throw e
-  //   console.log(`${fileName} has been created.`)
-  // })
+  fs.writeFile(`songData/${fileName}`, JSON.stringify(data), e => {
+    if(e) throw e
+    console.log(`${fileName} has been created.`)
+  })
 }
 
-// fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
-//   if(e) throw e
-//   console.log(`songData/index.js has been created.`)
-// })
+fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
+  if(e) throw e
+  console.log(`songData/index.js has been created.`)
+})
