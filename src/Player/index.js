@@ -19,6 +19,7 @@ export default class Player {
   voicesActive = {'s': true, 'a': true, 't': true, 'b': true}
 
   play = (data) => {
+    console.log(data)
     this.state = 'playing'
     this.ts = data.ts
     return new Promise(async (resolve, reject) => {

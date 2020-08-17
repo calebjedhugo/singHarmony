@@ -134,81 +134,149 @@ const restCheck = (pos, noteEnd, subsPerBeat) => {
   }
 }
 
-let importCode = ['', 'export default {\n']
-for(let i = 0; i < songTitles.length; i++){
-  let fileName = songTitles[i].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
-  importCode[0] += `import ${fileName.replace('.json', '')} from './${fileName}'\n`
-  importCode[1] += `'${songTitles[i]}': ${fileName.replace('.json', '')},\n`
-  let notes = [], measure = {s: [], a: [], t: [], b: [], ts: []}
-  let measureLength = {s: 0, a: 0, t: 0, b: 0}
-  let noteEnd = {s: 0, a: 0, t: 0, b: 0}
-  let noteStart = {s: 0, a: 0, t: 0, b: 0}
-  let flag= false
-  for(let i2 = 0; i2 < oldNotes.s.length; i2++){
-    for(let voice in oldNotes){
-      if(oldNotes[voice][i2] && oldNotes[voice][i2][i]){
-        let rest = restCheck(i2, noteEnd[voice], songData.subsPerBeat[i])
-        if(rest && i2 > 2){
-          measure[voice].push(rest)
-        }
-        switch(rhythm[voice][i2][i]){
-          case 5:
-            rhythm[voice][i2][i] = 6;
-            break;
-          case 9:
-            rhythm[voice][i2][i] = 10;
-            break;
-        }
-        measure[voice].push({
-          value: valueConvert(oldNotes[voice][i2][i]),
-          duration: durationConvert(rhythm[voice][i2][i], songData.subsPerBeat[i])
-        })
-        noteStart[voice] = i2
-        measureLength[voice] += rhythm[voice][i2][i]
-        noteEnd[voice] += rhythm[voice][i2][i]
-      }
-    }
-    if((i2 - songData.pickups[i]) % songData.subsPerMeasure[i] === 1 && i2 !== 1){
-      if(!measure.s.length && !measure.a.length && !measure.t.length && !measure.b.length && i2 !== 0){
-        break;
-      }
-      for(let voice in noteEnd){
-        if(noteEnd[voice] <= i2){
-          noteEnd[voice] = i2
-        } else {
-          if(measure[voice][measure[voice].length - 1]){
-            measure[voice][measure[voice].length - 1].duration = durationConvert(i2 - noteStart[voice] + 1, songData.subsPerBeat[i])
-          } else {
-            // measure[voice].push()
-          }
-          measureLength[voice] -= (noteEnd[voice] - i2)
-          // oldNotes[voice][i2 + 1][i] = oldNotes[voice][noteStart[voice]][i]
-          // rhythm[voice][i2 + 1][i] = (noteEnd[voice] - i2)
-        }
-      }
-      measure.ts = [Number(((measureLength.s || measureLength.a || measureLength.t || measureLength.b) * songData.resolution[i]).toFixed(0)), /(5|2)/.test(songData.resolution[i].toString()[2]) ? 4 : 8]
-      notes.push(measure)
-      measure = {s: [], a: [], t: [], b: [], ts: []}
-      measureLength = {s: 0, a: 0, t: 0, b: 0}
-    }
-  }
-  noteEnd = {s: 0, a: 0, t: 0, b: 0}
-  let data = {
-    metaData: {
-      resolution: songData.resolution[i],
-      tempo: songData.tempo[i],
-      pickups: songData.pickups[i],
-      subsPerMeasure: songData.subsPerMeasure[i],
-    },
-    notes: notes
-  }
-  fs.writeFile(`songData/${fileName}`, JSON.stringify(data), e => {
-    if(e) throw e
-    console.log(`${fileName} has been created.`)
+const getLyrics = (songTitle) => {
+  return new Promise(resolve => {
+    fs.readFile(`./oldData/lyrics/${songTitle}`, 'utf8', (e, data) => {
+      resolve(data)
+    })
   })
 }
 
-fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
-  if(e) throw e
-  console.log(`songData/index.js has been created.`)
-})
+const writeFiles = async () => {
+  let importCode = ['', 'export default {\n']
+  for(let i = 0; i < songTitles.length; i++){
+    let fileName = songTitles[i].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
+
+    let lyrics = await getLyrics(fileName.replace('.json', '.txt'))
+    lyrics = lyrics.split('\n\n')
+    lyrics = lyrics.map(verse => {
+      let f = verse.replace(/\n/g, ' ')
+      f = f.split(' ')
+      while(f[f.length - 1].trim() === '') {
+        f.pop()
+      }
+      return f
+    })
+
+    importCode[0] += `import ${fileName.replace('.json', '')} from './${fileName}'\n`
+    importCode[1] += `'${songTitles[i]}': ${fileName.replace('.json', '')},\n`
+    let notes = [], measure = {s: [], a: [], t: [], b: [], ts: [], lyrics: [], tempoChanges: []}
+    let measureLength = {s: 0, a: 0, t: 0, b: 0}
+    let noteEnd = {s: 0, a: 0, t: 0, b: 0}
+    let noteStart = {s: 0, a: 0, t: 0, b: 0}
+
+    for(let i2 = 0; i2 < oldNotes.s.length; i2++){
+      measure.tempoChanges.push(tempoChanges[i2][i])
+      for(let voice in oldNotes){
+        if(oldNotes[voice][i2] && oldNotes[voice][i2][i]){
+          let rest = restCheck(i2, noteEnd[voice], songData.subsPerBeat[i])
+          if(rest && i2 > 2){
+            measure[voice].push(rest)
+          }
+          switch(rhythm[voice][i2][i]){
+            case 5:
+              rhythm[voice][i2][i] = 6;
+              break;
+            case 9:
+              rhythm[voice][i2][i] = 10;
+              break;
+          }
+          measure[voice].push({
+            value: valueConvert(oldNotes[voice][i2][i]),
+            duration: durationConvert(rhythm[voice][i2][i], songData.subsPerBeat[i])
+          })
+          noteStart[voice] = i2
+          measureLength[voice] += rhythm[voice][i2][i]
+          noteEnd[voice] += rhythm[voice][i2][i]
+        }
+      }
+      if((i2 - songData.pickups[i]) % songData.subsPerMeasure[i] === 1 && i2 !== 1){
+        if(!measure.s.length && !measure.a.length && !measure.t.length && !measure.b.length && i2 !== 0){
+          break;
+        }
+
+        //Add the Lyrics
+        let skipLength = []
+        measure.s.forEach(sNote => {
+          let noteDuration = sNote.duration
+          for(let verseIdx = 0; verseIdx < lyrics.length; verseIdx++){
+            if(noteDuration[noteDuration.length - 1] === 'r') {
+              measure.lyrics[verseIdx].push(
+                {
+                  value: '', //No words with a rest.
+                  duration: noteDuration
+                }
+              )
+              continue
+            }
+            if(skipLength[verseIdx] !== 0 && skipLength[verseIdx] !== undefined){
+              skipLength[verseIdx] -= ((1 / noteDuration) * 1000)
+              continue
+            }
+            word = lyrics[verseIdx].shift()
+            if(!word){
+              return //console.log(`lyrics are not well formed for ${fileName}`)
+            }
+            let lastLetter = word[word.length - 1]
+            let lyricDuration = noteDuration
+            if(!isNaN(lastLetter)){
+              skipLength[verseIdx] = ((1 / Number(lastLetter)) - (1 / noteDuration)).toFixed(3) * 1000
+              lyricDuration = Number(lastLetter)
+              word = word.slice(0, word.length - 1)
+            }
+
+            if(!measure.lyrics[verseIdx]) measure.lyrics[verseIdx] = []
+            measure.lyrics[verseIdx].push(
+              {
+                value: word,
+                duration: lyricDuration.toString()
+              }
+            )
+          }
+        })
+
+        //If notes go over barlines, just trim them. We'll fix it later.
+        for(let voice in noteEnd){
+          if(noteEnd[voice] <= i2){
+            noteEnd[voice] = i2
+          } else {
+            if(measure[voice][measure[voice].length - 1]){
+              measure[voice][measure[voice].length - 1].duration = durationConvert(i2 - noteStart[voice] + 1, songData.subsPerBeat[i])
+            } else {
+              // measure[voice].push()
+            }
+            measureLength[voice] -= (noteEnd[voice] - i2)
+            // oldNotes[voice][i2 + 1][i] = oldNotes[voice][noteStart[voice]][i]
+            // rhythm[voice][i2 + 1][i] = (noteEnd[voice] - i2)
+          }
+        }
+        measure.ts = [Number(((measureLength.s || measureLength.a || measureLength.t || measureLength.b) * songData.resolution[i]).toFixed(0)), /(5|2)/.test(songData.resolution[i].toString()[2]) ? 4 : 8]
+        measure.tempoChangeResolution = measure.ts[1] / songData.resolution[i]
+        notes.push(measure)
+        measure = {s: [], a: [], t: [], b: [], ts: [], lyrics: [], tempoChanges: []}
+        measureLength = {s: 0, a: 0, t: 0, b: 0}
+      }
+    }
+    noteEnd = {s: 0, a: 0, t: 0, b: 0}
+    let data = {
+      metaData: {
+        resolution: songData.resolution[i],
+        tempo: songData.tempo[i],
+        pickups: songData.pickups[i],
+        subsPerMeasure: songData.subsPerMeasure[i],
+      },
+      notes: notes
+    }
+    fs.writeFile(`songData/${fileName}`, JSON.stringify(data), e => {
+      if(e) throw e
+      console.log(`${fileName} has been created.`)
+    })
+  }
+
+  fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
+    if(e) throw e
+    console.log(`songData/index.js has been created.`)
+  })
+}
+
+writeFiles()
