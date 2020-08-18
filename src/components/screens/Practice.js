@@ -102,6 +102,14 @@ export default class Practice extends Component {
     return songData.length
   }
 
+  get homeButton() {
+    return <div className={'practiceHomeDiv'} onTouchStart={this.props.goHome}>{'Home'}</div>
+  }
+
+  get tempoButton() {
+    return <div className={'practiceTempoDiv'} onTouchStart={this.props.goHome}>{'Tempo'}</div>
+  }
+
   render(){
     const {voices, toggleVoice, keySignature} = this.props
     const {playing} = this.state
@@ -119,6 +127,8 @@ export default class Practice extends Component {
             {this.measures}
           </div>
         </div>
+        {this.tempoButton}
+        {this.homeButton}
       </>
     )
   }

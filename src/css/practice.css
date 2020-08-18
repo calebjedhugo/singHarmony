@@ -1,0 +1,13 @@
+.practiceHomeDiv, .practiceTempoDiv {
+  position: fixed;
+  right: 10px;
+  z-index: 1;
+}
+
+.practiceHomeDiv {
+  bottom: 10px;
+}
+
+.practiceTempoDiv {
+  top: 10px;
+}

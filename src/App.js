@@ -59,6 +59,10 @@ class App extends Component {
 
   songTitles = Object.keys(songData)
 
+  goHome = () => {
+    this.setState({screen: 'home'})
+  }
+
   //The user should not be allowed to adjust this, so we'll retrieve it like this.
   get songData(){
     const {song} = this.state
@@ -71,7 +75,7 @@ class App extends Component {
       case 'home':
         return <Home {...this.state} songTitles={this.songTitles} setSong={this.setSong}/>
       case 'practice':
-        return <Practice {...this.state} player={this.player} songData={this.songData} toggleVoice={this.toggleVoice}/>
+        return <Practice {...this.state} player={this.player} songData={this.songData} toggleVoice={this.toggleVoice} goHome={this.goHome}/>
       case 'sing':
         return <Sing {...this.state} songData={this.songData} toggleVoice={this.toggleVoice}/>
       case 'print':
@@ -81,6 +85,19 @@ class App extends Component {
     }
   }
 
+  get navButtons(){
+    const {screen, song} = this.state
+    if(screen === 'practice') return null
+    return ['home', 'practice', 'sing', 'print'].map(value => {
+      if(value === screen) return null
+      return <NavButton key={value} value={value} action={() => {
+        if(song){
+          this.setState({screen: value})
+        }
+      }}/>
+    })
+  }
+
   render(){
     const {screen, song} = this.state
     return (
@@ -88,14 +105,7 @@ class App extends Component {
         <div className='globalBackground' id='paper'>
           {this.screen}
           <div className={`navButtonContainer${song ? '' : ' navButtonContainerDisabled'}`}>
-            {['home', 'practice', 'sing', 'print'].map(value => {
-              if(value === screen) return null
-              return <NavButton key={value} value={value} action={() => {
-                if(song){
-                  this.setState({screen: value})
-                }
-              }}/>
-            })}
+            {this.navButtons}
           </div>
         </div>
       </div>
