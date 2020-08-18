@@ -23,36 +23,26 @@ export default class Practice extends Component {
 
   get measures(){
     const {activeIdx} = this.state
-    const {voices, songData} = this.props
+    const {voices, songData, keySignature} = this.props
+
     return songData.map((data, idx) => {
       let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
       let width = maxNotes * 70
       let active = idx >= activeIdx
       return (
         <div key={idx} style={{width: `${active ? width : 0}px`}} className={`measure${active ? '' : '-inactive'}`}>
-          <Measure idx={idx} data={data} voices={voices} grand={true} width={width}/>
+          <Measure idx={idx} data={data} voices={voices} grand={true} width={width} keySignature={keySignature}/>
         </div>
       )
     })
   }
-
-  // get atEnd(){
-  //   const {activeIdx} = this.state
-  //   const total = this.props.songData.length - 1
-  //   return activeIdx === total
-  // }
 
   togglePlay = (value = !this.state.playing) => {
     this.setState({playing: value})
   }
 
   beginPlayback = async () => {
-    // if(this.atEnd){ //Should start from the begining if at the end.
-    //   return this.setState({activeIdx: 0}, this.beginPlayback)
-    // }
-
     let {songData, player} = this.props
-
     this.playingMeasurePromise = player.play(songData[this.state.activeIdx])
 
     while(this.state.playing){
@@ -82,7 +72,7 @@ export default class Practice extends Component {
   }
 
   render(){
-    const {voices, toggleVoice} = this.props
+    const {voices, toggleVoice, keySignature} = this.props
     const {playing} = this.state
     const {togglePlay} = this
     return (
@@ -91,7 +81,7 @@ export default class Practice extends Component {
         <PlayButton togglePlay={togglePlay} playing={playing}/>
         <div className={'notation-container'}>
           <div className={'notation'} >
-            <Meta grand={true} key={'Ab'}/>
+            <Meta grand={true} keySignature={keySignature}/>
             {this.measures}
           </div>
         </div>

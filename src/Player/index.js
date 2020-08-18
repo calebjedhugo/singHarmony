@@ -19,7 +19,8 @@ export default class Player {
   voicesActive = {'s': true, 'a': true, 't': true, 'b': true}
 
   play = (data) => {
-    console.log(data)
+    const {tempoChanges, tempoChangeResolution} = data
+
     this.state = 'playing'
     this.ts = data.ts
     return new Promise(async (resolve, reject) => {
@@ -27,7 +28,7 @@ export default class Player {
 
       //Get all four voices going.
       for(let voice in this.voicePromises){
-        this.voicePromises[voice] = this.queueVoice(data[voice], voice)
+        this.voicePromises[voice] = this.queueVoice(data[voice], voice, [tempoChanges, tempoChangeResolution])
       }
 
       //Wait for all four voices to finish (should be all at the same time if the data is correct).
@@ -42,8 +43,9 @@ export default class Player {
 
   //We passed in the voice name in order to check it against voicesActive before playing the next note.
   //If voicesActive[voice] is false, dynamic is set to 'n'
-  queueVoice = (notesArray, voice) => {
+  queueVoice = (notesArray, voice, tempoChanges) => {
     return new Promise(async resolve => {
+      let framesElapsed = 0
       for(let i = 0; i < notesArray.length; i++){
         if(this.state === 'paused'){
           break;
@@ -56,8 +58,14 @@ export default class Player {
           duration = duration.slice(0, duration.length - 1) //get rid of the 'r'. this.lengthTranslate doesn't handle it.
         }
 
+        let durationInFrames = this.durationToFrames(duration, tempoChanges[1])
+
         let dynamic = notesArray[i].dynamic || this.defaultDynamic
-        let length = this.lengthTranslate(duration, this.ts[1] || 4)
+        let length = this.lengthTranslate(
+          duration,
+          this.ts[1] || 4,
+          tempoChanges[0].slice(framesElapsed, framesElapsed + durationInFrames)
+        )
 
         //Is this a rest? Is the voice active?
         if(!resting && this.voicesActive[voice]) {
@@ -67,6 +75,7 @@ export default class Player {
             setTimeout(resolve, length * 1000)
           })
         }
+        framesElapsed += durationInFrames
       }
       resolve()
     })
@@ -86,19 +95,38 @@ export default class Player {
     }
   }
 
-  lengthTranslate = (duration, denominator) => {
+  lengthTranslate = (duration, denominator, tempoAlterations) => {
+    let tempoAlteration = 1
+    if(tempoAlterations){
+      tempoAlteration = tempoAlterations.reduce((a, b) => {return a + b}) / tempoAlterations.length
+    }
+    
     let dotted = false
     if(duration[duration.length - 1] === 'd'){
       dotted = true
       duration = duration.slice(0, duration.length - 1)
     }
+
     let beats = denominator / duration
     if(dotted){
       beats += (denominator / (duration * 2))
     }
 
-    let secondsPerBeat = 60 / this.tempo
+    let secondsPerBeat = 60 / (this.tempo * tempoAlteration)
     return beats * secondsPerBeat
+  }
+
+  durationToFrames(duration, tempoChangeResolution){
+    let dotted = false
+    if(duration[duration.length - 1] === 'd'){
+      dotted = true
+      duration = duration.slice(0, duration.length - 1)
+    }
+    let f = tempoChangeResolution / duration
+    if(dotted){
+      f *= 1.5
+    }
+    return f
   }
 
   pause = () => {

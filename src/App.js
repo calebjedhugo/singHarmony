@@ -15,8 +15,8 @@ class App extends Component {
     this.player = new Player()
 
     this.state = {
-      screen: 'practice',
-      song: 'A Mighty Fortress is Our God',
+      screen: 'home',
+      song: '',
       tempo: 100,
       keySignature: 'C',
       voices: {
@@ -53,7 +53,7 @@ class App extends Component {
     this.setState({
       song: song,
       tempo: songData[song].metaData.tempo,
-      keySignature: songData[song].metaData.key //User will be allow to change this someday.
+      keySignature: songData[song].metaData.keySignature //User will be allow to change this someday.
     })
   }
 

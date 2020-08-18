@@ -26,7 +26,7 @@ export class Staff extends Component {
     }
 
     initStaff(){
-      let {grand} = this.props //We only want to render the notes
+      let {grand, keySignature} = this.props
       let {clef, padding, stafSpace} = this.staticProps
       let type = this.props.type || 'treble' //the staff on which to render.
 
@@ -50,9 +50,18 @@ export class Staff extends Component {
       }
 
       if(grand){
-        if(clef) this.trebleStaff.addClef('treble');
+        if(clef){ //key signature existance is tied to the clef's existance.
+          this.trebleStaff.addClef('treble')
+          this.bassStaff.addClef('bass')
+
+          let trebleKeySig = new this.VF.KeySignature(keySignature)
+          trebleKeySig.addToStave(this.trebleStaff)
+
+          let bassKeySig = new this.VF.KeySignature(keySignature)
+          bassKeySig.addToStave(this.bassStaff)
+        }
+
         this.trebleStaff.setContext(this.context).draw();
-        if(clef) this.bassStaff.addClef('bass');
         this.bassStaff.setContext(this.context).draw();
       } else {
         if(clef) this[`${type}Staff`].addClef(type);

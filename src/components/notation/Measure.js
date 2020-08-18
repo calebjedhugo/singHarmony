@@ -1,10 +1,12 @@
 import {Staff} from './Staff.js'
+import KeySignatures from '../../theory/KeySignatures'
 
 export default class Measure extends Staff {
   constructor(props){
     const {data, width} = props
     let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
     super(props, {padding: 0, stafSpace: 215, width: width || (maxNotes * 70)})
+    this.keyTheory = new KeySignatures()
   }
 
   draw = () => {
@@ -89,8 +91,10 @@ export default class Measure extends Staff {
   }
 
   accidental = (note) => {
+    let {keySignature} = this.props
     let acc = note.split('/')[0].slice(1)
-    if(acc) return [0, new this.VF.Accidental(acc)]
+    let partOfKey = this.keyTheory.alteredNotes(keySignature).includes(note.split('/')[0])
+    if(acc && !partOfKey) return [0, new this.VF.Accidental(acc)]
     else return false
   }
 

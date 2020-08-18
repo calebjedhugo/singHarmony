@@ -18,80 +18,80 @@ const rhythm = {
 }
 
 let songTitles = [
-  'A Mighty Fortress is Our God',
-  'All Glory, Laud and Honor',
-  'All Hail the Power of Jesus’ Name',
-  'America the Beautiful',
-  'Amazing Grace',
-  'And Can It Be',
-  'Angels We Have Heard on High',
-  'Angels, from the Realms of Glory',
-  'As with Gladness Men of Old',
-  'At Calvary',
-  'At the Cross',
-  'Away in a Manger',
-  'Battle Hymn of the Republic',
-  'Blest Be the Tie That Binds',
-  'Brethren, We Have Met to Worship',
-  'Children of the Heavenly Father',
-  'Christ Arose!',
-  'Christ the Lord Is Risen Today',
-  'Come, Thou Fount of Every Blessing',
-  'Crown Him with Many Crowns',
-  'Face to Face',
-  'Fairest Lord Jesus',
-  'For the Beauty of the Earth',
-  'Go to Dark Gethsemane',
-  'God of Our Fathers',
-  'God Rest Ye Merry, Gentlemen',
-  'Good Christian Men, Rejoice',
-  'Grace Greater than Our Sin',
-  'Hallelujah, What a Savior!',
-  'Hark! the Herald Angels Sing',
-  'Have Thine Own Way, Lord!',
-  'Higher Ground',
-  'Holy Holy Holy',
-  'How Firm A Foundation',
-  'How Great Our Joy',
-  'I Heard the Bells on Christmas Day',
-  'I Sing the Mighty Power of God',
-  'I Surrender All',
-  'In the Garden',
-  'It Came upon the Midnight Clear',
-  'It Is Well with My Soul',
-  'Jesus Paid it All',
-  'Joy to the World!',
-  'Joyful, Joyful, We Adore Thee',
-  'Just As I Am',
-  'Leaning on the Everlasting Arms',
-  'My Country, ‘Tis of Thee',
-  'Nothing But the Blood',
-  'O Come, All Ye Faithful',
-  'O Come, O Come, Emmanuel',
-  'O for a Thousand Tongues to Sing',
-  'O Holy Night',
-  'O Little Town of Bethlehem',
-  'O Sacred Head, Now Wounded',
-  'Praise Him! Praise Him!',
-  'Praise to the Lord, the Almighty',
-  'Rock of Ages',
-  'Shall We Gather at the River?',
-  'Silent Night! Holy Night!',
-  'Standing on the Promises',
-  'Take My Life and Let It Be',
-  'The First Noel',
-  'The Lord Bless You and Keep You',
-  'The Old Rugged Cross',
-  'The Solid Rock',
-  'There Is a Fountain',
-  'This Is my Father’s World',
-  'To God Be the Glory',
-  'We Three Kings',
-  'Were You There?',
-  'What Child Is This?',
-  'When I Survey the Wondrous Cross',
-  'While Shepherds Watched Their Flocks',
-  'Wonderful Grace of Jesus'
+  ['A Mighty Fortress is Our God', 'C'],
+  ['All Glory, Laud and Honor', 'Bb'],
+  ['All Hail the Power of Jesus’ Name', 'G'],
+  ['America the Beautiful', 'Bb'],
+  ['Amazing Grace', 'G'],
+  ['And Can It Be', 'G'],
+  ['Angels We Have Heard on High', 'F'],
+  ['Angels, from the Realms of Glory', 'Bb'],
+  ['As with Gladness Men of Old', 'G'],
+  ['At Calvary', 'C'],
+  ['At the Cross', 'Eb'],
+  ['Away in a Manger', 'F'],
+  ['Battle Hymn of the Republic', 'Bb'],
+  ['Blest Be the Tie That Binds', 'F'],
+  ['Brethren, We Have Met to Worship', 'G'],
+  ['Children of the Heavenly Father', 'D'],
+  ['Christ Arose!', 'Bb'],
+  ['Christ the Lord Is Risen Today', 'C'],
+  ['Come, Thou Fount of Every Blessing', 'D'],
+  ['Crown Him with Many Crowns', 'Eb'],
+  ['Face to Face', 'Ab'],
+  ['Fairest Lord Jesus', 'Eb'],
+  ['For the Beauty of the Earth', 'Ab'],
+  ['Go to Dark Gethsemane', 'D'],
+  ['God of Our Fathers', 'Eb'],
+  ['God Rest Ye Merry, Gentlemen', 'G'],
+  ['Good Christian Men, Rejoice', 'F'],
+  ['Grace Greater than Our Sin', 'G'],
+  ['Hallelujah, What a Savior!', 'Bb'],
+  ['Hark! the Herald Angels Sing', 'F'],
+  ['Have Thine Own Way, Lord!', 'Eb'],
+  ['Higher Ground', 'G'],
+  ['Holy Holy Holy', 'D'],
+  ['How Firm A Foundation', 'Ab'],
+  ['How Great Our Joy', 'Bb'],
+  ['I Heard the Bells on Christmas Day', 'Eb'],
+  ['I Sing the Mighty Power of God', 'Bb'],
+  ['I Surrender All', 'Db'],
+  ['In the Garden', 'Ab'],
+  ['It Came upon the Midnight Clear', 'Bb'],
+  ['It Is Well with My Soul', 'C'],
+  ['Jesus Paid it All', 'Db'],
+  ['Joy to the World!', 'D'],
+  ['Joyful, Joyful, We Adore Thee', 'G'],
+  ['Just As I Am', 'Db'],
+  ['Leaning on the Everlasting Arms', 'Ab'],
+  ['My Country, ‘Tis of Thee', 'F'],
+  ['Nothing But the Blood', 'F'],
+  ['O Come, All Ye Faithful', 'Ab'],
+  ['O Come, O Come, Emmanuel', 'G'],
+  ['O for a Thousand Tongues to Sing', 'Ab'],
+  ['O Holy Night', 'Eb'],
+  ['O Little Town of Bethlehem', 'F'],
+  ['O Sacred Head, Now Wounded', 'C'],
+  ['Praise Him! Praise Him!', 'G'],
+  ['Praise to the Lord, the Almighty', 'G'],
+  ['Rock of Ages', 'Bb'],
+  ['Shall We Gather at the River?', 'D'],
+  ['Silent Night! Holy Night!', 'Bb'],
+  ['Standing on the Promises', 'Bb'],
+  ['Take My Life and Let It Be', 'F'],
+  ['The First Noel', 'D'],
+  ['The Lord Bless You and Keep You', 'C'],
+  ['The Old Rugged Cross', 'Bb'],
+  ['The Solid Rock', 'F'],
+  ['There Is a Fountain', 'Bb'],
+  ['This Is my Father’s World', 'Eb'],
+  ['To God Be the Glory', 'Ab'],
+  ['We Three Kings', 'G'],
+  ['Were You There?', 'Eb'],
+  ['What Child Is This?', 'G'],
+  ['When I Survey the Wondrous Cross', 'F'],
+  ['While Shepherds Watched Their Flocks', 'C'],
+  ['Wonderful Grace of Jesus', 'C']
 ]
 
 const valueConvert = value => {
@@ -145,7 +145,7 @@ const getLyrics = (songTitle) => {
 const writeFiles = async () => {
   let importCode = ['', 'export default {\n']
   for(let i = 0; i < songTitles.length; i++){
-    let fileName = songTitles[i].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
+    let fileName = songTitles[i][0].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
 
     let lyrics = await getLyrics(fileName.replace('.json', '.txt'))
     lyrics = lyrics.split('\n\n')
@@ -159,14 +159,14 @@ const writeFiles = async () => {
     })
 
     importCode[0] += `import ${fileName.replace('.json', '')} from './${fileName}'\n`
-    importCode[1] += `'${songTitles[i]}': ${fileName.replace('.json', '')},\n`
+    importCode[1] += `'${songTitles[i][0]}': ${fileName.replace('.json', '')},\n`
     let notes = [], measure = {s: [], a: [], t: [], b: [], ts: [], lyrics: [], tempoChanges: []}
     let measureLength = {s: 0, a: 0, t: 0, b: 0}
     let noteEnd = {s: 0, a: 0, t: 0, b: 0}
     let noteStart = {s: 0, a: 0, t: 0, b: 0}
 
     for(let i2 = 0; i2 < oldNotes.s.length; i2++){
-      measure.tempoChanges.push(tempoChanges[i2][i])
+      measure.tempoChanges.push(tempoChanges[i2] ? tempoChanges[i2][i] : 1)
       for(let voice in oldNotes){
         if(oldNotes[voice][i2] && oldNotes[voice][i2][i]){
           let rest = restCheck(i2, noteEnd[voice], songData.subsPerBeat[i])
@@ -200,6 +200,7 @@ const writeFiles = async () => {
         measure.s.forEach(sNote => {
           let noteDuration = sNote.duration
           for(let verseIdx = 0; verseIdx < lyrics.length; verseIdx++){
+            if(!measure.lyrics[verseIdx]) measure.lyrics[verseIdx] = []
             if(noteDuration[noteDuration.length - 1] === 'r') {
               measure.lyrics[verseIdx].push(
                 {
@@ -225,7 +226,6 @@ const writeFiles = async () => {
               word = word.slice(0, word.length - 1)
             }
 
-            if(!measure.lyrics[verseIdx]) measure.lyrics[verseIdx] = []
             measure.lyrics[verseIdx].push(
               {
                 value: word,
@@ -264,6 +264,7 @@ const writeFiles = async () => {
         tempo: songData.tempo[i],
         pickups: songData.pickups[i],
         subsPerMeasure: songData.subsPerMeasure[i],
+        keySignature: songTitles[i][1]
       },
       notes: notes
     }
