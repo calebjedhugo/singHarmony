@@ -9,7 +9,9 @@ export default class Practice extends Component {
     super(props)
     this.state = {
       activeIdx: 0,
-      playing: false
+      startedIdx: 0, //Where playback was when the user started touching the screen.
+      playing: false,
+      touchStart: 0
     }
   }
 
@@ -71,6 +73,35 @@ export default class Practice extends Component {
     this.setState({playing: false})
   }
 
+  recordTouchStart = (e) => {
+    let {clientX} = e.touches[0]
+    clientX = Math.round(clientX)
+    this.setState({
+      touchStart: clientX,
+      startedIdx: this.state.activeIdx
+    })
+  }
+
+  scroll = (e) => {
+    let {clientX} = e.touches[0]
+    clientX = Math.round(clientX)
+    const {touchStart, startedIdx} = this.state
+    let newIdx = Number(((touchStart - clientX) / 75).toFixed(0)) + startedIdx
+
+    newIdx = Math.min(this.numberOfMeasures - 1, newIdx)
+    newIdx = Math.max(0, newIdx)
+    if(newIdx === this.state.activeIdx) return //no update needed
+
+    this.setState({
+      activeIdx: newIdx
+    })
+  }
+
+  get numberOfMeasures(){
+    const {songData} = this.props
+    return songData.length
+  }
+
   render(){
     const {voices, toggleVoice, keySignature} = this.props
     const {playing} = this.state
@@ -80,7 +111,10 @@ export default class Practice extends Component {
         <VoiceController voices={voices} toggleVoice={toggleVoice} />
         <PlayButton togglePlay={togglePlay} playing={playing}/>
         <div className={'notation-container'}>
-          <div className={'notation'} >
+          <div className={'notation'}
+            onTouchStart={this.recordTouchStart}
+            onTouchMove={this.scroll}
+          >
             <Meta grand={true} keySignature={keySignature}/>
             {this.measures}
           </div>
