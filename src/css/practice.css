@@ -1,4 +1,4 @@
-.practiceHomeDiv, .practiceTempoDiv {
+.practiceHomeDiv, .practiceTempoDiv, .practiceTempoDiv-active {
   position: fixed;
   right: 10px;
   z-index: 1;
@@ -8,6 +8,17 @@
   bottom: 10px;
 }
 
-.practiceTempoDiv {
+.practiceTempoDiv, .practiceTempoDiv-active {
   top: 10px;
+  text-align: right;
+  transition: width .5s, background-color .5s;
+  border-radius: 4px;
+}
+
+.practiceTempoDiv {
+  width: 60px;
+}
+
+.practiceTempoDiv-active {
+  background-color: #8dd8f182;
 }

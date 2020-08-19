@@ -57,6 +57,14 @@ class App extends Component {
     })
   }
 
+  setTempo = tempo => {
+    tempo = Math.max(tempo, 56)
+    tempo = Math.min(tempo, 212)
+    this.setState({
+      tempo: tempo
+    })
+  }
+
   songTitles = Object.keys(songData)
 
   goHome = () => {
@@ -75,7 +83,16 @@ class App extends Component {
       case 'home':
         return <Home {...this.state} songTitles={this.songTitles} setSong={this.setSong}/>
       case 'practice':
-        return <Practice {...this.state} player={this.player} songData={this.songData} toggleVoice={this.toggleVoice} goHome={this.goHome}/>
+        return (
+          <Practice
+            {...this.state}
+            player={this.player}
+            songData={this.songData}
+            toggleVoice={this.toggleVoice}
+            goHome={this.goHome}
+            setTempo={this.setTempo}
+          />
+        )
       case 'sing':
         return <Sing {...this.state} songData={this.songData} toggleVoice={this.toggleVoice}/>
       case 'print':

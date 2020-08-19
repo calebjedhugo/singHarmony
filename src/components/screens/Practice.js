@@ -3,6 +3,7 @@ import VoiceController from '../VoiceController'
 import Measure from '../notation/Measure'
 import Meta from '../notation/Meta'
 import PlayButton from '../playButton'
+import TempoButton from '../TempoButton'
 
 export default class Practice extends Component {
   constructor(props){
@@ -13,7 +14,18 @@ export default class Practice extends Component {
       playing: false,
       touchStart: 0
     }
+    this.notation = React.createRef()
   }
+
+  componentDidMount(){
+    this.notation.current.addEventListener('touchstart', this.recordTouchStart, {passive: false})
+  }
+
+  componentWillUnmount(){
+    this.notation.current.removeEventListener('touchstart', this.recordTouchStart)
+  }
+
+  restartPlayback = false
 
   componentDidUpdate(prevProps, prevState){
     //Playback is completely handled by the state of 'playing'.
@@ -39,8 +51,8 @@ export default class Practice extends Component {
     })
   }
 
-  togglePlay = (value = !this.state.playing) => {
-    this.setState({playing: value})
+  togglePlay = (value = !this.state.playing, callback = null) => {
+    this.setState({playing: value}, callback)
   }
 
   beginPlayback = async () => {
@@ -74,12 +86,16 @@ export default class Practice extends Component {
   }
 
   recordTouchStart = (e) => {
+    e.preventDefault()
+    const {playing, activeIdx} = this.state
     let {clientX} = e.touches[0]
     clientX = Math.round(clientX)
     this.setState({
       touchStart: clientX,
-      startedIdx: this.state.activeIdx
+      startedIdx: activeIdx
     })
+    this.restartPlayback = playing
+    if(playing) this.togglePlay()
   }
 
   scroll = (e) => {
@@ -97,37 +113,46 @@ export default class Practice extends Component {
     })
   }
 
+  doneScrolling = () => {
+    if(this.restartPlayback){
+      this.togglePlay()
+    }
+  }
+
   get numberOfMeasures(){
     const {songData} = this.props
     return songData.length
   }
 
-  get homeButton() {
-    return <div className={'practiceHomeDiv'} onTouchStart={this.props.goHome}>{'Home'}</div>
+  goHome = () => {
+    const {goHome} = this.props
+    const {playing} = this.state
+
+    this.togglePlay(false, goHome)
   }
 
-  get tempoButton() {
-    return <div className={'practiceTempoDiv'} onTouchStart={this.props.goHome}>{'Tempo'}</div>
+  get homeButton() {
+    return <div className={'practiceHomeDiv'} onTouchStart={this.goHome}>{'Home'}</div>
   }
 
   render(){
-    const {voices, toggleVoice, keySignature} = this.props
+    const {voices, toggleVoice, keySignature, setTempo, tempo} = this.props
     const {playing} = this.state
-    const {togglePlay} = this
+    const {togglePlay, endPlayback} = this
     return (
       <>
         <VoiceController voices={voices} toggleVoice={toggleVoice} />
         <PlayButton togglePlay={togglePlay} playing={playing}/>
         <div className={'notation-container'}>
-          <div className={'notation'}
-            onTouchStart={this.recordTouchStart}
+          <div ref={this.notation} className={'notation'}
             onTouchMove={this.scroll}
+            onTouchEnd={this.doneScrolling}
           >
             <Meta grand={true} keySignature={keySignature}/>
             {this.measures}
           </div>
         </div>
-        {this.tempoButton}
+        <TempoButton setTempo={setTempo} togglePlay={togglePlay} tempo={tempo} playing={playing}/>
         {this.homeButton}
       </>
     )
