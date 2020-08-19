@@ -2,7 +2,7 @@ import {Staff} from './Staff.js'
 
 export default class Meta extends Staff {
   constructor(props){
-    super(props, {width: width(props.keySignature), clef: true, padding: -2, stafSpace: 215})
+    super(props, {width: width(props.keySignature), clef: true, padding: -2, stafSpace: props.stafSpace})
   }
 
   draw = () => {

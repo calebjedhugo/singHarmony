@@ -4,6 +4,7 @@ import Measure from '../notation/Measure'
 import Meta from '../notation/Meta'
 import PlayButton from '../playButton'
 import TempoButton from '../TempoButton'
+import {stafSpace, verseSpace} from '../../config.js'
 
 export default class Practice extends Component {
   constructor(props){
@@ -35,6 +36,17 @@ export default class Practice extends Component {
     }
   }
 
+  get stafSpacePlusVerses(){
+    const {songData} = this.props
+    let numberOfVerses = 0
+    for(let i = 0; i < songData.length; i++){
+      numberOfVerses = Math.max(numberOfVerses, songData[i].lyrics ? songData[i].lyrics.length : 0)
+    }
+
+    let f = stafSpace + (numberOfVerses * verseSpace)
+    return f
+  }
+
   get measures(){
     const {activeIdx} = this.state
     const {voices, songData, keySignature} = this.props
@@ -45,7 +57,7 @@ export default class Practice extends Component {
       let active = idx >= activeIdx
       return (
         <div key={idx} style={{width: `${active ? width : 0}px`}} className={`measure${active ? '' : '-inactive'}`}>
-          <Measure idx={idx} data={data} voices={voices} grand={true} width={width} keySignature={keySignature}/>
+          <Measure idx={idx} data={data} voices={voices} grand={true} width={width} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
         </div>
       )
     })
@@ -139,6 +151,7 @@ export default class Practice extends Component {
     const {voices, toggleVoice, keySignature, setTempo, tempo} = this.props
     const {playing} = this.state
     const {togglePlay, endPlayback} = this
+
     return (
       <>
         <VoiceController voices={voices} toggleVoice={toggleVoice} />
@@ -148,7 +161,7 @@ export default class Practice extends Component {
             onTouchMove={this.scroll}
             onTouchEnd={this.doneScrolling}
           >
-            <Meta grand={true} keySignature={keySignature}/>
+            <Meta grand={true} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
             {this.measures}
           </div>
         </div>

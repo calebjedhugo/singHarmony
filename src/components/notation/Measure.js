@@ -5,9 +5,15 @@ const disabledVoiceStyle = {fillStyle: "#0000004a", strokeStyle: "#0000004a"}
 
 export default class Measure extends Staff {
   constructor(props){
-    const {data, width} = props
+    const {data, width, stafSpace} = props
     let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
-    super(props, {padding: 0, stafSpace: 215, width: width || (maxNotes * 70)})
+
+    super(props, {
+      padding: 0,
+      stafSpace: stafSpace,
+      width: width || (maxNotes * 70)
+    })
+
     this.keyTheory = new KeySignatures()
   }
 
@@ -84,7 +90,7 @@ export default class Measure extends Staff {
       return verse.map(word => {
         let textNote = new this.VF.TextNote({text: word.value, duration: word.duration})
         textNote.setContext(this.context).setJustification(this.VF.TextNote.Justification.LEFT)
-        textNote.setLine(13 + (idx * 1.75))
+        textNote.setLine(14 + (idx * 1.75))
         return textNote
       })
     })
