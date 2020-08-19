@@ -1,6 +1,8 @@
 import {Staff} from './Staff.js'
 import KeySignatures from '../../theory/KeySignatures'
 
+const disabledVoiceStyle = {fillStyle: "#0000004a", strokeStyle: "#0000004a"}
+
 export default class Measure extends Staff {
   constructor(props){
     const {data, width} = props
@@ -26,7 +28,13 @@ export default class Measure extends Staff {
         currentVoice.addTickables(tickables)
         currentVoice.clef = this[`${clef}Staff`]
 
-        this.beams.push(this.VF.Beam.applyAndGetBeams(currentVoice, /^(a|b)$/.test(voice) ? -1 : 1))
+        let localBeams = this.VF.Beam.applyAndGetBeams(currentVoice, /^(a|b)$/.test(voice) ? -1 : 1)
+        if(!voices[voice]){
+          localBeams.forEach(beam => {
+            beam.setStyle(disabledVoiceStyle);
+          })
+        }
+        this.beams.push(localBeams)
       }
 
       //prepare lyrics
@@ -66,7 +74,7 @@ export default class Measure extends Staff {
   createTickables = (data, clef, active, voice) => {
     return data.map(note => {
       let vfNote = this.vfNote({...note, clef: clef, voice: voice})
-      if(!active) vfNote.setStyle({fillStyle: "#0000004a"});
+      if(!active) vfNote.setStyle(disabledVoiceStyle);
       return vfNote
     })
   }
