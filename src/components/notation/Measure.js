@@ -5,7 +5,7 @@ const disabledVoiceStyle = {fillStyle: "#0000004a", strokeStyle: "#0000004a"}
 
 export default class Measure extends Staff {
   constructor(props){
-    const {data, width, stafSpace} = props
+    const {data, width, stafSpace, keySignature} = props
     let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
 
     super(props, {
@@ -14,7 +14,7 @@ export default class Measure extends Staff {
       width: width || (maxNotes * 70)
     })
 
-    this.keyTheory = new KeySignatures()
+    this.alteredNotes = (new KeySignatures()).alteredNotes(keySignature)
   }
 
   draw = () => {
@@ -88,9 +88,11 @@ export default class Measure extends Staff {
   createLyrics = data => {
     return data.map((verse, idx) => {
       return verse.map(word => {
-        let textNote = new this.VF.TextNote({text: word.value, duration: word.duration})
-        textNote.setContext(this.context).setJustification(this.VF.TextNote.Justification.LEFT)
-        textNote.setLine(14 + (idx * 1.75))
+        let textNote = new this.VF.TextNote({text: word.value + ' ', duration: word.duration})
+        textNote
+          .setContext(this.context)
+          .setJustification(this.VF.TextNote.Justification.LEFT)
+          .setLine(14 + (idx * 1.75))
         return textNote
       })
     })
@@ -105,10 +107,16 @@ export default class Measure extends Staff {
   }
 
   accidental = (note) => {
-    let {keySignature} = this.props
-    let acc = note.split('/')[0].slice(1)
-    let partOfKey = this.keyTheory.alteredNotes(keySignature).includes(note.split('/')[0])
-    if(acc && !partOfKey) return [0, new this.VF.Accidental(acc)]
+    let noteArray = note.split('/')
+    let acc = noteArray[0].slice(1, 2)
+    let letter = noteArray[0].slice(0, 1)
+
+    let partOfKey = this.alteredNotes[letter] === noteArray[0]
+
+    if(!partOfKey){
+      this.alteredNotes[letter] = letter + acc
+      return [0, new this.VF.Accidental(acc || 'n')]
+    }
     else return false
   }
 

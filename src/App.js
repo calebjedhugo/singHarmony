@@ -15,10 +15,10 @@ class App extends Component {
     this.player = new Player()
 
     this.state = {
-      screen: 'home',
-      song: '',
+      screen: 'practice',
+      song: 'America the Beautiful',
       tempo: 100,
-      keySignature: 'C',
+      keySignature: 'Bb',
       voices: {
         s: true,
         a: true,

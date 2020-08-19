@@ -1,19 +1,19 @@
 export default class KeySignatures {
   alteredNotes = (key) => {
-    let f = []
+    let f = {C: 'C', D: 'D', E: 'E', F: 'F', G: 'G', A: 'A', B: 'B'}
     switch(key){
-      case 'F#': f.push('E#')
-      case 'B': f.push('A#')
-      case 'E': f.push('D#')
-      case 'A': f.push('G#')
-      case 'D': f.push('C#')
-      case 'G': f.push('F#'); break;
-      case 'Gb': f.push('Cb')
-      case 'Db': f.push('Gb')
-      case 'Ab': f.push('Db')
-      case 'Eb': f.push('Ab')
-      case 'Bb': f.push('Eb')
-      case 'F': f.push('Bb'); break;
+      case 'F#': f.E += '#'
+      case 'B': f.A += '#'
+      case 'E': f.D += '#'
+      case 'A': f.G += '#'
+      case 'D': f.C += '#'
+      case 'G': f.F += '#'; break;
+      case 'Gb': f.C += 'b'
+      case 'Db': f.G += 'b'
+      case 'Ab': f.D += 'b'
+      case 'Eb': f.A += 'b'
+      case 'Bb': f.E += 'b'
+      case 'F': f.B += 'b'; break;
     }
     return f
   }
