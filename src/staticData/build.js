@@ -220,6 +220,7 @@ const writeFiles = async () => {
             }
             let lastLetter = word[word.length - 1]
             let lyricDuration = noteDuration
+            if(word === 'lieved;') console.log(noteDuration)
             if(!isNaN(lastLetter)){
               skipLength[verseIdx] = ((1 / Number(lastLetter)) - (1 / noteDuration)).toFixed(3) * 1000
               lyricDuration = Number(lastLetter)
@@ -241,7 +242,16 @@ const writeFiles = async () => {
             noteEnd[voice] = i2
           } else {
             if(measure[voice][measure[voice].length - 1]){
-              measure[voice][measure[voice].length - 1].duration = durationConvert(i2 - noteStart[voice] + 1, songData.subsPerBeat[i])
+              let newDuration = durationConvert(i2 - noteStart[voice] + 1, songData.subsPerBeat[i])
+              measure[voice][measure[voice].length - 1].duration = newDuration
+              if(voice === 's') {
+                measure.lyrics = measure.lyrics.map(verse => {
+                  if(verse[measure[voice].length - 1]){
+                    verse[measure[voice].length - 1].duration = newDuration
+                  }
+                  return verse
+                })
+              }
             } else {
               // measure[voice].push()
             }

@@ -1,5 +1,6 @@
 import {Staff} from './Staff.js'
-import KeySignatures from '../../theory/KeySignatures'
+import {Theory} from '../../Theory'
+const theory = new Theory()
 
 const disabledVoiceStyle = {fillStyle: "#0000004a", strokeStyle: "#0000004a"}
 
@@ -13,8 +14,6 @@ export default class Measure extends Staff {
       stafSpace: stafSpace,
       width: width || (maxNotes * 70)
     })
-
-    this.alteredNotes = (new KeySignatures()).alteredNotes(keySignature)
   }
 
   draw = () => {
@@ -22,8 +21,12 @@ export default class Measure extends Staff {
     this.voices = []
     this.verses = []
     this.beams = []
-    const {voices, data, idx} = this.props
+    const {voices, idx, keySignature} = this.props
+    let {data} = this.props //We may need to tweak this a bit.
+    this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
+
     if(!data) throw new Error('The Measure component requires the prop, "data"')
+
     try{
       //create voices
       for(let voice in voices){
@@ -129,7 +132,10 @@ export default class Measure extends Staff {
     })
     if(/d/.test(data.duration)) note.addDotToAll()
     let accidental = this.accidental(data.value)
-    if(accidental) note.addAccidental(...accidental)
+    if(accidental && !/r/.test(data.duration)) note.addAccidental(...accidental)
+    if(data.offset){
+      note.setXShift(15)
+    }
     return note
   }
 }

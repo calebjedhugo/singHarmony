@@ -9,16 +9,19 @@ import Player from './Player'
 import songData from './staticData/songData'
 import './App.css';
 
+import {Theory} from './Theory'
+const theory = new Theory()
+
 class App extends Component {
   constructor(props){
     super(props)
     this.player = new Player()
 
     this.state = {
-      screen: 'practice',
-      song: 'America the Beautiful',
+      screen: 'home',
+      song: '',
       tempo: 100,
-      keySignature: 'Bb',
+      keySignature: 'G',
       voices: {
         s: true,
         a: true,
@@ -74,7 +77,10 @@ class App extends Component {
   //The user should not be allowed to adjust this, so we'll retrieve it like this.
   get songData(){
     const {song} = this.state
-    return songData[song].notes
+    return songData[song].notes.map(measure => {
+      //Check if there are intervals of a second and offset these notes.
+      return theory.offsetSeconds(measure)
+    })
   }
 
   get screen(){
