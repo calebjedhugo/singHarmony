@@ -1,0 +1,21 @@
+.songList {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.songSelection {
+  cursor: pointer;
+}
+
+.songSelection:hover {
+  background-color: #007bff6b;
+}
+
+.menuButtons {
+  margin: 10px;
+}
+
+.error {
+  color: red;
+  padding: 3px;
+}
