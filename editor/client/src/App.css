@@ -19,3 +19,16 @@
   color: red;
   padding: 3px;
 }
+
+.noteEntry, .wordEntry {
+  display: inline-block;
+  max-width: 60px;
+}
+
+.voiceLable, .verseLabel {
+  vertical-align: top;
+  display: inline-block;
+  text-transform: capitalize;
+  font-weight: bold;
+  padding-right: 3px;
+}

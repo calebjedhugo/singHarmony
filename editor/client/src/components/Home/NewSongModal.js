@@ -55,7 +55,7 @@ export default class NewSongModal extends Component {
     const {show, title, error} = this.state
     return (
       <>
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant="primary" onClick={handleShow} className={'menuButtons'}>
           New Song
         </Button>
 

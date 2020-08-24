@@ -32,6 +32,10 @@ class App extends Component {
     })
   }
 
+  setData = newData => {
+    this.setState({data: newData})
+  }
+
   newSong = songTitle => {
     return new Promise((resolve, reject) => {
       axios.post(`songData/${songTitle}`).then(res => {
@@ -56,7 +60,7 @@ class App extends Component {
         )
       case 'editor':
         return (
-          <Editor data={data} selectedSong={selectedSong}/>
+          <Editor setScreen={this.setScreen} data={data} setData={this.setData} selectedSong={selectedSong}/>
         )
       default: throw new Error(`There is no screen called '${screen}'`)
     }

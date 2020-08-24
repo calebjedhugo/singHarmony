@@ -270,11 +270,13 @@ const writeFiles = async () => {
     noteEnd = {s: 0, a: 0, t: 0, b: 0}
     let data = {
       metaData: {
-        resolution: songData.resolution[i],
+        // resolution: songData.resolution[i],
         tempo: songData.tempo[i],
-        pickups: songData.pickups[i],
-        subsPerMeasure: songData.subsPerMeasure[i],
-        keySignature: songTitles[i][1]
+        // pickups: songData.pickups[i],
+        // subsPerMeasure: songData.subsPerMeasure[i],
+        keySignature: songTitles[i][1],
+        fileName: fileName,
+        prettyTitle: songTitles[i][0]
       },
       notes: notes
     }

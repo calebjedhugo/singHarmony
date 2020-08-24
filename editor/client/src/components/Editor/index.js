@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import MetaData from './MetaData.js'
+import Notation from './Notation.js'
 import axios from 'axios'
 
 export default class Editor extends Component {
@@ -7,47 +10,37 @@ export default class Editor extends Component {
     error: ''
   }
 
-  patch = (newData) => {
+  home = () => {
+    const {setScreen} = this.props
+    setScreen('home')
+  }
+
+  patch = (newData, prop) => {
     let {selectedSong} = this.props
-    axios.patch(`songData/${selectedSong}`, newData).catch(e => {
+    let fData
+    if(prop){
+      fData = JSON.parse(JSON.stringify(this.props.data))
+      fData[prop] = newData
+    } else {
+      fData = newData
+    }
+    axios.patch(`songData/${selectedSong}`, fData).then(res => {
+      this.props.setData(res.data)
+    }).catch(e => {
       this.setState({error: e.response ? e.response.data : e.message})
     })
   }
 
   render(){
+    //todo: lyrics import modal
     const {data, error} = this.props
     return (
       <>
+        <Button className={'menuButtons'} onClick={this.home}>{'Home'}</Button>
         {error ? <div className='error'>{error}</div> : null}
-        <MetaDataEdit patch={this.patch} data={data}/>
+        <MetaData patch={newData => {this.patch(newData, 'metaData')}} metaData={data.metaData} />
+        <Notation patch={newData => {this.patch(newData, 'notes')}} songData={data.notes} keySignature={data.metaData.keySignature}/>
       </>
-    )
-  }
-}
-
-class MetaDataEdit extends Component {
-  state = {
-    prettyTitle: this.props.data.metaData.prettyTitle
-  }
-
-  handleTitleChange = (e) => {
-    let {data, patch} = this.props
-    data.metaData.prettyTitle = e.target.value
-    patch(data)
-    this.setState({prettyTitle: e.target.value})
-  }
-
-  render(){
-    const {prettyTitle} = this.state
-
-    return (
-      <Form>
-        <Form.Control
-          value={prettyTitle}
-          placeholder={'i.e. Amazing Grace'}
-          onChange={this.handleTitleChange}
-        />
-      </Form>
     )
   }
 }
