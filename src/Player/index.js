@@ -52,6 +52,27 @@ export default class Player {
         }
 
         let duration = notesArray[i].duration
+
+        //A 't' at the end of a duration value indicates a tie.
+        let tie = duration.slice(duration.length - 1) === 't'
+        if(tie){
+          //remove the 't'. handling playback for ties will be very complicated. Consider this to be tech debt.
+          //For now, it'll just play the note again.
+          duration = duration.slice(0, duration.length - 1)
+        }
+
+        let noBeam = duration.slice(duration.length - 1) === 'b'
+        if(noBeam){
+          //remove the 'b'. It doesn't matter for playback
+          duration = duration.slice(0, duration.length - 1)
+        }
+
+        let fermata = duration.slice(duration.length - 1) === 'f'
+        if(fermata){
+          //Not relavent to playback.
+          duration = duration.slice(0, duration.length - 1)
+        }
+
         let resting = false
         if(duration[duration.length - 1] === 'r'){
           resting = true
@@ -100,7 +121,7 @@ export default class Player {
     if(tempoAlterations){
       tempoAlteration = tempoAlterations.reduce((a, b) => {return a + b}) / tempoAlterations.length
     }
-    
+
     let dotted = false
     if(duration[duration.length - 1] === 'd'){
       dotted = true

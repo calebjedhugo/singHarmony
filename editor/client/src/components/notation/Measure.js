@@ -21,7 +21,7 @@ export default class Measure extends Staff {
     this.voices = []
     this.verses = []
     this.beams = []
-    this.ties = []
+    this.ties = {s: [], a: [], t: [], b: []}
     const {voices, idx, keySignature} = this.props
     let {data} = this.props //We may need to tweak this a bit.
     this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
@@ -38,7 +38,16 @@ export default class Measure extends Staff {
         currentVoice.addTickables(tickables)
         currentVoice.clef = this[`${clef}Staff`]
 
-        let localBeams = this.VF.Beam.applyAndGetBeams(currentVoice, /^(a|b)$/.test(voice) ? -1 : 1)
+        let localBeams = this.VF.Beam.generateBeams(currentVoice.getTickables().filter(note => {
+          if(note.beam !== 'noBeam'){
+            return true
+          } else {
+            note.setBeam(null)
+          }
+        }), {
+          stem_direction: /^(a|b)$/.test(voice) ? -1 : 1,
+          groups: [new this.VF.Fraction(2, 8), new this.VF.Fraction(2, 8), new this.VF.Fraction(2, 8)]
+        })
         if(!voices[voice]){
           localBeams.forEach(beam => {
             beam.setStyle(disabledVoiceStyle);
@@ -76,9 +85,13 @@ export default class Measure extends Staff {
         })
       });
 
-      this.ties.forEach(tie => {
-        tie.setContext(this.context).draw(this.context)
-      })
+      for(let tieVoice in this.ties){
+        this.ties[tieVoice].forEach(tie => {
+          if(voices[tieVoice]){
+            tie.setContext(this.context).draw(this.context)
+          }
+        })
+      }
 
     }
     catch(e){
@@ -129,6 +142,7 @@ export default class Measure extends Staff {
     else return false
   }
 
+  //example of alterations: '2drfbt' is a dotted half note rest, with a fermata, no beam, and tied to the next measure.
   vfNote = (data) => {
     //A 't' at the end of a duration value indicates a tie.
     let tie = data.duration.slice(data.duration.length - 1) === 't'
@@ -136,6 +150,19 @@ export default class Measure extends Staff {
       //remove the 't' so vexflow can take over. We need the note to exist before we can put a tie on it.
       data.duration = data.duration.slice(0, data.duration.length - 1)
     }
+
+    let noBeam = data.duration.slice(data.duration.length - 1) === 'b'
+    if(noBeam){
+      //remove the 'b' so vexflow can take over. We need the note to exist before we can tell our code not to beam it.
+      data.duration = data.duration.slice(0, data.duration.length - 1)
+    }
+
+    let fermata = data.duration.slice(data.duration.length - 1) === 'f'
+    if(fermata){
+      //remove the 'b' so vexflow can take over. We need the note to exist before we can tell our code not to beam it.
+      data.duration = data.duration.slice(0, data.duration.length - 1)
+    }
+
     let stemDirection = /^(a|b)$/.test(data.voice) ? -1 : 1
     let note = new this.VF.StaveNote({
       clef: data.clef,
@@ -143,6 +170,14 @@ export default class Measure extends Staff {
       duration: data.duration,
       stem_direction: stemDirection
     })
+
+    if(noBeam){
+      note.setBeam('noBeam')
+    }
+
+    if(fermata){
+      note.addArticulation(0, new this.VF.Articulation('a@a').setPosition(3))
+    }
 
     //Add dotted values if needed
     if(/d/.test(data.duration)) note.addDotToAll()
@@ -156,7 +191,7 @@ export default class Measure extends Staff {
 
     //ties
     if(tie){
-      this.ties.push(new this.VF.StaveTie({
+      this.ties[data.voice].push(new this.VF.StaveTie({
         first_note: note
       }))
     }

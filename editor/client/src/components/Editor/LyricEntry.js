@@ -54,7 +54,7 @@ class VerseEntry extends Component{
     const {verse} = this.props
     return verse.map((word, idx) => {
       let addRemove = new AddRemove({add: () => this.add(idx), remove: () => this.remove(idx)})
-      return <WordEntry check={addRemove.check} key={`${word}${idx}`} word={word} patch={newData => {this.patch(newData, idx)}}/>
+      return <WordEntry check={addRemove.check} key={idx} word={word} patch={newData => {this.patch(newData, idx)}}/>
     })
   }
 
