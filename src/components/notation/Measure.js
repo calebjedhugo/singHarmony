@@ -12,7 +12,7 @@ export default class Measure extends Staff {
     super(props, {
       padding: 0,
       stafSpace: stafSpace,
-      width: width || (maxNotes * 70)
+      width: width || (maxNotes * 72)
     })
   }
 

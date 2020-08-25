@@ -53,7 +53,7 @@ export default class Practice extends Component {
 
     return songData.map((data, idx) => {
       let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
-      let width = maxNotes * 70
+      let width = maxNotes * 72
       let active = idx >= activeIdx
       return (
         <div key={idx} style={{width: `${active ? width : 0}px`}} className={`measure${active ? '' : '-inactive'}`}>
