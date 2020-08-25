@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Form from 'react-bootstrap/Form'
+import {AddRemove} from './helpers'
 
 export default class LyricEntry extends Component {
 
@@ -32,10 +33,28 @@ class VerseEntry extends Component{
     patch(data)
   }
 
+  add = (idx) => {
+    const {patch} = this.props
+    let data = JSON.parse(JSON.stringify(this.props.verse))
+    data.splice(idx + 1, 0, {
+      value: undefined,
+      duration: undefined
+    })
+    patch(data)
+  }
+
+  remove = (idx) => {
+    const {patch} = this.props
+    let data = JSON.parse(JSON.stringify(this.props.verse))
+    data.splice(idx, 1)
+    patch(data)
+  }
+
   get words(){
     const {verse} = this.props
     return verse.map((word, idx) => {
-      return <WordEntry key={idx} word={word} patch={newData => {this.patch(newData, idx)}}/>
+      let addRemove = new AddRemove({add: () => this.add(idx), remove: () => this.remove(idx)})
+      return <WordEntry check={addRemove.check} key={`${word}${idx}`} word={word} patch={newData => {this.patch(newData, idx)}}/>
     })
   }
 
@@ -66,6 +85,7 @@ class WordEntry extends Component{
 
   render(){
     const {value, duration} = this.state
+    const {check} = this.props
 
     return (
       <div className={'wordEntry'}>
@@ -74,11 +94,13 @@ class WordEntry extends Component{
             value={value}
             placeholder={'word'}
             onChange={e => {this.handleChange(e, 'value')}}
+            onKeyDown={check}
           />
           <Form.Control
             value={duration}
             placeholder={'ndr'}
             onChange={e => {this.handleChange(e, 'duration')}}
+            onKeyDown={check}
           />
         </Form>
       </div>

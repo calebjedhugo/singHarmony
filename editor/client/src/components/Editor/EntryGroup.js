@@ -33,7 +33,7 @@ export default class EntryGroup extends Component {
         {this.voices}
         {this.verses}
         <LyricEntry patch={newData => {this.patch(newData, 'lyrics')}} data={data.lyrics}/>
-        <MetaEntry data={data} />
+        <MetaEntry patch={this.patch} data={data} />
       </>
     )
   }

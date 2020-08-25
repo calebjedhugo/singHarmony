@@ -21,6 +21,7 @@ export default class Measure extends Staff {
     this.voices = []
     this.verses = []
     this.beams = []
+    this.ties = []
     const {voices, idx, keySignature} = this.props
     let {data} = this.props //We may need to tweak this a bit.
     this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
@@ -74,6 +75,11 @@ export default class Measure extends Staff {
           return beam.setContext(this.context).draw();
         })
       });
+
+      this.ties.forEach(tie => {
+        tie.setContext(this.context).draw(this.context)
+      })
+
     }
     catch(e){
       console.error(e.message, data, `Measure ${idx}`)
@@ -124,18 +130,37 @@ export default class Measure extends Staff {
   }
 
   vfNote = (data) => {
+    //A 't' at the end of a duration value indicates a tie.
+    let tie = data.duration.slice(data.duration.length - 1) === 't'
+    if(tie){
+      //remove the 't' so vexflow can take over. We need the note to exist before we can put a tie on it.
+      data.duration = data.duration.slice(0, data.duration.length - 1)
+    }
+    let stemDirection = /^(a|b)$/.test(data.voice) ? -1 : 1
     let note = new this.VF.StaveNote({
       clef: data.clef,
       keys: [data.value],
       duration: data.duration,
-      stem_direction: /^(a|b)$/.test(data.voice) ? -1 : 1
+      stem_direction: stemDirection
     })
+
+    //Add dotted values if needed
     if(/d/.test(data.duration)) note.addDotToAll()
+
+    //Accidentals
     let accidental = this.accidental(data.value)
     if(accidental && !/r/.test(data.duration)) note.addAccidental(...accidental)
     if(data.offset){
       note.setXShift(15)
     }
+
+    //ties
+    if(tie){
+      this.ties.push(new this.VF.StaveTie({
+        first_note: note
+      }))
+    }
+
     return note
   }
 }

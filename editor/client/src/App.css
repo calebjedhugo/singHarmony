@@ -25,6 +25,16 @@
   max-width: 60px;
 }
 
+.tempoChangeEntry, .timeSignatureEntry, .tempoResolutionEntry {
+  display: inline-block;
+  max-width: 25px;
+}
+
+.tempoChangeEntry > form > input, .timeSignatureEntry > form > input, .tempoResolutionEntry > form > input {
+  padding: 0px;
+  text-align: center;
+}
+
 .voiceLable, .verseLabel {
   vertical-align: top;
   display: inline-block;
