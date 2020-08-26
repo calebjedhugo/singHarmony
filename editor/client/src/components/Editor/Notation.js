@@ -23,6 +23,7 @@ export default class Notation extends Component {
       let width = maxNotes * 70
 
       return <div key={idx} style={{display: 'inline-block', verticalAlign: 'top'}} className={`measure`}>
+        {idx}
         <div style={{display: 'block'}}>
           <Measure voices={{s: true, a: true, t: true, b: true}} idx={idx} data={data} grand={true} width={width} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
         </div>
@@ -53,7 +54,12 @@ export default class Notation extends Component {
       whiteSpace: 'nowrap',
       maxWidth: '100vw'
     }}>
-      <Meta grand={true} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
+      <div style={{display: 'inline-block', verticalAlign: 'top'}} className={`measure`}>
+        {'-'}
+        <div style={{display: 'block'}}>
+          <Meta grand={true} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
+        </div>
+      </div>
       {this.measures}
     </div>
   }
