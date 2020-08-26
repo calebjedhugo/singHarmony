@@ -220,7 +220,7 @@ const writeFiles = async () => {
             }
             let lastLetter = word[word.length - 1]
             let lyricDuration = noteDuration
-            if(word === 'lieved;') console.log(noteDuration)
+            
             if(!isNaN(lastLetter)){
               skipLength[verseIdx] = ((1 / Number(lastLetter)) - (1 / noteDuration)).toFixed(3) * 1000
               lyricDuration = Number(lastLetter)

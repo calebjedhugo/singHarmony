@@ -53,6 +53,13 @@ export default class Player {
 
         let duration = notesArray[i].duration
 
+        //An 'o' at the end of a duration value indicates a manual offset.
+        let manuallyOffset = duration.slice(duration.length - 1) === 'o'
+        if(manuallyOffset){
+          //remove the 'o'. Not relevant to playback
+          duration = duration.slice(0, duration.length - 1)
+        }
+
         //A 't' at the end of a duration value indicates a tie.
         let tie = duration.slice(duration.length - 1) === 't'
         if(tie){

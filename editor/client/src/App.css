@@ -30,7 +30,7 @@
   max-width: 25px;
 }
 
-.tempoChangeEntry > form > input, .timeSignatureEntry > form > input, .tempoResolutionEntry > form > input {
+.tempoChangeEntry input, .timeSignatureEntry input, .tempoResolutionEntry input {
   padding: 0px;
   text-align: center;
 }

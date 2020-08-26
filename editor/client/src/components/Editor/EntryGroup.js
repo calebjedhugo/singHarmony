@@ -6,11 +6,11 @@ import MetaEntry from './MetaEntry'
 
 export default class EntryGroup extends Component {
 
-  patch = (newData, prop) => {
+  patch = (newData, prop, hardSetDataBool) => {
     const {patch} = this.props
     let data = JSON.parse(JSON.stringify(this.props.data))
     data[prop] = newData
-    patch(data)
+    patch(data, hardSetDataBool)
   }
 
   get voices(){
@@ -19,7 +19,7 @@ export default class EntryGroup extends Component {
     for(let voice in data){
       if(/^(s|a|t|b)$/.test(voice)){
         voiceArray.push(
-          <VoiceEntry key={voice} data={data[voice]} patch={newData => {this.patch(newData, voice)}} label={voice}/>
+          <VoiceEntry key={voice} data={data[voice]} patch={(newData, hardSetDataBool) => {this.patch(newData, voice, hardSetDataBool)}} label={voice}/>
         )
       }
     }
@@ -32,7 +32,7 @@ export default class EntryGroup extends Component {
       <>
         {this.voices}
         {this.verses}
-        <LyricEntry patch={newData => {this.patch(newData, 'lyrics')}} data={data.lyrics}/>
+        <LyricEntry patch={(newData, hardSetDataBool) => {this.patch(newData, 'lyrics', hardSetDataBool)}} data={data.lyrics}/>
         <MetaEntry patch={this.patch} data={data} />
       </>
     )

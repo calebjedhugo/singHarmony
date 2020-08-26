@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import MetaData from './MetaData.js'
-import Notation from './Notation.js'
+import MetaData from './MetaData'
+import Notation from './Notation'
+import LyricImport from './LyricImport'
+import TimeSignatureChange from './TimeSignatureChange'
 import axios from 'axios'
 
 export default class Editor extends Component {
@@ -15,8 +17,8 @@ export default class Editor extends Component {
     setScreen('home')
   }
 
-  patch = (newData, prop) => {
-    let {selectedSong} = this.props
+  patch = (newData, prop, hardSetDataBool) => {
+    let {selectedSong, setData, hardSetData} = this.props
     let fData
     if(prop){
       fData = JSON.parse(JSON.stringify(this.props.data))
@@ -25,7 +27,11 @@ export default class Editor extends Component {
       fData = newData
     }
     axios.patch(`songData/${selectedSong}`, fData).then(res => {
-      this.props.setData(res.data)
+      if(hardSetDataBool){
+        this.props.hardSetData(res.data)
+      } else {
+        this.props.setData(res.data)
+      }
     }).catch(e => {
       this.setState({error: e.response ? e.response.data : e.message})
     })
@@ -33,13 +39,16 @@ export default class Editor extends Component {
 
   render(){
     //todo: lyrics import modal
-    const {data, error} = this.props
+    const {data, error, selectedSong, setData, hardSetData} = this.props
+    if(!data.notes) return null
     return (
       <>
         <Button className={'menuButtons'} onClick={this.home}>{'Home'}</Button>
+        <LyricImport setData={hardSetData} title={selectedSong} />
+        <TimeSignatureChange setData={setData} title={selectedSong} />
         {error ? <div className='error'>{error}</div> : null}
         <MetaData patch={newData => {this.patch(newData, 'metaData')}} metaData={data.metaData} />
-        <Notation patch={newData => {this.patch(newData, 'notes')}} songData={data.notes} keySignature={data.metaData.keySignature}/>
+        <Notation patch={(newData, hardSetDataBool) => {this.patch(newData, 'notes', hardSetDataBool)}} songData={data.notes} keySignature={data.metaData.keySignature}/>
       </>
     )
   }

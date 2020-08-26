@@ -108,8 +108,12 @@ class TempoChanges extends Component {
     let {value} = e.target
 
     this.setState({[idx]: value})
-    data[idx] = value
-    patch(data)
+    data[idx] = Number(value)
+    if(isNaN(value)){
+      console.warn(`${value} is not a number`)
+    } else {
+      patch(data)
+    }
   }
 
   get changes(){

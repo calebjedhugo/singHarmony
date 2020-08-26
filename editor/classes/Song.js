@@ -49,16 +49,16 @@ class Song {
     })
   }
 
-  update(newJSON) {
+  update(newContent) {
     if(!this.exists){
       throw new Error(`${this.title} does not exist.`)
     }
 
     //Try to make it. I can't imagine why this would fail, but to be safe...
     return new Promise((resolve, reject) => {
-      fs.writeFile(this.dataPath, JSON.stringify(newJSON), e => {
+      fs.writeFile(this.dataPath, JSON.stringify(newContent), e => {
         if(e) reject(e)
-        else resolve(newJSON)
+        else resolve(newContent)
       })
     })
   }

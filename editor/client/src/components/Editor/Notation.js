@@ -9,11 +9,11 @@ const verseSpace = 18
 
 export default class Notation extends Component {
 
-  patch = (newData, idx) => {
+  patch = (newData, idx, hardSetDataBool) => {
     let {patch} = this.props
     let songData = JSON.parse(JSON.stringify(this.props.songData))
     songData[idx] = newData
-    patch(songData)
+    patch(songData, hardSetDataBool)
   }
 
   get measures(){
@@ -27,7 +27,7 @@ export default class Notation extends Component {
           <Measure voices={{s: true, a: true, t: true, b: true}} idx={idx} data={data} grand={true} width={width} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
         </div>
         <div style={{display: 'block'}}>
-          <EntryGroup key={idx} patch={newData => {this.patch(newData, idx)}} data={data}/>
+          <EntryGroup key={idx} patch={(newData, hardSetDataBool) => {this.patch(newData, idx, hardSetDataBool)}} data={data}/>
         </div>
       </div>
     })

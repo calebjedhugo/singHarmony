@@ -12,7 +12,7 @@ export default class Measure extends Staff {
     super(props, {
       padding: 0,
       stafSpace: stafSpace,
-      width: width || (maxNotes * 70)
+      width: width || (maxNotes * 72)
     })
   }
 
@@ -31,6 +31,7 @@ export default class Measure extends Staff {
     try{
       //create voices
       for(let voice in voices){
+        if(!data.ts[1]) throw new Error(`invalid value in time signature denominator: ${data.ts[1]}`)
         let currentVoice = new this.VF.Voice({num_beats: data.ts[0], beat_value: data.ts[1]})
         this.voices.push(currentVoice)
         let clef = voice === 's' || voice === 'a' ? 'treble' : 'bass'
@@ -142,8 +143,16 @@ export default class Measure extends Staff {
     else return false
   }
 
-  //example of alterations: '2drfbt' is a dotted half note rest, with a fermata, no beam, and tied to the next measure.
+  //example of alterations: '2drfbto' is a dotted half note rest, with a fermata, no beam, tied to the next measure, and offset.
   vfNote = (data) => {
+
+    //An 'o' at the end of a duration value indicates a tie.
+    let manuallyOffset = data.duration.slice(data.duration.length - 1) === 'o'
+    if(manuallyOffset){
+      //remove the '' so vexflow can take over. We need the note to exist before we can offset it.
+      data.duration = data.duration.slice(0, data.duration.length - 1)
+    }
+
     //A 't' at the end of a duration value indicates a tie.
     let tie = data.duration.slice(data.duration.length - 1) === 't'
     if(tie){
@@ -151,6 +160,7 @@ export default class Measure extends Staff {
       data.duration = data.duration.slice(0, data.duration.length - 1)
     }
 
+    //b means a broken beam
     let noBeam = data.duration.slice(data.duration.length - 1) === 'b'
     if(noBeam){
       //remove the 'b' so vexflow can take over. We need the note to exist before we can tell our code not to beam it.
@@ -162,6 +172,8 @@ export default class Measure extends Staff {
       //remove the 'b' so vexflow can take over. We need the note to exist before we can tell our code not to beam it.
       data.duration = data.duration.slice(0, data.duration.length - 1)
     }
+
+    let rest = /r/.test(data.duration)
 
     let stemDirection = /^(a|b)$/.test(data.voice) ? -1 : 1
     let note = new this.VF.StaveNote({
@@ -176,7 +188,7 @@ export default class Measure extends Staff {
     }
 
     if(fermata){
-      note.addArticulation(0, new this.VF.Articulation('a@a').setPosition(3))
+        note.addArticulation(0, (new this.VF.Articulation('a@a')).setPosition(3))
     }
 
     //Add dotted values if needed
@@ -184,8 +196,8 @@ export default class Measure extends Staff {
 
     //Accidentals
     let accidental = this.accidental(data.value)
-    if(accidental && !/r/.test(data.duration)) note.addAccidental(...accidental)
-    if(data.offset){
+    if(accidental && !rest) note.addAccidental(...accidental)
+    if(data.offset || manuallyOffset){
       note.setXShift(15)
     }
 

@@ -4,17 +4,17 @@ import {AddRemove} from './helpers'
 
 export default class LyricEntry extends Component {
 
-  patch = (newData, verseNumber) => {
+  patch = (newData, verseNumber, hardSetDataBool) => {
     const {patch} = this.props
     let data = JSON.parse(JSON.stringify(this.props.data))
     data[verseNumber] = newData
-    patch(data)
+    patch(data, hardSetDataBool)
   }
 
   get verses(){
     const {data} = this.props
     return data.map((verse, idx) => {
-      return <VerseEntry label={idx + 1} key={idx} verse={verse} patch={newData => {this.patch(newData, idx)}}/>
+      return <VerseEntry label={idx + 1} key={idx} verse={verse} patch={(newData, hardSetDataBool) => {this.patch(newData, idx, hardSetDataBool)}}/>
     })
   }
 
@@ -47,7 +47,7 @@ class VerseEntry extends Component{
     const {patch} = this.props
     let data = JSON.parse(JSON.stringify(this.props.verse))
     data.splice(idx, 1)
-    patch(data)
+    patch(data, true)
   }
 
   get words(){

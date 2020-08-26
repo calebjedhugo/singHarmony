@@ -12,7 +12,7 @@ export class AddRemove {
   timeout = 2000
 
   check = (e) => {
-    if(e.keyCode === 109){ // '-' key
+    if(e.keyCode === 109 || e.keyCode === 189){ // '-' key
       e.preventDefault()
       if(this.removing){
         this.remove()
@@ -22,7 +22,7 @@ export class AddRemove {
           this.removing = false
         }, this.timeout)
       }
-    } else if(e.keyCode === 107){ // '+' key
+    } else if(e.keyCode === 107 || e.keyCode === 187){ // '+' key
       e.preventDefault()
       if(this.adding){
         this.add()
