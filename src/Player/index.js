@@ -2,6 +2,7 @@
 //Do not create a seperate one, you will be sorry! (Player.soundManager.soundscape)
 
 import SoundManager from './soundManager'
+import durationMods from '../components/notation/durationMods'
 
 export default class Player {
   constructor(){
@@ -51,38 +52,9 @@ export default class Player {
           break;
         }
 
-        let duration = notesArray[i].duration
+        let {duration, tie, rest} = durationMods(notesArray[i].duration)
 
-        //An 'o' at the end of a duration value indicates a manual offset.
-        let manuallyOffset = duration.slice(duration.length - 1) === 'o'
-        if(manuallyOffset){
-          //remove the 'o'. Not relevant to playback
-          duration = duration.slice(0, duration.length - 1)
-        }
-
-        //A 't' at the end of a duration value indicates a tie.
-        let tie = duration.slice(duration.length - 1) === 't'
-        if(tie){
-          //remove the 't'. handling playback for ties will be very complicated. Consider this to be tech debt.
-          //For now, it'll just play the note again.
-          duration = duration.slice(0, duration.length - 1)
-        }
-
-        let noBeam = duration.slice(duration.length - 1) === 'b'
-        if(noBeam){
-          //remove the 'b'. It doesn't matter for playback
-          duration = duration.slice(0, duration.length - 1)
-        }
-
-        let fermata = duration.slice(duration.length - 1) === 'f'
-        if(fermata){
-          //Not relavent to playback.
-          duration = duration.slice(0, duration.length - 1)
-        }
-
-        let resting = false
-        if(duration[duration.length - 1] === 'r'){
-          resting = true
+        if(rest){
           duration = duration.slice(0, duration.length - 1) //get rid of the 'r'. this.lengthTranslate doesn't handle it.
         }
 
@@ -96,7 +68,7 @@ export default class Player {
         )
 
         //Is this a rest? Is the voice active?
-        if(!resting && this.voicesActive[voice]) {
+        if(!rest && this.voicesActive[voice]) {
           await this.piano.play(notesArray[i].value, dynamic, length)
         } else { //This shouldn't be played. Just tell me when it's over...
           await new Promise(resolve => {

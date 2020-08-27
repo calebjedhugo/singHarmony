@@ -1,9 +1,9 @@
-// This is copied from the main project. We need to figure out how to not do that...
 import {Staff} from './Staff.js'
 
 export default class Meta extends Staff {
   constructor(props){
-    super(props, {width: width(props.keySignature), clef: true, padding: -2, stafSpace: props.stafSpace})
+    console.log(keyWidth(props.keySignature) + tsWidth(props.ts))
+    super(props, {width: keyWidth(props.keySignature) + tsWidth(props.ts), clef: true, padding: -2, stafSpace: props.stafSpace})
   }
 
   draw = () => {
@@ -11,7 +11,7 @@ export default class Meta extends Staff {
   }
 }
 
-const width = key => {
+const keyWidth = key => {
   switch(key){
     case 'G':
     case 'F':
@@ -33,4 +33,8 @@ const width = key => {
       return 110
     default: return 50
   }
+}
+
+const tsWidth = ts => {
+  return ts ? 30 : 0
 }

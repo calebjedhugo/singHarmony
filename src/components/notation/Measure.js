@@ -1,5 +1,6 @@
 import {Staff} from './Staff.js'
 import {Theory} from '../../Theory'
+import durationMods from './durationMods'
 const theory = new Theory()
 
 const disabledVoiceStyle = {fillStyle: "#0000004a", strokeStyle: "#0000004a"}
@@ -22,8 +23,9 @@ export default class Measure extends Staff {
     this.verses = []
     this.beams = []
     this.ties = {s: [], a: [], t: [], b: []}
-    const {voices, idx, keySignature} = this.props
-    let {data} = this.props //We may need to tweak this a bit.
+    this.curves = []
+    const {voices, idx, keySignature, data, final} = this.props
+
     this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
 
     if(!data) throw new Error('The Measure component requires the prop, "data"')
@@ -35,7 +37,8 @@ export default class Measure extends Staff {
         let currentVoice = new this.VF.Voice({num_beats: data.ts[0], beat_value: data.ts[1]})
         this.voices.push(currentVoice)
         let clef = voice === 's' || voice === 'a' ? 'treble' : 'bass'
-        let tickables = this.createTickables(data[voice], clef, voices[voice], voice)
+        let tickables = this.createTickables(data[voice], clef, voices[voice], voice, final)
+
         currentVoice.addTickables(tickables)
         currentVoice.clef = this[`${clef}Staff`]
 
@@ -73,7 +76,7 @@ export default class Measure extends Staff {
       // Render voice
       //The 'this.stave' in the Staff class needs to be in the constructor to be accessible.
       this.voices.forEach(voice => {
-        voice.draw(this.context, voice.clef);
+        voice.draw(this.context, voice.clef)
       })
 
       this.verses.forEach(verse => {
@@ -94,13 +97,18 @@ export default class Measure extends Staff {
         })
       }
 
+      this.curves.forEach(curve => {
+        curve.setContext(this.context).draw()
+      })
+
     }
     catch(e){
       console.error(e.message, data, `Measure ${idx}`)
     }
   }
 
-  createTickables = (data, clef, active, voice) => {
+  createTickables = (data, clef, active, voice, final) => {
+    this.slurringFrom = false
     return data.map(note => {
       let vfNote = this.vfNote({...note, clef: clef, voice: voice})
       if(!active) vfNote.setStyle(disabledVoiceStyle);
@@ -143,70 +151,56 @@ export default class Measure extends Staff {
     else return false
   }
 
-  //example of alterations: '2drfbto' is a dotted half note rest, with a fermata, no beam, tied to the next measure, and offset.
   vfNote = (data) => {
-
-    //An 'o' at the end of a duration value indicates a tie.
-    let manuallyOffset = data.duration.slice(data.duration.length - 1) === 'o'
-    if(manuallyOffset){
-      //remove the '' so vexflow can take over. We need the note to exist before we can offset it.
-      data.duration = data.duration.slice(0, data.duration.length - 1)
-    }
-
-    //A 't' at the end of a duration value indicates a tie.
-    let tie = data.duration.slice(data.duration.length - 1) === 't'
-    if(tie){
-      //remove the 't' so vexflow can take over. We need the note to exist before we can put a tie on it.
-      data.duration = data.duration.slice(0, data.duration.length - 1)
-    }
-
-    //b means a broken beam
-    let noBeam = data.duration.slice(data.duration.length - 1) === 'b'
-    if(noBeam){
-      //remove the 'b' so vexflow can take over. We need the note to exist before we can tell our code not to beam it.
-      data.duration = data.duration.slice(0, data.duration.length - 1)
-    }
-
-    let fermata = data.duration.slice(data.duration.length - 1) === 'f'
-    if(fermata){
-      //remove the 'b' so vexflow can take over. We need the note to exist before we can tell our code not to beam it.
-      data.duration = data.duration.slice(0, data.duration.length - 1)
-    }
-
-    let rest = /r/.test(data.duration)
-
+    const {manuallyOffset, tie, noBeam, fermata, slur, duration, rest, dotted} = durationMods(data.duration)
     let stemDirection = /^(a|b)$/.test(data.voice) ? -1 : 1
+
     let note = new this.VF.StaveNote({
       clef: data.clef,
       keys: [data.value],
-      duration: data.duration,
+      duration: duration,
       stem_direction: stemDirection
     })
 
+    //Accidentals
+    let accidental = this.accidental(data.value)
+    if(accidental && !rest){
+      note.addAccidental(...accidental)
+    }
+
+    if(data.offset || manuallyOffset){
+      note.setXShift(15)
+    }
+
+    //Add dots
+    if(dotted){
+      note.addDotToAll()
+    }
+
+    //Custom modifiers (not in Vexflow)
     if(noBeam){
       note.setBeam('noBeam')
     }
 
     if(fermata){
-        note.addArticulation(0, (new this.VF.Articulation('a@a')).setPosition(3))
-    }
-
-    //Add dotted values if needed
-    if(/d/.test(data.duration)) note.addDotToAll()
-
-    //Accidentals
-    let accidental = this.accidental(data.value)
-    if(accidental && !rest) note.addAccidental(...accidental)
-    if(data.offset || manuallyOffset){
-      note.setXShift(15)
+      note.addArticulation(0, (new this.VF.Articulation('a@a')).setPosition(3))
     }
 
     //ties
     if(tie){
-      this.ties[data.voice].push(new this.VF.StaveTie({
-        first_note: note
-      }))
+      let staveTie = new this.VF.StaveTie({first_note: note})
+        .setDirection(-stemDirection)
+
+      this.ties[data.voice].push(staveTie)
     }
+
+    if(slur && !this.slurringFrom){
+      this.slurringFrom = note
+    } else if(!slur && this.slurringFrom) {
+      let curve = new this.VF.Curve(this.slurringFrom, note, {cps: [{x: 10, y: 60}, {x: 10, y: 20}]})
+      this.curves.push(curve)
+      this.slurringFrom = false
+    } //else there is no slur starting or ending and we'll just keep going.
 
     return note
   }

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import VoiceController from '../VoiceController'
 import Measure from '../notation/Measure'
 import Meta from '../notation/Meta'
+import EndBar from '../notation/EndBar'
 import PlayButton from '../playButton'
 import TempoButton from '../TempoButton'
 import {stafSpace, verseSpace} from '../../config.js'
@@ -55,12 +56,18 @@ export default class Practice extends Component {
       let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
       let width = maxNotes * 72
       let active = idx >= activeIdx
+      let final = idx === songData.length - 1
       return (
         <div key={idx} style={{width: `${active ? width : 0}px`}} className={`measure${active ? '' : '-inactive'}`}>
-          <Measure idx={idx} data={data} voices={voices} grand={true} width={width} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
+          <Measure final={final} idx={idx} data={data} voices={voices} grand={true} width={width} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
         </div>
       )
     })
+  }
+
+  get ts(){
+    const {songData} = this.props
+    return songData[1].ts
   }
 
   togglePlay = (value = !this.state.playing, callback = null) => {
@@ -161,8 +168,9 @@ export default class Practice extends Component {
             onTouchMove={this.scroll}
             onTouchEnd={this.doneScrolling}
           >
-            <Meta grand={true} keySignature={keySignature} stafSpace={this.stafSpacePlusVerses}/>
+            <Meta grand={true} keySignature={keySignature} ts={this.ts} stafSpace={this.stafSpacePlusVerses}/>
             {this.measures}
+            <EndBar grand={true} stafSpace={this.stafSpacePlusVerses}/>
           </div>
         </div>
         <TempoButton setTempo={setTempo} togglePlay={togglePlay} tempo={tempo} playing={playing}/>

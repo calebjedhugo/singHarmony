@@ -1,5 +1,3 @@
-// This is copied from the main project. We need to figure out how to not do that...
-
 // props = {
 //     type: String, /*treble, base, alto, tenor, or grand*/
 //     width: Number /*width of the staff in pixels*/
@@ -28,7 +26,7 @@ export class Staff extends Component {
   }
 
   initStaff(){
-    let {grand, keySignature} = this.props
+    let {grand, keySignature, ts} = this.props
     let {clef, padding, stafSpace} = this.staticProps
     let type = this.props.type || 'treble' //the staff on which to render.
 
@@ -52,7 +50,7 @@ export class Staff extends Component {
     }
 
     if(grand){
-      if(clef){ //key signature existance is tied to the clef's existance.
+      if(clef){ //key signatures existance is tied to the clef's existance.
         this.trebleStaff.addClef('treble')
         this.bassStaff.addClef('bass')
 
@@ -61,6 +59,11 @@ export class Staff extends Component {
 
         let bassKeySig = new this.VF.KeySignature(keySignature)
         bassKeySig.addToStave(this.bassStaff)
+      }
+
+      if(ts){
+        this.trebleStaff.addTimeSignature(ts.join('/'))
+        this.bassStaff.addTimeSignature(ts.join('/'))
       }
 
       this.trebleStaff.setContext(this.context).draw();
