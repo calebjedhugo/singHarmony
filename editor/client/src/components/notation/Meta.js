@@ -2,7 +2,6 @@ import {Staff} from './Staff.js'
 
 export default class Meta extends Staff {
   constructor(props){
-    console.log(keyWidth(props.keySignature) + tsWidth(props.ts))
     super(props, {width: keyWidth(props.keySignature) + tsWidth(props.ts), clef: true, padding: -2, stafSpace: props.stafSpace})
   }
 

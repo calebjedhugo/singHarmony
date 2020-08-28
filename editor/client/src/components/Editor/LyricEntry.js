@@ -47,7 +47,7 @@ class VerseEntry extends Component{
     const {patch} = this.props
     let data = JSON.parse(JSON.stringify(this.props.verse))
     data.splice(idx, 1)
-    patch(data, true)
+    patch(data, false)
   }
 
   get words(){

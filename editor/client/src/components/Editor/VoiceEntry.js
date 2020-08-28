@@ -25,7 +25,7 @@ export default class VoiceEntry extends Component {
     const {patch} = this.props
     let data = JSON.parse(JSON.stringify(this.props.data))
     data.splice(idx, 1)
-    patch(data, true)
+    patch(data, false)
   }
 
 

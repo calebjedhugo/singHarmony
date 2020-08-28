@@ -45,7 +45,7 @@ export default class Editor extends Component {
       <>
         <Button className={'menuButtons'} onClick={this.home}>{'Home'}</Button>
         <LyricImport setData={hardSetData} title={selectedSong} />
-        <TimeSignatureChange setData={setData} title={selectedSong} />
+        <TimeSignatureChange setData={hardSetData} title={selectedSong} />
         {error ? <div className='error'>{error}</div> : null}
         <MetaData patch={newData => {this.patch(newData, 'metaData')}} metaData={data.metaData} />
         <Notation patch={(newData, hardSetDataBool) => {this.patch(newData, 'notes', hardSetDataBool)}} songData={data.notes} keySignature={data.metaData.keySignature}/>

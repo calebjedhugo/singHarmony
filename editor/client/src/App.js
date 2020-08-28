@@ -37,6 +37,7 @@ class App extends Component {
   }
 
   hardSetData = newData => {
+    // return this.setData(newData) //If you want to turn this off...
     this.setState({data: {}}, () => {
       this.setState({data: newData})
     })

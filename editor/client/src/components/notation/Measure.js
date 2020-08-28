@@ -23,6 +23,7 @@ export default class Measure extends Staff {
     this.verses = []
     this.beams = []
     this.ties = {s: [], a: [], t: [], b: []}
+    this.curves = []
     const {voices, idx, keySignature, data, final} = this.props
 
     this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
@@ -96,6 +97,10 @@ export default class Measure extends Staff {
         })
       }
 
+      this.curves.forEach(curve => {
+        curve.setContext(this.context).draw()
+      })
+
     }
     catch(e){
       console.error(e.message, data, `Measure ${idx}`)
@@ -103,11 +108,17 @@ export default class Measure extends Staff {
   }
 
   createTickables = (data, clef, active, voice, final) => {
-    return data.map(note => {
+    this.slurringFrom = false
+    this.tying = false
+    let f = data.map(note => {
       let vfNote = this.vfNote({...note, clef: clef, voice: voice})
       if(!active) vfNote.setStyle(disabledVoiceStyle);
       return vfNote
     })
+    if(this.tying){
+      this.pushTie(this.tying, null, voice)
+    }
+    return f
   }
 
   createLyrics = data => {
@@ -145,24 +156,41 @@ export default class Measure extends Staff {
     else return false
   }
 
+  pushTie = (from, to, voice) => {
+    let stemDirection = this.stemDirection(voice)
+    let staveTie = new this.VF.StaveTie({
+      first_note: from,
+      last_note: to
+    })
+    .setDirection(-stemDirection)
+
+    this.ties[voice].push(staveTie)
+    this.tying = undefined
+  }
+
+  stemDirection = voice => {
+    return /^(a|b)$/.test(voice) ? -1 : 1
+  }
+
   vfNote = (data) => {
     const {manuallyOffset, tie, noBeam, fermata, slur, duration, rest, dotted} = durationMods(data.duration)
-    let stemDirection = /^(a|b)$/.test(data.voice) ? -1 : 1
+    const {voice, value, clef, offset} = data
+    let stemDirection = this.stemDirection(voice)
 
     let note = new this.VF.StaveNote({
-      clef: data.clef,
-      keys: [data.value],
+      clef: clef,
+      keys: [value],
       duration: duration,
       stem_direction: stemDirection
     })
 
     //Accidentals
-    let accidental = this.accidental(data.value)
+    let accidental = this.accidental(value)
     if(accidental && !rest){
       note.addAccidental(...accidental)
     }
 
-    if(data.offset || manuallyOffset){
+    if(offset || manuallyOffset){
       note.setXShift(15)
     }
 
@@ -181,16 +209,24 @@ export default class Measure extends Staff {
     }
 
     //ties
+    if(this.tying){
+      this.pushTie(this.tying, note, voice)
+    }
     if(tie){
-      let staveTie = new this.VF.StaveTie({first_note: note})
-        .setDirection(-stemDirection)
-
-      this.ties[data.voice].push(staveTie)
+      this.tying = note
     }
 
-    if(slur){
-
-    }
+    if(slur && !this.slurringFrom){
+      this.slurringFrom = note
+    } else if(!slur && this.slurringFrom) {
+      let curve = new this.VF.Curve(this.slurringFrom, note, {
+        cps: [{x: 10, y: 30}, {x: 10, y: 20}],
+        invert: true,
+        x_shift: 2
+      })
+      this.curves.push(curve)
+      this.slurringFrom = false
+    } //else there is no slur starting or ending and we'll just keep going.
 
     return note
   }
