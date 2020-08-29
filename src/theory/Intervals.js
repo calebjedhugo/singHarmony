@@ -17,7 +17,9 @@ export default class Intervals{
     let zeroBase2 = (note2[1] * 7) + letters.indexOf(note2[0])
 
     let interval = Math.abs(zeroBase1 - zeroBase2)
-    return interval + 1 //intervals are 1 based counting
+    return {
+      value: (interval + 1),
+      direction: zeroBase1 > zeroBase2
+    } //intervals are 1 based counting
   }
 }
- window.notationDistance = (new Intervals()).notationDistance

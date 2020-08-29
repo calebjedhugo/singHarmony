@@ -1,6 +1,8 @@
 import {Staff} from './Staff.js'
-import {Theory} from '../../Theory'
 import durationMods from './durationMods'
+import Curves from './Curves'
+import {Theory} from '../../Theory'
+
 const theory = new Theory()
 
 const disabledVoiceStyle = {fillStyle: "#0000004a", strokeStyle: "#0000004a"}
@@ -108,7 +110,7 @@ export default class Measure extends Staff {
   }
 
   createTickables = (data, clef, active, voice, final) => {
-    this.slurringFrom = false
+    this.curveCreator = new Curves(this.VF)
     this.tying = false
     let f = data.map(note => {
       let vfNote = this.vfNote({...note, clef: clef, voice: voice})
@@ -216,17 +218,12 @@ export default class Measure extends Staff {
       this.tying = note
     }
 
-    if(slur && !this.slurringFrom){
-      this.slurringFrom = note
-    } else if(!slur && this.slurringFrom) {
-      let curve = new this.VF.Curve(this.slurringFrom, note, {
-        cps: [{x: 10, y: 30}, {x: 10, y: 20}],
-        invert: true,
-        x_shift: 2
-      })
-      this.curves.push(curve)
-      this.slurringFrom = false
-    } //else there is no slur starting or ending and we'll just keep going.
+    if(slur || this.curveCreator.from){
+      this.curveCreator.insert(note)
+      if(!slur){ //if the slur is ending
+        this.curves.push(this.curveCreator.extract)
+      }
+    }
 
     return note
   }

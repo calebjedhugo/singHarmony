@@ -20,4 +20,3 @@ export default class Intervals{
     return interval + 1 //intervals are 1 based counting
   }
 }
- window.notationDistance = (new Intervals()).notationDistance

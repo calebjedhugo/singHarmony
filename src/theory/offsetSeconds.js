@@ -17,8 +17,8 @@ function modifyFirstVoice(voice1, voice2, denom){
   let i2 = 0
   for(let i = 0; i < voice1.length; i++){
     if(nextNotes[0] === nextNotes[1]){
-      let interval = intervals.notationDistance(voice1[i].value, voice2[i2].value)
-      if(interval === 2){
+      let {value} = intervals.notationDistance(voice1[i].value, voice2[i2].value)
+      if(value === 2){
         voice1[i].offset = true
       }
     }
