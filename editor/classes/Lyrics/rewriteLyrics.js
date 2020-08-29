@@ -25,7 +25,7 @@ module.exports = (newLyrics, songData) => {
       let noteDuration = sNote.duration
 
       //remove leading instructions for notation.
-      while(/^(t|b|f|o)$/.test(noteDuration.slice(noteDuration.length - 1))) {
+      while(/^(t|b|f|o|s)$/.test(noteDuration.slice(noteDuration.length - 1))) {
         noteDuration = noteDuration.slice(0, noteDuration.length - 1)
       }
 
