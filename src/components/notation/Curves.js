@@ -12,11 +12,13 @@ export default class Curves {
   get extract() {
     //Do we have what we need to make a curve?
     if(!this.from || !this.to) return null
-    console.log(notationDistance(this.from.keys[0], this.to.keys[0]))
+    let interval = notationDistance(this.from.keys[0], this.to.keys[0])
+    
     this.lastResult = new this.VF.Curve(this.from, this.to, {
       cps: [{x: 10, y: 30}, {x: 10, y: 20}],
       invert: true,
-      x_shift: 2
+      x_shift: 2,
+      thickness: 0.1
     })
 
     this.to = null
