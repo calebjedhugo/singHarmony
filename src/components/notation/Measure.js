@@ -175,7 +175,7 @@ export default class Measure extends Staff {
   }
 
   vfNote = (data) => {
-    const {manuallyOffset, tie, noBeam, fermata, slur, duration, rest, dotted} = durationMods(data.duration)
+    const {manuallyOffset, tie, noBeam, fermata, slur, duration, rest, dotted, breathMark} = durationMods(data.duration)
     const {voice, value, clef, offset} = data
     let stemDirection = this.stemDirection(voice)
 
@@ -192,16 +192,16 @@ export default class Measure extends Staff {
       note.addAccidental(...accidental)
     }
 
-    if(offset || manuallyOffset){
-      note.setXShift(15)
-    }
-
     //Add dots
     if(dotted){
       note.addDotToAll()
     }
 
-    //Custom modifiers (not in Vexflow)
+    //*** Custom modifiers (not in Vexflow) ***
+    if(offset || manuallyOffset){
+      note.setXShift(15)
+    }
+
     if(noBeam){
       note.setBeam('noBeam')
     }
@@ -210,7 +210,6 @@ export default class Measure extends Staff {
       note.addArticulation(0, (new this.VF.Articulation('a@a')).setPosition(3))
     }
 
-    //ties
     if(this.tying){
       this.pushTie(this.tying, note, voice)
     }
@@ -223,6 +222,14 @@ export default class Measure extends Staff {
       if(!slur){ //if the slur is ending
         this.curves.push(this.curveCreator.extract)
       }
+    }
+
+    if(breathMark && stemDirection > 0){
+      let annotation = new this.VF.Annotation('  ’')
+      annotation.setFont('Times', 40)
+      annotation.setVerticalJustification(this.VF.Annotation.VerticalJustify.CENTER);
+      annotation.setJustification(1);
+      note.addModifier(0, annotation)
     }
 
     return note

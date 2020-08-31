@@ -52,7 +52,7 @@ export default class Player {
           break;
         }
 
-        let {duration, tie, rest} = durationMods(notesArray[i].duration)
+        let {duration, tie, rest, breathMark} = durationMods(notesArray[i].duration)
 
         if(rest){
           duration = duration.slice(0, duration.length - 1) //get rid of the 'r'. this.lengthTranslate doesn't handle it.
@@ -67,9 +67,20 @@ export default class Player {
           tempoChanges[0].slice(framesElapsed, framesElapsed + durationInFrames)
         )
 
+        let noteSpace = 0
+        if(breathMark){
+          noteSpace = length * .25
+        }
+
         //Is this a rest? Is the voice active?
         if(!rest && this.voicesActive[voice]) {
-          await this.piano.play(notesArray[i].value, dynamic, length)
+          await this.piano.play(notesArray[i].value, dynamic, length - noteSpace)
+          if(noteSpace){
+            console.log(noteSpace * 1000)
+            await new Promise(resolve => {
+              setTimeout(resolve, noteSpace * 1000)
+            })
+          }
         } else { //This shouldn't be played. Just tell me when it's over...
           await new Promise(resolve => {
             setTimeout(resolve, length * 1000)

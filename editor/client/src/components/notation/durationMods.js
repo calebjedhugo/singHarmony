@@ -15,6 +15,7 @@ export default (ds) => {
       case 't': f.tie = true; break;
       case 'r': f.rest = true; break;
       case 'd': f.dotted = true; break;
+      case '\'': f.breathMark = true; break;
     }
   }
 
@@ -28,7 +29,7 @@ class DurationMods {
     this.ds = ds
   }
 
-  modRegexp = /^(f|b|t|o|s|r|d)$/
+  modRegexp = /^(f|b|t|o|s|r|d|\')$/
 
   output = ''
 
