@@ -24,7 +24,6 @@ export default class Measure extends Staff {
     this.voices = []
     this.verses = []
     this.beams = []
-    this.ties = {s: [], a: [], t: [], b: []}
     this.curves = []
     const {voices, idx, keySignature, data, final} = this.props
 
@@ -91,14 +90,6 @@ export default class Measure extends Staff {
         })
       });
 
-      for(let tieVoice in this.ties){
-        this.ties[tieVoice].forEach(tie => {
-          if(voices[tieVoice]){
-            tie.setContext(this.context).draw(this.context)
-          }
-        })
-      }
-
       this.curves.forEach(curve => {
         curve.setContext(this.context).draw()
       })
@@ -118,7 +109,7 @@ export default class Measure extends Staff {
       return vfNote
     })
     if(this.tying){
-      this.pushTie(this.tying, null, voice)
+      this.pushTie(this.tying, null)
     }
     return f
   }
@@ -166,7 +157,7 @@ export default class Measure extends Staff {
     })
     .setDirection(-stemDirection)
 
-    this.ties[voice].push(staveTie)
+    this.curves.push(staveTie)
     this.tying = undefined
   }
 
@@ -177,6 +168,7 @@ export default class Measure extends Staff {
   vfNote = (data) => {
     const {manuallyOffset, tie, noBeam, fermata, slur, duration, rest, dotted, breathMark} = durationMods(data.duration)
     const {voice, value, clef, offset} = data
+    const {voices} = this.props
     let stemDirection = this.stemDirection(voice)
 
     let note = new this.VF.StaveNote({
@@ -210,14 +202,14 @@ export default class Measure extends Staff {
       note.addArticulation(0, (new this.VF.Articulation('a@a')).setPosition(3))
     }
 
-    if(this.tying){
-      this.pushTie(this.tying, note, voice)
+    if(this.tying && voices[voice]){
+      this.pushTie(this.tying, note)
     }
-    if(tie){
+    if(tie && voices[voice]){
       this.tying = note
     }
 
-    if(slur || this.curveCreator.from){
+    if(slur || this.curveCreator.from && voices[voice]){
       this.curveCreator.insert(note)
       if(!slur){ //if the slur is ending
         this.curves.push(this.curveCreator.extract)

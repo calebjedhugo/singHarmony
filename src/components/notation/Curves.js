@@ -38,8 +38,10 @@ export default class Curves {
       invert: true,
       x_shift: 2,
       y_shift: this.notesInMiddle ? 20 : 10,
+      style: {fillStyle: "#0000004a", strokeStyle: "#0000004a"},
       thickness: .001
     })
+    this.lastResult.setStyle({fillStyle: "#0000004a", strokeStyle: "#0000004a"})
 
     this.to = null
     this.from = null
