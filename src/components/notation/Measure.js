@@ -25,7 +25,7 @@ export default class Measure extends Staff {
     this.verses = []
     this.beams = []
     this.curves = []
-    const {voices, idx, keySignature, data, final} = this.props
+    const {voices, idx, keySignature, data} = this.props
 
     this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
 
@@ -38,7 +38,7 @@ export default class Measure extends Staff {
         let currentVoice = new this.VF.Voice({num_beats: data.ts[0], beat_value: data.ts[1]})
         this.voices.push(currentVoice)
         let clef = voice === 's' || voice === 'a' ? 'treble' : 'bass'
-        let tickables = this.createTickables(data[voice], clef, voices[voice], voice, final)
+        let tickables = this.createTickables(data[voice], clef, voices[voice], voice)
 
         currentVoice.addTickables(tickables)
         currentVoice.clef = this[`${clef}Staff`]
@@ -100,7 +100,7 @@ export default class Measure extends Staff {
     }
   }
 
-  createTickables = (data, clef, active, voice, final) => {
+  createTickables = (data, clef, active, voice) => {
     this.curveCreator = new Curves(this.VF)
     this.tying = false
     let f = data.map(note => {
@@ -108,6 +108,8 @@ export default class Measure extends Staff {
       if(!active) vfNote.setStyle(disabledVoiceStyle);
       return vfNote
     })
+    let lastNote = f[f.length - 1]
+    if(lastNote.duration === '2' && f.length > 1) lastNote.setXShift(lastNote.x_shift + 30)
     if(this.tying){
       this.pushTie(this.tying, null)
     }
@@ -116,7 +118,7 @@ export default class Measure extends Staff {
 
   createLyrics = data => {
     return data.map((verse, idx) => {
-      return verse.map(word => {
+      let f = verse.map(word => {
         let textNote = new this.VF.TextNote({text: word.value + ' ', duration: word.duration})
         textNote
           .setContext(this.context)
@@ -124,6 +126,9 @@ export default class Measure extends Staff {
           .setLine(14 + (idx * 1.75))
         return textNote
       })
+      let lastNote = f[f.length - 1]
+      if(lastNote.duration === '2' && f.length > 1) lastNote.text = ('     ' + lastNote.text)
+      return f
     })
   }
 

@@ -18,6 +18,7 @@ export default class Player {
   //holds the promises returned by "this.queueVoice"
   voicePromises = {'s': undefined, 'a': undefined, 't': undefined, 'b': undefined}
   voicesActive = {'s': true, 'a': true, 't': true, 'b': true}
+  voiceStopFunctions = {}
 
   play = (data) => {
     const {tempoChanges, tempoChangeResolution} = data
@@ -53,13 +54,11 @@ export default class Player {
         }
 
         let {duration, tie, rest, breathMark} = durationMods(notesArray[i].duration)
-
         if(rest){
           duration = duration.slice(0, duration.length - 1) //get rid of the 'r'. this.lengthTranslate doesn't handle it.
         }
 
         let durationInFrames = this.durationToFrames(duration, tempoChanges[1])
-
         let dynamic = notesArray[i].dynamic || this.defaultDynamic
         let length = this.lengthTranslate(
           duration,
@@ -72,11 +71,26 @@ export default class Player {
           noteSpace = length * .25
         }
 
-        //Is this a rest? Is the voice active?
-        if(!rest && this.voicesActive[voice]) {
-          await this.piano.play(notesArray[i].value, dynamic, length - noteSpace)
+        if(breathMark && tie){throw new Error('You cannot have a breath mark with a tie.')}
+
+        //Is this a rest? Is the voice active? Also, is this from a previous tie going to another tie?
+        if(!rest && this.voicesActive[voice] && !(this.voiceStopFunctions[voice] && tie)){
+          //Is there a stop function?
+          if(this.voiceStopFunctions[voice]){
+            await new Promise(resolve => {
+              setTimeout(() => {
+                resolve()
+                this.voiceStopFunctions[voice]()
+                delete this.voiceStopFunctions[voice]
+              }, length * 1000)
+            })
+          } else {
+            //Start the note. This is most typical
+            this.voiceStopFunctions[voice] = await this.piano.play(notesArray[i].value, dynamic, length - noteSpace, tie)
+          }
+
+          //Are to stopping the note early for articulation, breathing, ect?
           if(noteSpace){
-            console.log(noteSpace * 1000)
             await new Promise(resolve => {
               setTimeout(resolve, noteSpace * 1000)
             })
@@ -109,7 +123,12 @@ export default class Player {
   lengthTranslate = (duration, denominator, tempoAlterations) => {
     let tempoAlteration = 1
     if(tempoAlterations){
-      tempoAlteration = tempoAlterations.reduce((a, b) => {return a + b}) / tempoAlterations.length
+      try{
+        tempoAlteration = tempoAlterations.reduce((a, b) => {return a + b}) / tempoAlterations.length
+      } catch(e){
+        //Don't ruin everything. Just don't change the tempo.
+        console.error(e.message, tempoAlterations)
+      }
     }
 
     let dotted = false

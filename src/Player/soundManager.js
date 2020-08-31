@@ -36,7 +36,7 @@ class SampledInstrument{
     }, (err) => {console.error(err.message, fileData)});
   }
 
-  //For what we resolve a promise at the right time, but without playing a sound.
+  //For resolving a promise at the right time, but without playing a sound.
   timelyPromise = (length) => {
     return new Promise(resolve => {
       //We still want to resolve at the right time.
@@ -44,7 +44,7 @@ class SampledInstrument{
     })
   }
 
-  play = (note, dynamic = 'mf', length = 1) => {
+  play = (note, dynamic = 'mf', length = 1, tied) => {
     note = this.noteConvert(note);
     if((this.sourceNodes[note] && !(this.sourceNodes[note].ready))) {
       console.log(`The ${note} on the ${this.type} is priming.`)
@@ -79,16 +79,17 @@ class SampledInstrument{
     else
       console.log(note + " is not available for the " + this.type);
 
-    if(length){
-      return new Promise(resolve => {
-        setTimeout(() => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        let stop = () => {this.smoothStop(sourceNode, gainNode)}
+        if(!tied){
           resolve() //resolve with precision.
-          setTimeout(() => { //Allow sound to overlap a bit.
-            this.smoothStop(sourceNode, gainNode)
-          }, 20)
-        }, (length * 1000));
-      })
-    }
+          setTimeout(stop, 20) //Allow sound to overlap a bit.
+        } else { //the note is tied, so whatever called this needs to know how to stop it.
+          resolve(stop) //Note we are returning HOW to stop it. We are not stopping it yet.
+        }
+      }, (length * 1000))
+    })
   }
 
   noteConvert = note => {

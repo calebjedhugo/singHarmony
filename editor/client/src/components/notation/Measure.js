@@ -24,9 +24,8 @@ export default class Measure extends Staff {
     this.voices = []
     this.verses = []
     this.beams = []
-    this.ties = {s: [], a: [], t: [], b: []}
     this.curves = []
-    const {voices, idx, keySignature, data, final} = this.props
+    const {voices, idx, keySignature, data} = this.props
 
     this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
 
@@ -39,7 +38,7 @@ export default class Measure extends Staff {
         let currentVoice = new this.VF.Voice({num_beats: data.ts[0], beat_value: data.ts[1]})
         this.voices.push(currentVoice)
         let clef = voice === 's' || voice === 'a' ? 'treble' : 'bass'
-        let tickables = this.createTickables(data[voice], clef, voices[voice], voice, final)
+        let tickables = this.createTickables(data[voice], clef, voices[voice], voice)
 
         currentVoice.addTickables(tickables)
         currentVoice.clef = this[`${clef}Staff`]
@@ -91,14 +90,6 @@ export default class Measure extends Staff {
         })
       });
 
-      for(let tieVoice in this.ties){
-        this.ties[tieVoice].forEach(tie => {
-          if(voices[tieVoice]){
-            tie.setContext(this.context).draw(this.context)
-          }
-        })
-      }
-
       this.curves.forEach(curve => {
         curve.setContext(this.context).draw()
       })
@@ -109,7 +100,7 @@ export default class Measure extends Staff {
     }
   }
 
-  createTickables = (data, clef, active, voice, final) => {
+  createTickables = (data, clef, active, voice) => {
     this.curveCreator = new Curves(this.VF)
     this.tying = false
     let f = data.map(note => {
@@ -117,15 +108,17 @@ export default class Measure extends Staff {
       if(!active) vfNote.setStyle(disabledVoiceStyle);
       return vfNote
     })
+    let lastNote = f[f.length - 1]
+    if(lastNote.duration === '2' && f.length > 1) lastNote.setXShift(lastNote.x_shift + 30)
     if(this.tying){
-      this.pushTie(this.tying, null, voice)
+      this.pushTie(this.tying, null)
     }
     return f
   }
 
   createLyrics = data => {
     return data.map((verse, idx) => {
-      return verse.map(word => {
+      let f = verse.map(word => {
         let textNote = new this.VF.TextNote({text: word.value + ' ', duration: word.duration})
         textNote
           .setContext(this.context)
@@ -133,6 +126,9 @@ export default class Measure extends Staff {
           .setLine(14 + (idx * 1.75))
         return textNote
       })
+      let lastNote = f[f.length - 1]
+      if(lastNote.duration === '2' && f.length > 1) lastNote.text = ('     ' + lastNote.text)
+      return f
     })
   }
 
@@ -166,7 +162,7 @@ export default class Measure extends Staff {
     })
     .setDirection(-stemDirection)
 
-    this.ties[voice].push(staveTie)
+    this.curves.push(staveTie)
     this.tying = undefined
   }
 
@@ -177,6 +173,7 @@ export default class Measure extends Staff {
   vfNote = (data) => {
     const {manuallyOffset, tie, noBeam, fermata, slur, duration, rest, dotted, breathMark} = durationMods(data.duration)
     const {voice, value, clef, offset} = data
+    const {voices} = this.props
     let stemDirection = this.stemDirection(voice)
 
     let note = new this.VF.StaveNote({
@@ -210,14 +207,14 @@ export default class Measure extends Staff {
       note.addArticulation(0, (new this.VF.Articulation('a@a')).setPosition(3))
     }
 
-    if(this.tying){
-      this.pushTie(this.tying, note, voice)
+    if(this.tying && voices[voice]){
+      this.pushTie(this.tying, note)
     }
-    if(tie){
+    if(tie && voices[voice]){
       this.tying = note
     }
 
-    if(slur || this.curveCreator.from){
+    if(slur || this.curveCreator.from && voices[voice]){
       this.curveCreator.insert(note)
       if(!slur){ //if the slur is ending
         this.curves.push(this.curveCreator.extract)

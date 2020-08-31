@@ -21,7 +21,7 @@ class App extends Component {
       screen: 'home',
       song: '',
       tempo: 100,
-      keySignature: 'G',
+      keySignature: 'C',
       voices: {
         s: true,
         a: true,

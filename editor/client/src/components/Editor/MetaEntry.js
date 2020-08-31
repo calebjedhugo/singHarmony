@@ -16,7 +16,7 @@ export default class MetaEntry extends Component {
     return (
       <>
         <div><TS data={data.ts} patch={newData => {patch(newData, 'ts')}} /></div>
-        <div><TempoChangeResolution data={data.tempoChangeResolution} patch={newData => {patch(newData, 'tempoResolution')}} /></div>
+        <div><TempoChangeResolution data={data.tempoChangeResolution} patch={newData => {patch(newData, 'tempoChangeResolution')}} /></div>
         <div><TempoChanges data={data.tempoChanges} patch={newData => {patch(newData, 'tempoChanges')}} /></div>
       </>
     )
@@ -32,6 +32,7 @@ class TempoChangeResolution extends Component {
   handleChange = (e, idx) => {
     let {resolution, patch} = this.props
     let {value} = e.target
+    value = Number(value)
 
     this.setState({tempoChangeResolution: value})
     patch(value)
