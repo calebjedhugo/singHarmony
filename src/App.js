@@ -18,8 +18,8 @@ class App extends Component {
     this.player = new Player()
 
     this.state = {
-      screen: 'practice',
-      song: 'And Can It Be',
+      screen: 'home',
+      song: '',
       tempo: 100,
       keySignature: 'G',
       voices: {

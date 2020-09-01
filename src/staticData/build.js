@@ -18,80 +18,80 @@ const rhythm = {
 }
 
 let songTitles = [
-  ['A Mighty Fortress is Our God', 'C'],
-  ['All Glory, Laud and Honor', 'Bb'],
-  ['All Hail the Power of Jesus’ Name', 'G'],
-  ['America the Beautiful', 'Bb'],
-  ['Amazing Grace', 'G'],
-  ['And Can It Be', 'G'],
-  ['Angels We Have Heard on High', 'F'],
-  ['Angels, from the Realms of Glory', 'Bb'],
-  ['As with Gladness Men of Old', 'G'],
-  ['At Calvary', 'C'],
-  ['At the Cross', 'Eb'],
-  ['Away in a Manger', 'F'],
-  ['Battle Hymn of the Republic', 'Bb'],
-  ['Blest Be the Tie That Binds', 'F'],
-  ['Brethren, We Have Met to Worship', 'G'],
-  ['Children of the Heavenly Father', 'D'],
-  ['Christ Arose!', 'Bb'],
-  ['Christ the Lord Is Risen Today', 'C'],
-  ['Come, Thou Fount of Every Blessing', 'D'],
-  ['Crown Him with Many Crowns', 'Eb'],
-  ['Face to Face', 'Ab'],
-  ['Fairest Lord Jesus', 'Eb'],
-  ['For the Beauty of the Earth', 'Ab'],
-  ['Go to Dark Gethsemane', 'D'],
-  ['God of Our Fathers', 'Eb'],
+  // ['A Mighty Fortress is Our God', 'C'],
+  // ['All Glory, Laud and Honor', 'Bb'],
+  // ['All Hail the Power of Jesus’ Name', 'G'],
+  // ['America the Beautiful', 'Bb'],
+  // ['Amazing Grace', 'G'],
+  // ['And Can It Be', 'G'],
+  // ['Angels We Have Heard on High', 'F'],
+  // ['Angels, from the Realms of Glory', 'Bb'],
+  // ['As with Gladness Men of Old', 'G'],
+  // ['At Calvary', 'C'],
+  // ['At the Cross', 'Eb'],
+  // ['Away in a Manger', 'F'],
+  // ['Battle Hymn of the Republic', 'Bb'],
+  // ['Blest Be the Tie That Binds', 'F'],
+  // ['Brethren, We Have Met to Worship', 'G'],
+  // ['Children of the Heavenly Father', 'D'],
+  // ['Christ Arose!', 'Bb'],
+  // ['Christ the Lord Is Risen Today', 'C'],
+  // ['Come, Thou Fount of Every Blessing', 'D'],
+  // ['Crown Him with Many Crowns', 'Eb'],
+  // ['Face to Face', 'Ab'],
+  // ['Fairest Lord Jesus', 'Eb'],
+  // ['For the Beauty of the Earth', 'Ab'],
+  // ['Go to Dark Gethsemane', 'D'],
+  // ['God of Our Fathers', 'Eb'],
   ['God Rest Ye Merry, Gentlemen', 'G'],
-  ['Good Christian Men, Rejoice', 'F'],
-  ['Grace Greater than Our Sin', 'G'],
-  ['Hallelujah, What a Savior!', 'Bb'],
-  ['Hark! the Herald Angels Sing', 'F'],
-  ['Have Thine Own Way, Lord!', 'Eb'],
-  ['Higher Ground', 'G'],
-  ['Holy Holy Holy', 'D'],
-  ['How Firm A Foundation', 'Ab'],
-  ['How Great Our Joy', 'Bb'],
-  ['I Heard the Bells on Christmas Day', 'Eb'],
-  ['I Sing the Mighty Power of God', 'Bb'],
-  ['I Surrender All', 'Db'],
-  ['In the Garden', 'Ab'],
-  ['It Came upon the Midnight Clear', 'Bb'],
-  ['It Is Well with My Soul', 'C'],
-  ['Jesus Paid it All', 'Db'],
-  ['Joy to the World!', 'D'],
-  ['Joyful, Joyful, We Adore Thee', 'G'],
-  ['Just As I Am', 'Db'],
-  ['Leaning on the Everlasting Arms', 'Ab'],
-  ['My Country, ‘Tis of Thee', 'F'],
-  ['Nothing But the Blood', 'F'],
-  ['O Come, All Ye Faithful', 'Ab'],
-  ['O Come, O Come, Emmanuel', 'G'],
-  ['O for a Thousand Tongues to Sing', 'Ab'],
-  ['O Holy Night', 'Eb'],
-  ['O Little Town of Bethlehem', 'F'],
-  ['O Sacred Head, Now Wounded', 'C'],
-  ['Praise Him! Praise Him!', 'G'],
-  ['Praise to the Lord, the Almighty', 'G'],
-  ['Rock of Ages', 'Bb'],
-  ['Shall We Gather at the River?', 'D'],
-  ['Silent Night! Holy Night!', 'Bb'],
-  ['Standing on the Promises', 'Bb'],
-  ['Take My Life and Let It Be', 'F'],
-  ['The First Noel', 'D'],
-  ['The Lord Bless You and Keep You', 'C'],
-  ['The Old Rugged Cross', 'Bb'],
-  ['The Solid Rock', 'F'],
-  ['There Is a Fountain', 'Bb'],
-  ['This Is my Father’s World', 'Eb'],
-  ['To God Be the Glory', 'Ab'],
-  ['We Three Kings', 'G'],
-  ['Were You There?', 'Eb'],
-  ['What Child Is This?', 'G'],
-  ['When I Survey the Wondrous Cross', 'F'],
-  ['While Shepherds Watched Their Flocks', 'C'],
-  ['Wonderful Grace of Jesus', 'C']
+  // ['Good Christian Men, Rejoice', 'F'],
+  // ['Grace Greater than Our Sin', 'G'],
+  // ['Hallelujah, What a Savior!', 'Bb'],
+  // ['Hark! the Herald Angels Sing', 'F'],
+  // ['Have Thine Own Way, Lord!', 'Eb'],
+  // ['Higher Ground', 'G'],
+  // ['Holy Holy Holy', 'D'],
+  // ['How Firm A Foundation', 'Ab'],
+  // ['How Great Our Joy', 'Bb'],
+  // ['I Heard the Bells on Christmas Day', 'Eb'],
+  // ['I Sing the Mighty Power of God', 'Bb'],
+  // ['I Surrender All', 'Db'],
+  // ['In the Garden', 'Ab'],
+  // ['It Came upon the Midnight Clear', 'Bb'],
+  // ['It Is Well with My Soul', 'C'],
+  // ['Jesus Paid it All', 'Db'],
+  // ['Joy to the World!', 'D'],
+  // ['Joyful, Joyful, We Adore Thee', 'G'],
+  // ['Just As I Am', 'Db'],
+  // ['Leaning on the Everlasting Arms', 'Ab'],
+  // ['My Country, ‘Tis of Thee', 'F'],
+  // ['Nothing But the Blood', 'F'],
+  // ['O Come, All Ye Faithful', 'Ab'],
+  // ['O Come, O Come, Emmanuel', 'G'],
+  // ['O for a Thousand Tongues to Sing', 'Ab'],
+  // ['O Holy Night', 'Eb'],
+  // ['O Little Town of Bethlehem', 'F'],
+  // ['O Sacred Head, Now Wounded', 'C'],
+  // ['Praise Him! Praise Him!', 'G'],
+  // ['Praise to the Lord, the Almighty', 'G'],
+  // ['Rock of Ages', 'Bb'],
+  // ['Shall We Gather at the River?', 'D'],
+  // ['Silent Night! Holy Night!', 'Bb'],
+  // ['Standing on the Promises', 'Bb'],
+  // ['Take My Life and Let It Be', 'F'],
+  // ['The First Noel', 'D'],
+  // ['The Lord Bless You and Keep You', 'C'],
+  // ['The Old Rugged Cross', 'Bb'],
+  // ['The Solid Rock', 'F'],
+  // ['There Is a Fountain', 'Bb'],
+  // ['This Is my Father’s World', 'Eb'],
+  // ['To God Be the Glory', 'Ab'],
+  // ['We Three Kings', 'G'],
+  // ['Were You There?', 'Eb'],
+  // ['What Child Is This?', 'G'],
+  // ['When I Survey the Wondrous Cross', 'F'],
+  // ['While Shepherds Watched Their Flocks', 'C'],
+  // ['Wonderful Grace of Jesus', 'C']
 ]
 
 const valueConvert = value => {
@@ -144,32 +144,35 @@ const getLyrics = (songTitle) => {
 
 const writeFiles = async () => {
   let importCode = ['', 'export default {\n']
-  for(let i = 0; i < songTitles.length; i++){
-    let fileName = songTitles[i][0].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
+  for(let i = 25; i < 26; i++){
+    let fileName = songTitles[0][0].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
 
-    let lyrics = await getLyrics(fileName.replace('.json', '.txt'))
-    lyrics = lyrics.split('\n\n')
-    lyrics = lyrics.map(verse => {
-      let f = verse.replace(/\n/g, ' ')
-      f = f.split(' ')
-      while(f[f.length - 1].trim() === '') {
-        f.pop()
-      }
-      return f
-    })
+    // let lyrics = await getLyrics(fileName.replace('.json', '.txt'))
+    // lyrics = lyrics.split('\n\n')
+    // lyrics = lyrics.map(verse => {
+    //   let f = verse.replace(/\n/g, ' ')
+    //   f = f.split(' ')
+    //   while(f[f.length - 1].trim() === '') {
+    //     f.pop()
+    //   }
+    //   return f
+    // })
 
     importCode[0] += `import ${fileName.replace('.json', '')} from './${fileName}'\n`
-    importCode[1] += `'${songTitles[i][0]}': ${fileName.replace('.json', '')},\n`
+    importCode[1] += `'${songTitles[0][0]}': ${fileName.replace('.json', '')},\n`
     let notes = [], measure = {s: [], a: [], t: [], b: [], ts: [], lyrics: [], tempoChanges: []}
     let measureLength = {s: 0, a: 0, t: 0, b: 0}
     let noteEnd = {s: 0, a: 0, t: 0, b: 0}
     let noteStart = {s: 0, a: 0, t: 0, b: 0}
 
+    const subsPerBeat = 2
+    const subsPerMeasure = 8
+
     for(let i2 = 0; i2 < oldNotes.s.length; i2++){
       measure.tempoChanges.push(tempoChanges[i2] ? tempoChanges[i2][i] : 1)
       for(let voice in oldNotes){
         if(oldNotes[voice][i2] && oldNotes[voice][i2][i]){
-          let rest = restCheck(i2, noteEnd[voice], songData.subsPerBeat[i])
+          let rest = restCheck(i2, noteEnd[voice], subsPerBeat)
           if(rest && i2 > 2){
             measure[voice].push(rest)
           }
@@ -183,58 +186,58 @@ const writeFiles = async () => {
           }
           measure[voice].push({
             value: valueConvert(oldNotes[voice][i2][i]),
-            duration: durationConvert(rhythm[voice][i2][i], songData.subsPerBeat[i])
+            duration: durationConvert(rhythm[voice][i2][i], subsPerBeat)
           })
           noteStart[voice] = i2
           measureLength[voice] += rhythm[voice][i2][i]
           noteEnd[voice] += rhythm[voice][i2][i]
         }
       }
-      if((i2 - songData.pickups[i]) % songData.subsPerMeasure[i] === 1 && i2 !== 1){
+      if((i2 - songData.pickups[i]) % subsPerMeasure === 1 && i2 !== 1){
         if(!measure.s.length && !measure.a.length && !measure.t.length && !measure.b.length && i2 !== 0){
           break;
         }
 
         //Add the Lyrics
-        let skipLength = []
-        measure.s.forEach(sNote => {
-          let noteDuration = sNote.duration
-          for(let verseIdx = 0; verseIdx < lyrics.length; verseIdx++){
-            if(!measure.lyrics[verseIdx]) measure.lyrics[verseIdx] = []
-            if(noteDuration[noteDuration.length - 1] === 'r') {
-              measure.lyrics[verseIdx].push(
-                {
-                  value: '', //No words with a rest.
-                  duration: noteDuration
-                }
-              )
-              continue
-            }
-            if(skipLength[verseIdx] !== 0 && skipLength[verseIdx] !== undefined){
-              skipLength[verseIdx] -= ((1 / noteDuration) * 1000)
-              continue
-            }
-            word = lyrics[verseIdx].shift()
-            if(!word){
-              return //console.log(`lyrics are not well formed for ${fileName}`)
-            }
-            let lastLetter = word[word.length - 1]
-            let lyricDuration = noteDuration
-            
-            if(!isNaN(lastLetter)){
-              skipLength[verseIdx] = ((1 / Number(lastLetter)) - (1 / noteDuration)).toFixed(3) * 1000
-              lyricDuration = Number(lastLetter)
-              word = word.slice(0, word.length - 1)
-            }
-
-            measure.lyrics[verseIdx].push(
-              {
-                value: word,
-                duration: lyricDuration.toString()
-              }
-            )
-          }
-        })
+        // let skipLength = []
+        // measure.s.forEach(sNote => {
+        //   let noteDuration = sNote.duration
+        //   for(let verseIdx = 0; verseIdx < lyrics.length; verseIdx++){
+        //     if(!measure.lyrics[verseIdx]) measure.lyrics[verseIdx] = []
+        //     if(noteDuration[noteDuration.length - 1] === 'r') {
+        //       measure.lyrics[verseIdx].push(
+        //         {
+        //           value: '', //No words with a rest.
+        //           duration: noteDuration
+        //         }
+        //       )
+        //       continue
+        //     }
+        //     if(skipLength[verseIdx] !== 0 && skipLength[verseIdx] !== undefined){
+        //       skipLength[verseIdx] -= ((1 / noteDuration) * 1000)
+        //       continue
+        //     }
+        //     word = lyrics[verseIdx].shift()
+        //     if(!word){
+        //       return //console.log(`lyrics are not well formed for ${fileName}`)
+        //     }
+        //     let lastLetter = word[word.length - 1]
+        //     let lyricDuration = noteDuration
+        //
+        //     if(!isNaN(lastLetter)){
+        //       skipLength[verseIdx] = ((1 / Number(lastLetter)) - (1 / noteDuration)).toFixed(3) * 1000
+        //       lyricDuration = Number(lastLetter)
+        //       word = word.slice(0, word.length - 1)
+        //     }
+        //
+        //     measure.lyrics[verseIdx].push(
+        //       {
+        //         value: word,
+        //         duration: lyricDuration.toString()
+        //       }
+        //     )
+        //   }
+        // })
 
         //If notes go over barlines, just trim them. We'll fix it later.
         for(let voice in noteEnd){
@@ -242,7 +245,7 @@ const writeFiles = async () => {
             noteEnd[voice] = i2
           } else {
             if(measure[voice][measure[voice].length - 1]){
-              let newDuration = durationConvert(i2 - noteStart[voice] + 1, songData.subsPerBeat[i])
+              let newDuration = durationConvert(i2 - noteStart[voice] + 1, subsPerBeat)
               measure[voice][measure[voice].length - 1].duration = newDuration
               if(voice === 's') {
                 measure.lyrics = measure.lyrics.map(verse => {
@@ -274,9 +277,9 @@ const writeFiles = async () => {
         tempo: songData.tempo[i],
         // pickups: songData.pickups[i],
         // subsPerMeasure: songData.subsPerMeasure[i],
-        keySignature: songTitles[i][1],
+        keySignature: songTitles[0][1],
         fileName: fileName,
-        prettyTitle: songTitles[i][0]
+        prettyTitle: songTitles[0][0]
       },
       notes: notes
     }
@@ -286,10 +289,10 @@ const writeFiles = async () => {
     })
   }
 
-  fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
-    if(e) throw e
-    console.log(`songData/index.js has been created.`)
-  })
+  // fs.writeFile(`songData/index.js`, `${importCode[0]}\n\n${importCode[1]}}`, e => {
+  //   if(e) throw e
+  //   console.log(`songData/index.js has been created.`)
+  // })
 }
 
-//writeFiles()
+// writeFiles()

@@ -11,7 +11,7 @@ export default class Practice extends Component {
   constructor(props){
     super(props)
     this.state = {
-      activeIdx: 15,
+      activeIdx: 0,
       startedIdx: 0, //Where playback was when the user started touching the screen.
       playing: false,
       touchStart: 0
@@ -54,7 +54,7 @@ export default class Practice extends Component {
 
     return songData.map((data, idx) => {
       let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
-      let width = maxNotes * 72
+      let width = Math.max(maxNotes * 72, 100)
       let active = idx >= activeIdx
       let final = idx === songData.length - 1
       return (

@@ -6,6 +6,7 @@ import {Theory} from '../../Theory'
 const theory = new Theory()
 
 const disabledVoiceStyle = {fillStyle: "#0000004a", strokeStyle: "#0000004a"}
+const hiddenStyle = {fillStyle: "#00000000", strokeStyle: "#00000000"}
 
 export default class Measure extends Staff {
   constructor(props){
@@ -192,6 +193,19 @@ export default class Measure extends Staff {
     //Add dots
     if(dotted){
       note.addDotToAll()
+      note.modifiers.filter(mod => {
+        return mod.constructor.name === 'Dot'
+      }).forEach(dot => {
+        if(note.flag && note.flag.code === 'flag8thUp'){
+          dot.setStyle(hiddenStyle) //We'll draw it again after the beaming settles in.
+          setTimeout(() => {
+            if(note.beam === null){
+              dot.setXShift(-11)
+            }
+            dot.draw()
+          })
+        }
+      })
     }
 
     //Accidentals
@@ -207,8 +221,6 @@ export default class Measure extends Staff {
 
     //manuallyOffset comes from the data being hard coded with one or more 'o's
     if(manuallyOffset) note.setXShift(note.x_shift + manuallyOffset)
-
-    //Now that we know what the xShift is, we (ugh...) have to set the accidenal's xShift too
 
 
     if(noBeam){
@@ -234,7 +246,8 @@ export default class Measure extends Staff {
     }
 
     if(breathMark && stemDirection > 0){ //Only mark s and t
-      let breathMarkString = '   ’'
+      let breathMarkString = '  ’'
+      if(duration !== '1') breathMarkString = ' ' + breathMarkString
       let annotation = new this.VF.Annotation(breathMarkString)
       annotation.setFont('Times', 40)
       annotation.setVerticalJustification(this.VF.Annotation.VerticalJustify.CENTER);
