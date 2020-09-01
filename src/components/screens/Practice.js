@@ -11,7 +11,7 @@ export default class Practice extends Component {
   constructor(props){
     super(props)
     this.state = {
-      activeIdx: 0,
+      activeIdx: 15,
       startedIdx: 0, //Where playback was when the user started touching the screen.
       playing: false,
       touchStart: 0

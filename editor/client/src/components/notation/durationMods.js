@@ -8,7 +8,7 @@ export default (ds) => {
 
   while(durationMods.unshiftMods()){
     switch(durationMods.output){
-      case 'o': f.manuallyOffset = true; break;
+      case 'o': f.manuallyOffset = f.manuallyOffset ? f.manuallyOffset + 15 : 15; break;
       case 'b': f.noBeam = true; break;
       case 'f': f.fermata = true; break;
       case 's': f.slur = true; break;

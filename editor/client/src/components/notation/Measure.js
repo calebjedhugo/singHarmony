@@ -109,9 +109,15 @@ export default class Measure extends Staff {
       return vfNote
     })
     let lastNote = f[f.length - 1]
-    if(lastNote.duration === '2' && f.length > 1) lastNote.setXShift(lastNote.x_shift + 30)
+    if(lastNote.duration === '2' && f.length > 1){
+      lastNote.setXShift(lastNote.x_shift + 30)
+      if(lastNote.accidental){
+        //Vexflow doesn't move the accidentals for us, and I don't know what it's negitive.
+        lastNote.accidental.setXShift(-lastNote.x_shift)
+      }
+    }
     if(this.tying){
-      this.pushTie(this.tying, null)
+      this.pushTie(this.tying, null, voice)
     }
     return f
   }
@@ -183,21 +189,27 @@ export default class Measure extends Staff {
       stem_direction: stemDirection
     })
 
-    //Accidentals
-    let accidental = this.accidental(value)
-    if(accidental && !rest){
-      note.addAccidental(...accidental)
-    }
-
     //Add dots
     if(dotted){
       note.addDotToAll()
     }
 
-    //*** Custom modifiers (not in Vexflow) ***
-    if(offset || manuallyOffset){
-      note.setXShift(15)
+    //Accidentals
+    let accidental = this.accidental(value)
+    if(accidental && !rest){
+      note.addAccidental(...accidental)
+      note.accidental = accidental[1] //So we can modify it later if needed.
     }
+
+    //*** Custom modifiers (not in Vexflow) ***
+    //offset comes from algorithms working on the data on import.
+    if(offset) note.setXShift(15)
+
+    //manuallyOffset comes from the data being hard coded with one or more 'o's
+    if(manuallyOffset) note.setXShift(note.x_shift + manuallyOffset)
+
+    //Now that we know what the xShift is, we (ugh...) have to set the accidenal's xShift too
+
 
     if(noBeam){
       note.setBeam('noBeam')
@@ -208,7 +220,7 @@ export default class Measure extends Staff {
     }
 
     if(this.tying && voices[voice]){
-      this.pushTie(this.tying, note)
+      this.pushTie(this.tying, note, voice)
     }
     if(tie && voices[voice]){
       this.tying = note
@@ -221,8 +233,9 @@ export default class Measure extends Staff {
       }
     }
 
-    if(breathMark && stemDirection > 0){
-      let annotation = new this.VF.Annotation('  ’')
+    if(breathMark && stemDirection > 0){ //Only mark s and t
+      let breathMarkString = '   ’'
+      let annotation = new this.VF.Annotation(breathMarkString)
       annotation.setFont('Times', 40)
       annotation.setVerticalJustification(this.VF.Annotation.VerticalJustify.CENTER);
       annotation.setJustification(1);
