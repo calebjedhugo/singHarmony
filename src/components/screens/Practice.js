@@ -54,7 +54,7 @@ export default class Practice extends Component {
 
     return songData.map((data, idx) => {
       let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
-      let width = Math.max(maxNotes * 72, 100)
+      let width = Math.max(maxNotes * 80, 100)
       let active = idx >= activeIdx
       let final = idx === songData.length - 1
       return (

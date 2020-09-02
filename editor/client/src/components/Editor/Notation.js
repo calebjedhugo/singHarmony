@@ -20,7 +20,7 @@ export default class Notation extends Component {
     const {songData, keySignature} = this.props
     return songData.map((data, idx) => {
       let maxNotes = Math.max(data.s.length, data.a.length, data.t.length, data.b.length, 1)
-      let width = Math.max(maxNotes * 70, 100)
+      let width = Math.max(maxNotes * 80, 100)
 
       return <div key={idx} style={{display: 'inline-block', verticalAlign: 'top'}} className={`measure`}>
         {idx}

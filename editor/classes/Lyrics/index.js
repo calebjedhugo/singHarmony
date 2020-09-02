@@ -18,7 +18,6 @@ class Lyrics {
       }
       fs.readFile(this.dataPath, 'utf8', (e, data) => {
         if(e) reject(e)
-        console.log(this.dataPath, data)
         resolve(data)
       })
     })

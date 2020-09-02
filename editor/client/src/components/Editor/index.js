@@ -7,6 +7,9 @@ import LyricImport from './LyricImport'
 import TimeSignatureChange from './TimeSignatureChange'
 import axios from 'axios'
 
+import {Theory} from '../../Theory'
+const theory = new Theory()
+
 export default class Editor extends Component {
   state = {
     error: ''
@@ -37,6 +40,14 @@ export default class Editor extends Component {
     })
   }
 
+  get songData(){
+    const {data} = this.props
+    return data.notes.map(measure => {
+      //Check if there are intervals of a second and offset these notes.
+      return theory.offsetSeconds(measure)
+    })
+  }
+
   render(){
     //todo: lyrics import modal
     const {data, error, selectedSong, setData, hardSetData} = this.props
@@ -48,7 +59,7 @@ export default class Editor extends Component {
         <TimeSignatureChange setData={hardSetData} title={selectedSong} />
         {error ? <div className='error'>{error}</div> : null}
         <MetaData patch={newData => {this.patch(newData, 'metaData')}} metaData={data.metaData} />
-        <Notation patch={(newData, hardSetDataBool) => {this.patch(newData, 'notes', hardSetDataBool)}} songData={data.notes} keySignature={data.metaData.keySignature}/>
+        <Notation patch={(newData, hardSetDataBool) => {this.patch(newData, 'notes', hardSetDataBool)}} songData={this.songData} keySignature={data.metaData.keySignature}/>
       </>
     )
   }

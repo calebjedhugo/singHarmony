@@ -43,7 +43,7 @@ let songTitles = [
   // ['For the Beauty of the Earth', 'Ab'],
   // ['Go to Dark Gethsemane', 'D'],
   // ['God of Our Fathers', 'Eb'],
-  ['God Rest Ye Merry, Gentlemen', 'G'],
+  // ['God Rest Ye Merry, Gentlemen', 'G'],
   // ['Good Christian Men, Rejoice', 'F'],
   // ['Grace Greater than Our Sin', 'G'],
   // ['Hallelujah, What a Savior!', 'Bb'],
@@ -56,7 +56,7 @@ let songTitles = [
   // ['I Heard the Bells on Christmas Day', 'Eb'],
   // ['I Sing the Mighty Power of God', 'Bb'],
   // ['I Surrender All', 'Db'],
-  // ['In the Garden', 'Ab'],
+  ['In the Garden', 'Ab'],
   // ['It Came upon the Midnight Clear', 'Bb'],
   // ['It Is Well with My Soul', 'C'],
   // ['Jesus Paid it All', 'Db'],
@@ -144,7 +144,7 @@ const getLyrics = (songTitle) => {
 
 const writeFiles = async () => {
   let importCode = ['', 'export default {\n']
-  for(let i = 25; i < 26; i++){
+  for(let i = 38; i < 26; i++){
     let fileName = songTitles[0][0].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
 
     // let lyrics = await getLyrics(fileName.replace('.json', '.txt'))
