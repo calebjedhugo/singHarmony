@@ -126,7 +126,7 @@ const durationConvert = (value, subsPerBeat) => {
 const restCheck = (pos, noteEnd, subsPerBeat) => {
   if(noteEnd < pos - 1 && pos > 2){
     return {
-      value: 'c/4',
+      value: 'b/4',
       duration: `${durationConvert(pos - noteEnd - 1, subsPerBeat)}r`
     }
   } else{
@@ -144,7 +144,7 @@ const getLyrics = (songTitle) => {
 
 const writeFiles = async () => {
   let importCode = ['', 'export default {\n']
-  for(let i = 38; i < 26; i++){
+  for(let i = 38; i < 39; i++){
     let fileName = songTitles[0][0].toLowerCase().replace(/\s/g, '_').replace(/\W/g, '') + '.json'
 
     // let lyrics = await getLyrics(fileName.replace('.json', '.txt'))
@@ -165,14 +165,14 @@ const writeFiles = async () => {
     let noteEnd = {s: 0, a: 0, t: 0, b: 0}
     let noteStart = {s: 0, a: 0, t: 0, b: 0}
 
-    const subsPerBeat = 2
-    const subsPerMeasure = 8
+    const subsPerBeat = 4
+    const subsPerMeasure = 12
 
     for(let i2 = 0; i2 < oldNotes.s.length; i2++){
       measure.tempoChanges.push(tempoChanges[i2] ? tempoChanges[i2][i] : 1)
       for(let voice in oldNotes){
         if(oldNotes[voice][i2] && oldNotes[voice][i2][i]){
-          let rest = restCheck(i2, noteEnd[voice], subsPerBeat)
+          let rest restCheck(i2, noteEnd[voice], subsPerBeat)
           if(rest && i2 > 2){
             measure[voice].push(rest)
           }
