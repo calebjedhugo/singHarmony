@@ -28,13 +28,13 @@ export default class Measure extends Staff {
     this.curves = []
     const {voices, idx, keySignature, data} = this.props
 
-    this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
 
     if(!data) throw new Error('The Measure component requires the prop, "data"')
 
     try{
       //create voices
       for(let voice in voices){
+        this.alteredNotes = (theory.keySignatures).alteredNotes(keySignature)
         if(!data.ts[1]) throw new Error(`invalid value in time signature denominator: ${data.ts[1]}`)
         let currentVoice = new this.VF.Voice({num_beats: data.ts[0], beat_value: data.ts[1]})
         this.voices.push(currentVoice)
